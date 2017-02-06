@@ -31,12 +31,19 @@ public class WriteWeightActivity extends AppCompatActivity {
     @BindView(R.id.pictureTitle)
     TextView pictureTitle;
 
+    String[] groups = {"그룹1", "그룹2", "그룹3", "그룹4"};
+
+    boolean[] checkGroups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_weight);
         ButterKnife.bind(this);
+
+        for(int i=0;i<groups.length;++i){
+            checkGroups[i] = true;
+        }
     }
 
     @OnClick(R.id.cameraBtn)
@@ -99,6 +106,41 @@ public class WriteWeightActivity extends AppCompatActivity {
 
                 dialog.dismiss();
 
+            }
+        }).show();
+    }
+
+    @OnClick(R.id.uploadBtn)
+    public void onUpload(){
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what==0){
+                    pickGroup();
+                }
+            }
+        };
+
+    }
+
+
+    public void pickGroup(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("게시할 그룹을 선택하세요.");
+        alert.setMultiChoiceItems(groups, checkGroups, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                checkGroups[which] = isChecked;
+            }
+        }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         }).show();
     }
