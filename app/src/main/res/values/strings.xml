@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">친구랑운동</string>
+
+    <string name="facebook_app_id">1099410106836082</string>
+
+    <string name="join">회원가입</string>
+    <string name="login">로그인</string>
+
+    <string name="nickname">닉네임</string>
+    <string name="email">이메일 주소</string>
+    <string name="phone">휴대폰 번호</string>
+    <string name="password">비밀번호</string>
+    <string name="auto_login">자동 로그인</string>
+
+    <string name="info_phone">휴대폰 번호는 개인 식별 용도 외에는 사용되지 않습니다.</string>
+    <string name="password_chk">비밀번호 확인</string>
+    <string name="height_unit">cm</string>
+    <string name="weight_unit">kg</string>
+    <string name="height">키</string>
+    <string name="weight">몸무게</string>
+    <string name="info_bmi">BMI지수</string>
+    <string name="wannabeKg">목표 체중</string>
+    <string name="age_unit">세</string>
+    <string name="group_name">그룹명</string>
+    <string name="invite_sms">문자로 초대하기</string>
+    <string name="wait">초대 승인을 기다리고 있습니다.</string>
+    <string name="settings_to_dev">개발자에게 문의하기</string>
+    <string name="settings_account">계정 관리</string>
+    <string name="settings_push">푸시알림 설정</string>
+    <string name="mypage">마이페이지</string>
+    <string name="group_add">그룹 생성</string>
+    <string name="group_startday">활동시작일</string>
+    <string name="group_endday">활동종료일</string>
+    <string name="when_group_start">그룹 인원 전원 참가 시</string>
+    <string name="date_pick">날짜 선택</string>
+    <string name="group_member">그룹 멤버 수</string>
+    <string name="person_unit">명</string>
+    <string name="group_name_sample">끝나고 치킨 먹자</string>
+    <string name="group_img">그룹 이미지 설정</string>
+    <string name="weigh_start">시작 체중 인증하기</string>
+    <string name="input_weight">체중 입력</string>
+    <string name="title_activity_home2_acrivity">Home2Acrivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="input_picture_exercise">운동 인증샷을 첨부해 주세요.</string>
+    <string name="input_picture_weight">체중 인증 사진을 입력해 주세요</string>
+</resources>

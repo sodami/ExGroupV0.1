@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_group_add"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.google.slashb410.exgroup.ui.group.create.GroupAddActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_defalt"
+            android:gravity="center"
+            android:text="@string/group_img" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_margin="@dimen/gmd_margin_default"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/com_facebook_profile_picture_blank_square" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/text_defalt"
+            android:text="@string/group_name" />
+
+        <EditText
+            android:id="@+id/group_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_big"
+            android:hint="@string/group_name_sample" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/text_defalt"
+            android:text="@string/group_member" />
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gmd_bar_height">
+
+            <Spinner
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/gmd_button_height"
+                android:layout_margin="8dp"
+                android:entries="@array/member" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person_unit"
+                android:textSize="@dimen/text_defalt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:text="@string/group_startday"
+                android:textSize="@dimen/text_defalt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_defalt"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:text="@string/when_group_start"
+                android:textColor="#444444" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_defalt"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:text="@string/group_endday" />
+
+            <Button
+                android:id="@+id/datepickBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/gmd_button_height"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:gravity="center"
+                android:text="@string/date_pick"
+                android:textSize="@dimen/text_defalt"
+                android:textColor="#777777" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/inviteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gmd_big_button"
+            android:text="@string/invite_sms" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/group_add"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/gmd_big_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/group_add" />
+</RelativeLayout>

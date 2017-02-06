@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/colorAccent">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/group_card"
+        android:layout_margin="16dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/com_facebook_profile_picture_blank_square" />
+<LinearLayout
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <TextView
+        android:layout_gravity="center_vertical"
+        android:textStyle="bold"
+        android:text="@string/nickname"
+        android:id="@+id/profile_nick"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_big" />
+
+    <TextView
+        android:text="0일째 출석중"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_defalt" />
+    <TextView
+        android:text="목표 체중까지 앞으로 00kg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_defalt" />
+    <TextView
+        android:text="현재 BMI 지수 : 00"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_defalt" />
+</LinearLayout>
+</LinearLayout>
