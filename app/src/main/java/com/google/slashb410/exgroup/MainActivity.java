@@ -12,6 +12,7 @@ import com.google.slashb410.exgroup.ui.IntroActivity;
 public class MainActivity extends AppCompatActivity {
 
     //추가
+    // 추가2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
