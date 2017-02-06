@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     //추가
     // 추가2
+    // 추가3 test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
