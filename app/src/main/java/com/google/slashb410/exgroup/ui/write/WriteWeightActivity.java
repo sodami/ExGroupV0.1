@@ -33,7 +33,7 @@ public class WriteWeightActivity extends AppCompatActivity {
 
     String[] groups = {"그룹1", "그룹2", "그룹3", "그룹4"};
 
-    boolean[] checkGroups;
+    boolean[] checkGroups = new boolean[groups.length];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,20 @@ public class WriteWeightActivity extends AppCompatActivity {
 
         Picasso.with(this).load(url).into(pictureThumbnail);
 
+        String pictureRename = renamePicture("weight");
+        pictureTitle.setText(pictureRename);
+
+    }
+
+    private String renamePicture(String menu) {
+
+        String nameMenu = menu;
+        String[] yyMMdd = U.getInstance().currentYYmmDD();
+        String[] hhMMss = U.getInstance().currentTime();
+
+        String fullname = menu+"_"+yyMMdd[0]+yyMMdd[1]+yyMMdd[2]+hhMMss[0]+hhMMss[1]+hhMMss[2];
+
+        return fullname;
     }
 
     @OnClick(R.id.pic_deleteBtn)
@@ -112,14 +126,7 @@ public class WriteWeightActivity extends AppCompatActivity {
 
     @OnClick(R.id.uploadBtn)
     public void onUpload(){
-        Handler handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.what==0){
-                    pickGroup();
-                }
-            }
-        };
+        pickGroup();
 
     }
 
@@ -135,6 +142,27 @@ public class WriteWeightActivity extends AppCompatActivity {
         }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
+                Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if(msg.what==0){
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(WriteWeightActivity.this);
+                            builder.setTitle("업로드를 완료하였습니다!")
+                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            WriteWeightActivity.this.finish();
+                                        }
+                                    }).show();
+                            }
+                        }
+
+                };
+
+                U.getInstance().onProgress(handler, WriteWeightActivity.this, "게시하는 중입니다.");
 
             }
         }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
