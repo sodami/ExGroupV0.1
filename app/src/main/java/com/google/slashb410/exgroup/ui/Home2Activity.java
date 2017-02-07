@@ -1,14 +1,19 @@
 package com.google.slashb410.exgroup.ui;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -43,6 +48,7 @@ public class Home2Activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2_acrivity);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -122,7 +128,20 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            Context mContext = getApplicationContext();
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.activity_developer_message,(ViewGroup) findViewById(R.id.popup));
+            AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
+//            aDialog.setTitle("개발자 문의메일"); //타이틀바 제목
+            aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
+                aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                });
+            //팝업창 생성
+            AlertDialog ad = aDialog.create();
+            ad.show();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
