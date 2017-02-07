@@ -17,6 +17,7 @@
         android:src="@drawable/scale_black" />
 
     <ImageButton
+        android:id="@+id/cancelBtn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"

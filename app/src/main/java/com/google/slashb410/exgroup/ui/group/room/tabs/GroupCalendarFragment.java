@@ -38,9 +38,11 @@ public class GroupCalendarFragment extends Fragment {
         listView = (ExpandableListView) view.findViewById(R.id.group_cal_list);
 
         theDayActList = new ArrayList<>();
-//
-//        theDayActList.add(0, new ArrayList<CalendarListData>().add(0,
-//                new CalendarListData(0, "asdf", "슬비닉네임", "2017년 2월 7일 17시 49분", "3키로 감량!")));
+
+        ArrayList<CalendarListData> inData = new ArrayList<>();
+
+        inData.add(new CalendarListData(0, "asdf", "슬비닉네임", "2017년 2월 7일 17시 49분", "3키로 감량!"));
+        theDayActList.add(0, inData);
 
         theDay = new ArrayList<>();
         theDay.add("날짜를 선택하시면 활동내역을 볼 수 있습니다.");

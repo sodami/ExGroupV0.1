@@ -172,4 +172,9 @@ public class WriteWeightActivity extends AppCompatActivity {
             }
         }).show();
     }
+
+    @OnClick(R.id.cancelBtn)
+    public void onCancel(){
+        finish();
+    }
 }
