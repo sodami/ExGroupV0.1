@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.google.slashb410.exgroup.ui.Home2Activity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+                android:background="@color/colorPrimary">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/ic_launcher"
+                    android:id="@+id/imageView2"
+                    android:layout_marginTop="30dp" />
+
+            </LinearLayout>
+
+        <TextView
+            android:hint="문의 제목"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_weight="1"
+            android:textSize="24sp"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textColor="@color/colorPrimary"
+            android:text="문의 사항을 입력하세요. 문의 사항을 입력하세요. 문의 사항을 입력하세요. 문의 사항을 입력하세요. 문의 사항을 입력하세요. 문의 사항을 입력하세요. 문의 사항을 입력하세요."
+            android:ems="10"
+            android:id="@+id/editText"
+            android:paddingLeft="20dp" />
+
+        // 이벤트 메일 발송으로 설정
+        <!--<Button-->
+            <!--android:text="send"-->
+            <!--android:id="@+id/button3"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:textColor="@color/colorAccent" />-->
+    </LinearLayout>
+
+</ScrollView>
