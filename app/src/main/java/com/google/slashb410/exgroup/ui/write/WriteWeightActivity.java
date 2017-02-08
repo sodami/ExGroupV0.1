@@ -159,7 +159,6 @@ public class WriteWeightActivity extends AppCompatActivity {
                                     }).show();
                             }
                         }
-
                 };
 
                 U.getInstance().onProgress(handler, WriteWeightActivity.this, "게시하는 중입니다.");

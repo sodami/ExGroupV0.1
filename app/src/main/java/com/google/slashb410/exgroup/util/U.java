@@ -5,13 +5,21 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -133,4 +141,27 @@ public class U {
         return currentTime;
     }
 
+    public void uploadFireBase(Context context, String folderPath, String path){
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://exgroup-1faeb.appspot.com");
+
+        Uri file = Uri.fromFile(new File(path));
+        StorageReference imgRef = storageReference.child(folderPath+file.getLastPathSegment());
+        UploadTask uploadTask = imgRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                U.getInstance().popSimpleDialog(null, context, "업로드에 실패했습니다. 다시 시도해주세요.", null);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                U.getInstance().popSimpleDialog(null, context, "업로드에 성공했습니다.", null);
+            }
+        });
+
+
+    }
 }
