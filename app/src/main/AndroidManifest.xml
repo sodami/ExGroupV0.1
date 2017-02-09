@@ -88,6 +88,7 @@
         <activity
             android:name=".ui.mypage.DeveloperMessage"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ExActivity"></activity>
     </application>
 
 </manifest>

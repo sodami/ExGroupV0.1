@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.google.slashb410.exgroup.ui.group.room.tabs.GroupCalendarFragment">
 
-    <CalendarView
+    <ExpandableListView
+        android:id="@+id/group_cal_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null"/>
+    <com.squareup.timessquare.CalendarPickerView
         android:id="@+id/group_calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

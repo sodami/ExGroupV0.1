@@ -10,10 +10,6 @@ import android.widget.DatePicker;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.util.U;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,7 +17,7 @@ import butterknife.OnClick;
 public class GroupAddActivity extends AppCompatActivity {
 
     final int DIALOG_DATE = 1;
-    String[] yyMMdd = whenToday();
+    String[] yyMMdd = U.getInstance().currentYYmmDD();
     @BindView(R.id.datepickBtn)
     Button datepickBtn;
 
@@ -62,26 +58,7 @@ public class GroupAddActivity extends AppCompatActivity {
         return super.onCreateDialog(id);
     }
 
-    public String[] whenToday(){
 
-        String[] today = {"",  "", ""};
-        long now = System.currentTimeMillis();
-
-        Date date = new Date(now);
-
-        SimpleDateFormat CurYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
-       SimpleDateFormat CurMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
-        SimpleDateFormat CurDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
-
-        today[0] = CurYearFormat.format(date);
-        today[1] = CurMonthFormat.format(date);
-        today[2] = CurDayFormat.format(date);
-
-        for(String whatDate : today){
-            U.getInstance().myLog(whatDate);
-        }
-        return today;
-    }
 
     @OnClick(R.id.group_add)
     public void goAdd(){

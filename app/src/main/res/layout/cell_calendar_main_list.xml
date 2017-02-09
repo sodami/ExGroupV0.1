@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/babyPink"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/gmd_bar_height"
+    android:orientation="vertical"
+    android:padding="@dimen/gmd_margin_default"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/date_group_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:text="날짜를 클릭하면 날짜별 활동을 볼 수 있습니다."
+        android:textSize="24sp" />
+</LinearLayout>

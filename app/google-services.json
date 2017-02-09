@@ -1,0 +1,45 @@
+{
+  "project_info": {
+    "project_number": "49261019138",
+    "firebase_url": "https://exgroup-1faeb.firebaseio.com",
+    "project_id": "exgroup-1faeb",
+    "storage_bucket": "exgroup-1faeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49261019138:android:a7ef8aa798d23a3e",
+        "android_client_info": {
+          "package_name": "com.google.slashb410.exgroup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49261019138-mbaj3af1l9gqlij3pinl062msdknv38d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBknHEH5HBe1IenFSWUwdI8STYcj7yT4lU"
+        },
+        {
+          "current_key": "AIzaSyC92h-hm7EXlNiU4_vTElrsa2ZPunA_3qk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
