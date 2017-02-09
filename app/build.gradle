@@ -57,8 +57,14 @@ dependencies {
 
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.google.firebase:firebase-crash:10.0.1'
     compile 'com.google.firebase:firebase-config:10.0.1'
+
+    //추가한 라인(계속 업그레이드 되고 있다.)
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    //서버로 데이터를 보낼때 okhttp를 사용한다면 추가
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
 
