@@ -27,6 +27,7 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
         this.mainList = mainList;
         this.childList = childList;
         this.inflater = LayoutInflater.from(context);
+
     }
 
     @Override
@@ -67,6 +68,7 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         View view = convertView;
+        viewHolder = new CalListViewHolder(view);
         view = inflater.inflate(R.layout.cell_calendar_main_list, parent, false);
 
 
@@ -74,18 +76,20 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
             viewHolder.groupAct.setText(mainList.get(groupPosition));
         }
 
-        return null;
+        return view;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         View view = convertView;
-
+        childListHolder = new CalChildListHolder(view);
         if(view==null){
             view = inflater.inflate(R.layout.cell_calendar_list, null);
         }
 
-        switch (childList.get(0).get(childPosition)+"") {
+        if(childList.get(0).get(childPosition)==null) return view;
+
+        switch (childList.get(0).get(childPosition).getBoardType()+"") {
             case "0" :
                 childListHolder.menuImg.setImageResource(R.drawable.scale_black);
                 break;
@@ -96,6 +100,8 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
                 childListHolder.menuImg.setImageResource(R.drawable.meal_black);
                 break;
         }
+
+
 
         //childListHolder.profileImg.setImageResource();
         childListHolder.nickname.setText(childList.get(groupPosition).get(childPosition).getNickname());

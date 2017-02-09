@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.ui.HomeActivity;
+import com.google.slashb410.exgroup.ui.Home2Activity;
 import com.google.slashb410.exgroup.util.U;
 
 import butterknife.ButterKnife;
@@ -21,6 +21,6 @@ public class InputInit2Activity extends AppCompatActivity {
 
     @OnClick(R.id.nextBtn4)
     public void goNext() {
-        U.getInstance().goNext(this, HomeActivity.class, false);
+        U.getInstance().goNext(this, Home2Activity.class, false);
     }
 }

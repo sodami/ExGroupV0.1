@@ -15,15 +15,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.ui.group.create.GroupAddActivity;
-import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity;
 import com.google.slashb410.exgroup.ui.write.WriteMealActivity;
@@ -59,23 +56,23 @@ public class Home2Activity extends AppCompatActivity
         //------------------------------------------------------------------------------------------
         // 2017. 02. 01 추가
         ButterKnife.bind(this);
-        final String[] groupName = {"슬비네그룹", "소담이네그룹", "혜원이네", "승옥이네", "추가"};
+        final String[] groupName = {"슬비네그룹", "소담이네그룹", "혜원이네", "승옥이네", "연정이네"};
 
         GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, groupName);
         GridView gridView = (GridView) findViewById(R.id.group_grid);
         gridView.setAdapter(gridAdapter);
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(position==groupName.length-1){
-                    U.getInstance().goNext(getApplicationContext(), GroupAddActivity.class, false);
-                }else{
-                    U.getInstance().goNext(getApplicationContext(), GroupHomeActivity.class, false);
-                }
-            }
-        });
+//
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                if(position==groupName.length-1){
+//                    U.getInstance().goNext(getApplicationContext(), GroupAddActivity.class, false);
+//                }else{
+//                    U.getInstance().goNext(getApplicationContext(), GroupHomeActivity.class, false);
+//                }
+//            }
+//        });
         //-------------------------------------------------------------------------------------------
 
         scaleQuick.setOnClickListener(new View.OnClickListener() {
