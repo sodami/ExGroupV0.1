@@ -1,11 +1,16 @@
 package com.google.slashb410.exgroup.ui.mypage;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
@@ -15,6 +20,8 @@ import com.miguelbcr.ui.rx_paparazzo.entities.size.SmallSize;
 import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,19 +34,22 @@ public class MyHomeActivity extends AppCompatActivity {
     ImageView profile_change;
     SweetAlertDialog alert;
     private ViewGroup layoutGraphView;
+    EditText nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_home);
+
+
         layoutGraphView = (ViewGroup) findViewById(R.id.tab1);
 
         // 2017. 02. 01
         TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
         profile_change = (ImageView) findViewById(R.id.profile_change);
+        nickname = (EditText)findViewById(R.id.nickname);
         tabHost.setup();
-
 
         TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
         spec.setContent(R.id.tab1);
@@ -59,6 +69,9 @@ public class MyHomeActivity extends AppCompatActivity {
         tabHost.setCurrentTab(0);
 
         setLineGraph();
+
+        // 2017. 02. 09
+//        nickname.setText("멍청이");
     }
 
     //  2017. 02. 01
@@ -166,13 +179,13 @@ public class MyHomeActivity extends AppCompatActivity {
 
         //GRAPH SETTING
         String[] legendArr 	= {"MON","TUE","WED","THU","FRI","SAT","SUN"};
-        float[] graph1 		= {55,57,48,53,50,57,64};
+        float[] graph1 		= {60,59,58,59,57,57,5500};
 //        float[] graph2 		= {000,100,200,100,200};
 //        float[] graph3 		= {200,500,300,400,000};
 
         List<LineGraph> arrGraph 		= new ArrayList<LineGraph>();
 
-        arrGraph.add(new LineGraph("android", 0xaa66ff33, graph1, R.mipmap.ic_launcher));
+        arrGraph.add(new LineGraph("android", 0xaa66ff33, graph1, R.drawable.graph_like_pink));
         // 친구랑 경쟁 몸무게
 //        arrGraph.add(new LineGraph("ios", 0xaa00ffff, graph2));
 //        arrGraph.add(new LineGraph("tizen", 0xaaff0066, graph3));
@@ -199,25 +212,25 @@ public class MyHomeActivity extends AppCompatActivity {
         return vo;
     }
 
-//    // 2017.02.06
-//    // 앨범에서 사진 하나 선택했을 때 result를 받아서 비트맵으로 변경 후 프로필에 적용
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
-//    {
-//        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-//        switch (requestCode) {
-//            case 100:
-//                if (resultCode == RESULT_OK) {
-//                    try {
-//                        Uri selectedImage = imageReturnedIntent.getData();
-//                        InputStream imageStream = getContentResolver().openInputStream(selectedImage);
-//                        Bitmap bitmapSelectedImage = BitmapFactory.decodeStream(imageStream);
-//                        profile_change.setImageBitmap(bitmapSelectedImage);
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//        }
-//    }
+    // 2017.02.06
+    // 앨범에서 사진 하나 선택했을 때 result를 받아서 비트맵으로 변경 후 프로필에 적용
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
+    {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch (requestCode) {
+            case 100:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        Uri selectedImage = imageReturnedIntent.getData();
+                        InputStream imageStream = getContentResolver().openInputStream(selectedImage);
+                        Bitmap bitmapSelectedImage = BitmapFactory.decodeStream(imageStream);
+                        profile_change.setImageBitmap(bitmapSelectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
+    }
 }
 

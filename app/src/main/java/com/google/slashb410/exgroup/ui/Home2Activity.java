@@ -2,6 +2,7 @@ package com.google.slashb410.exgroup.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,12 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -51,7 +52,7 @@ public class Home2Activity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.i("토큰 확인 : ", token);
+//        Log.i("토큰 확인 : ", token);
 
         //------------------------------------------------------------------------------------------
         // 2017. 02. 01 추가
@@ -124,7 +125,9 @@ public class Home2Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent = new Intent(this, EnterActivity.class);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -134,7 +137,6 @@ public class Home2Activity extends AppCompatActivity
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message,(ViewGroup) findViewById(R.id.popup));
             AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
-//            aDialog.setTitle("개발자 문의메일"); //타이틀바 제목
             aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
                 aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

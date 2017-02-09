@@ -207,31 +207,23 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
                             }
 
                             //x coord dot line
-                            drawBaseLine(graphCanvasWrapper);
+                            //drawBaseLine(graphCanvasWrapper);
 
-                            //y coord
-                            graphCanvasWrapper.drawLine(0, 0, 0, chartYLength, pBaseLine);
+                            //y 세로선
+                            // graphCanvasWrapper.drawLine(0, 0, 0, chartYLength, pBaseLine);
+                            //x 가로선
+                            //graphCanvasWrapper.drawLine(0, 0, chartXLength, 0, pBaseLine);
 
-                            //x coord
-                            graphCanvasWrapper.drawLine(0, 0, chartXLength, 0, pBaseLine);
+                            //x, y 가로, 세로 점
+                            //drawXMark(graphCanvasWrapper);
+                            //drawYMark(graphCanvasWrapper);
 
-                            //x, y coord mark
-                            drawXMark(graphCanvasWrapper);
-                            drawYMark(graphCanvasWrapper);
-
-                            //x, y coord text
+                            //x, y 가로(요일) 세로(kg)
                             drawXText(graphCanvasWrapper);
                             drawYText(graphCanvasWrapper);
 
-                            //Graph
-                            drawGraphRegion(graphCanvasWrapper);
                             drawGraph(graphCanvasWrapper);
-
-
-                            drawGraphName(canvas);
-
-//							isDirty = false;
-
+                            //drawGraphName(canvas);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -244,8 +236,6 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
                     }
                 }
             }
-
-
         }
 
         private void calcTimePass(){
@@ -376,7 +366,7 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
         }
 
         private void drawBaseLine(GraphCanvasWrapper graphCanvas) {
-            for (int i = 1; mLineGraphVO.getIncrement() * i <= mLineGraphVO.getMaxValue(); i++) {
+            for (int i = 40; mLineGraphVO.getIncrement() * i <= mLineGraphVO.getMaxValue(); i++) {
 
                 float y = yLength * mLineGraphVO.getIncrement() * i/mLineGraphVO.getMaxValue();
 
@@ -450,7 +440,6 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
          * draw Graph
          */
         private void drawGraph(GraphCanvasWrapper graphCanvas) {
-
             if (isAnimation){
                 drawGraphWithAnimation(graphCanvas);
             }else{
@@ -749,7 +738,7 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
                 Rect rect = new Rect();
                 pMarkText.getTextBounds(text, 0, text.length(), rect);
 
-                graphCanvas.drawText(text, x -(rect.width()/2), -(20 + rect.height()), pMarkText);
+                graphCanvas.drawText(text, x -(rect.width()/2), -(20 + rect.height())+(rect.height()+400), pMarkText);
             }
         }
 
@@ -757,7 +746,7 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
          * draw Y Text
          */
         private void drawYText(GraphCanvasWrapper graphCanvas) {
-            for (int i = 0; mLineGraphVO.getIncrement() * i <= mLineGraphVO.getMaxValue(); i++) {
+            for (int i = 40; mLineGraphVO.getIncrement() * i <= mLineGraphVO.getMaxValue(); i++) {
 
                 String mark = Float.toString(mLineGraphVO.getIncrement() * i);
                 float y = yLength * mLineGraphVO.getIncrement() * i/mLineGraphVO.getMaxValue();
@@ -765,8 +754,6 @@ public class LineGraphView extends SurfaceView implements SurfaceHolder.Callback
                 pMarkText.setTextSize(20);
                 Rect rect = new Rect();
                 pMarkText.getTextBounds(mark, 0, mark.length(), rect);
-//				Log.e(TAG, "rect = height()" + rect.height());
-//				Log.e(TAG, "rect = width()" + rect.width());
                 graphCanvas.drawText(mark, -(rect.width() + 20), y-rect.height()/2, pMarkText);
             }
         }

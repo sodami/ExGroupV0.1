@@ -5,7 +5,7 @@ package com.google.slashb410.exgroup.ui.mypage;
  */
 
 public class Graph  {
-    public static final int DEFAULT_PADDING 		= 100;
+    public static final int DEFAULT_PADDING 		= 80;
     public static final int DEFAULT_MARGIN_TOP		= 10;
     public static final int DEFAULT_MARGIN_RIGHT 	= 100;
     public static final int DEFAULT_MAX_VALUE 		= 70; //500;
