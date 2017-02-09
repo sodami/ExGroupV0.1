@@ -12,6 +12,7 @@ import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.CalendarListData;
 import com.squareup.timessquare.CalendarPickerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,23 +54,23 @@ public class GroupCalendarFragment extends Fragment {
         Date today = new Date();
         calendar.init(today, nextYear.getTime())
                 .withSelectedDate(today);
-//
-//
-//        calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
-//            @Override
-//            public void onDateSelected(Date date) {
-//                Date dateSelected = date;
-//                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
-//                theDay = new ArrayList<String>();
-//                theDay.add(transFormat.format(dateSelected));
-//                listView.setAdapter(new CalExpandableListAdapter(getContext(), theDay, null));
-//            }
-//
-//            @Override
-//            public void onDateUnselected(Date date) {
-//
-//            }
-//        });
+
+
+        calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(Date date) {
+                Date dateSelected = date;
+                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+                theDay = new ArrayList<String>();
+                theDay.add(transFormat.format(dateSelected));
+              //  listView.setAdapter(new CalExpandableListAdapter(getContext(), theDay, null));
+            }
+
+            @Override
+            public void onDateUnselected(Date date) {
+
+            }
+        });
 
         return view;
     }

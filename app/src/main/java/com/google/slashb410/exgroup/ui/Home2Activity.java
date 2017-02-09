@@ -52,7 +52,7 @@ public class Home2Activity extends AppCompatActivity
         //------------------------------------------------------------------------------------------
         // 2017. 02. 01 추가
         ButterKnife.bind(this);
-        final String[] groupName = {"슬비네그룹", "소담이네그룹", "혜원이네", "승옥이네", "추가"};
+        final String[] groupName = {"슬비네그룹", "소담이네그룹", "혜원이네", "승옥이네", "연정이네"};
 
         GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, groupName);
         GridView gridView = (GridView) findViewById(R.id.group_grid);

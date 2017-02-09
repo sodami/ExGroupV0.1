@@ -70,6 +70,7 @@
     </LinearLayout>
 
     <Button
+        android:background="@drawable/button_white"
         android:text="다음으로"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
