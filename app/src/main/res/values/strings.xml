@@ -28,10 +28,10 @@
     <string name="settings_account">계정 관리</string>
     <string name="settings_push">푸시알림 설정</string>
     <string name="mypage">마이페이지</string>
-    <string name="group_add">그룹 생성</string>
+    <string name="group_add">그룹 만들기</string>
     <string name="group_startday">활동시작일</string>
     <string name="group_endday">활동종료일</string>
-    <string name="when_group_start">그룹 인원 전원 참가 시</string>
+    <string name="when_group_start">그룹 생성일</string>
     <string name="date_pick">날짜 선택</string>
     <string name="group_member">그룹 멤버 수</string>
     <string name="person_unit">명</string>

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -18,11 +19,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
+import com.miguelbcr.ui.rx_paparazzo.entities.size.ScreenSize;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Tacademy on 2017-01-20.
@@ -162,6 +171,49 @@ public class U {
             }
         });
 
+
+    }
+
+
+    public void onCamera(Activity activity, String folder, ImageView imageView){
+
+        RxPaparazzo.takeImage(activity)
+                .size(new ScreenSize())
+                .usingCamera()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {// See response.resultCode() doc
+                    if (response.resultCode() != RESULT_OK) {
+                        //  response.targetUI().showUserCanceled();
+                        return;
+                    }
+                    if(imageView!=null) loadImage(activity, response.data(), imageView);
+                     uploadFireBase(activity, folder, response.data());
+                });
+
+    }
+
+    public void onGallery(Activity activity, String folder, ImageView imageView){
+        RxPaparazzo.takeImage(activity)
+                .usingGallery()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {// See response.resultCode() doc
+                    if (response.resultCode() != RESULT_OK) {
+                        //  response.targetUI().showUserCanceled();
+                        return;
+                    }
+                    if(imageView!=null) loadImage(activity, response.data(), imageView);
+                    uploadFireBase(activity, folder, response.data());
+                });
+    }
+
+    private void loadImage(Activity activity, String path, ImageView imageView) {
+        String url = "file://" + path;
+
+        Picasso.with(activity).setLoggingEnabled(true);
+        Picasso.with(activity).invalidate(url);
+        Picasso.with(activity).load(url).into(imageView);
 
     }
 }

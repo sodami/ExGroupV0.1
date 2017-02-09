@@ -58,7 +58,6 @@ class GridAdapter extends BaseAdapter {
         TextView textView;
         CardView cardView;
         if (position == E.KEY.GROUP_MAX) {
-            U.getInstance().myLog("들어오김함!!!1");
             cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
             cardView.setVisibility(View.VISIBLE);
             cardView.setClickable(false);

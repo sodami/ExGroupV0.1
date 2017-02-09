@@ -42,7 +42,7 @@ public class WeightCheckActivity extends AppCompatActivity {
                 return;
             }
             uploadLocal(response.data());
-        });;
+        });
     }
 
 

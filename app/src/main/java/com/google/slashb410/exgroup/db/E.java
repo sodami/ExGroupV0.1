@@ -9,6 +9,11 @@ public class E {
     public static class KEY {
         public static final int GROUP_MAX = 5;
         public static final String STORAGE_KEY = "pref";
+        public static final int GROUP_TERM_MIN = 7;
+        public static final int GROUP_TERM_MAX = 30;
+
+        //----fake data
+        public static final String[] GROUPS ={"소담이네", "혜원이네", "연정이네", "승옥이네"};
     }
 
     public static class NET {

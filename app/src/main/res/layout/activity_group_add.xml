@@ -18,102 +18,125 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text_defalt"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/group_img" />
+            android:text="@string/group_img"
+            android:textSize="@dimen/text_default" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_margin="@dimen/gmd_margin_default"
+            android:id="@+id/group_profileImg"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:src="@drawable/com_facebook_profile_picture_blank_square" />
+            android:layout_margin="@dimen/gmd_margin_default"
+            android:src="@drawable/com_facebook_profile_picture_blank_square"
+            app:civ_border_color="#cccccc"
+            app:civ_border_width="1dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_defalt"
-            android:text="@string/group_name" />
-
-        <EditText
-            android:id="@+id/group_name_add"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text_big"
-            android:hint="@string/group_name_sample" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_defalt"
-            android:text="@string/group_member" />
-
-        <LinearLayout
-            android:gravity="bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/gmd_bar_height">
-
-            <Spinner
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/gmd_button_height"
-                android:layout_margin="8dp"
-                android:entries="@array/member" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/person_unit"
-                android:textSize="@dimen/text_defalt" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:gravity="top">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gmd_margin_default"
-                android:text="@string/group_startday"
-                android:textSize="@dimen/text_defalt" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gmd_bar_height"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="@dimen/text_defalt"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gmd_margin_default"
-                android:text="@string/when_group_start"
-                android:textColor="#444444" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/gmd_bar_height"
+                    android:gravity="end|center_vertical"
+                    android:text="@string/group_name" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/group_name_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/group_name_sample"
+                    android:textSize="16sp" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="@dimen/text_defalt"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/gmd_margin_default"
-                android:text="@string/group_endday" />
+            <TableRow
+                android:layout_height="@dimen/gmd_bar_height"
+                android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/datepickBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/gmd_button_height"
-                android:layout_margin="@dimen/gmd_margin_default"
-                android:gravity="center"
-                android:text="@string/date_pick"
-                android:textSize="@dimen/text_defalt"
-                android:textColor="#777777" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/gmd_bar_height"
+                    android:gravity="end|center_vertical"
+                    android:text="@string/group_member"
+                    android:textSize="@dimen/text_default" />
 
-        <Button
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/text_default"
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/gmd_button_height"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:entries="@array/member" />
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="@dimen/gmd_bar_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/gmd_bar_height"
+                    android:gravity="end|center_vertical"
+                    android:text="@string/group_startday"
+                    android:textSize="@dimen/text_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    android:text="@string/when_group_start"
+                    android:textColor="#444444"
+                    android:textSize="@dimen/text_default" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="@dimen/gmd_bar_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/gmd_bar_height"
+                    android:gravity="end|center_vertical"
+                    android:text="@string/group_endday"
+                    android:textSize="@dimen/text_default" />
+
+                <Button
+                    android:padding="4dp"
+                    android:id="@+id/datepickBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/gmd_button_height"
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    android:background="@drawable/button_white"
+                    android:gravity="center"
+                    android:text="@string/date_pick"
+                    android:textColor="@color/universeBlack"
+                    android:textSize="@dimen/text_default" />
+            </TableRow>
+        </TableLayout>
+
+       <!-- <Button
+            android:textColor="#ffffff"
             android:id="@+id/inviteBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gmd_big_button"
-            android:text="@string/invite_sms" />
+            android:background="@drawable/button_pink"
+            android:text="@string/invite_sms" />-->
     </LinearLayout>
 
     <Button
@@ -122,5 +145,6 @@
         android:layout_height="@dimen/gmd_big_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:background="@drawable/button_white"
         android:text="@string/group_add" />
 </RelativeLayout>

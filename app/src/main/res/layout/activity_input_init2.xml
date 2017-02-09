@@ -30,7 +30,7 @@
         <TextView
             android:text="@string/weight_unit"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_defalt" />
+            android:layout_height="@dimen/text_default" />
         </LinearLayout>
     </LinearLayout>
 
