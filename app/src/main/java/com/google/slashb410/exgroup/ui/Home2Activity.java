@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.GridView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.ui.group.create.GroupAddActivity;
 import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
@@ -48,9 +50,11 @@ public class Home2Activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2_acrivity);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.i("토큰 확인 : ", token);
 
         //------------------------------------------------------------------------------------------
         // 2017. 02. 01 추가
@@ -103,6 +107,7 @@ public class Home2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
