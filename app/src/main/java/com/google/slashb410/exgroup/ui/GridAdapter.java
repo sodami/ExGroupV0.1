@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.ui;
 
+
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
@@ -20,6 +21,9 @@ import com.google.slashb410.exgroup.util.U;
 
 import java.util.ArrayList;
 
+<<<<<<<HEAD
+        =======
+        >>>>>>>cba567f378f35ed24aa9f988cdc84eaa05f48107
 /**
  * Created by Tacademy on 2017-02-01.
  */
@@ -95,6 +99,75 @@ class GridAdapter extends BaseAdapter {
             textView2.setText(groupInfos.get(position).getTerm()+"");
 
             FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    U.getInstance().goNext(v.getContext(), GroupHomeActivity.class, false);
+                }
+            });
+        }
+
+        if (position == groupName.length) {
+            cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+            cardView.setVisibility(View.VISIBLE);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    U.getInstance().goNext(v.getContext(), GroupAddActivity.class, false);
+                }
+            });
+        } else if (position == R.dimen.GROUP_MAX) {
+            cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+            cardView.setVisibility(View.VISIBLE);
+            cardView.setClickable(false);
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.group_add_img);
+            imageView.setVisibility(View.GONE);
+            textView = (TextView) convertView.findViewById(R.id.group_addTxt);
+            textView.setText("그룹은 최대 5개까지 소속될 수 있습니다.");
+            textView.setTextSize(R.dimen.text_small);
+
+        } else
+
+        {
+            cardView = (CardView) convertView.findViewById(R.id.group_cardview);
+            textView = (TextView) convertView.findViewById(R.id.group_name_card);
+            textView.setText(groupName[position]);
+
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    U.getInstance().goNext(v.getContext(), GroupHomeActivity.class, false);
+                }
+            });
+//        }
+        if (position == E.KEY.GROUP_MAX) {
+            cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+            cardView.setVisibility(View.VISIBLE);
+            cardView.setClickable(false);
+            cardView.setBackgroundResource(R.color.babyPink);
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.group_add_img);
+            imageView.setVisibility(View.GONE);
+            textView = (TextView) convertView.findViewById(R.id.group_addTxt);
+            textView.setText("그룹은 최대 5개까지 소속될 수 있습니다.");
+            textView.setTextColor(Color.WHITE);
+
+
+        } else if (position == groupName.length) {
+            cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+            cardView.setVisibility(View.VISIBLE);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    U.getInstance().goNext(v.getContext(), GroupAddActivity.class, false);
+                }
+            });
+        } else {
+            cardView = (CardView) convertView.findViewById(R.id.group_cardview);
+            textView = (TextView) convertView.findViewById(R.id.group_name_card);
+            textView.setText(groupName[position]);
+
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
