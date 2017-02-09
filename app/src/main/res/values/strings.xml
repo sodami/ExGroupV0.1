@@ -46,8 +46,6 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="input_picture_exercise">운동 인증샷을 첨부해 주세요.</string>
     <string name="input_picture_weight">체중 인증 사진을 입력해 주세요</string>
 </resources>

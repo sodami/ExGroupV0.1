@@ -77,8 +77,10 @@
                 android:src="@drawable/add_gray" />
 
             <TextView
+                android:layout_margin="4dp"
                 android:id="@+id/group_addTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="그룹 만들기"
                 android:textColor="#888888" />
