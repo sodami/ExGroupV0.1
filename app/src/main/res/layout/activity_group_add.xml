@@ -35,7 +35,7 @@
             android:text="@string/group_name" />
 
         <EditText
-            android:id="@+id/group_name"
+            android:id="@+id/group_name_add"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_big"
             android:hint="@string/group_name_sample" />

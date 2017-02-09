@@ -35,6 +35,8 @@
             android:fillViewport="true">
 
             <GridView
+                android:listSelector="@color/float_transparent"
+                android:clickable="false"
                 android:id="@+id/group_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
