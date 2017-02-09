@@ -21,6 +21,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
+import com.google.slashb410.exgroup.model.group.GroupInfo;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity;
 import com.google.slashb410.exgroup.ui.write.WriteMealActivity;
@@ -56,9 +58,26 @@ public class Home2Activity extends AppCompatActivity
         //------------------------------------------------------------------------------------------
         // 2017. 02. 01 추가
         ButterKnife.bind(this);
-        final String[] groupName = {/*"슬비네그룹",*/ "소담이네그룹", "혜원이네", "승옥이네" , "연정이네"};
 
-        GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, groupName);
+        //======================================FAKE DATA
+
+        GroupInfo sodams = new GroupInfo("소담이네", "/groupimg01.jpg", 30);
+        GroupInfo heawons = new GroupInfo("혜원이네", "/groupimg02.jpg", 6);
+        GroupInfo seungoks = new GroupInfo("승옥이네", "/groupimg03.jpg", 2);
+        GroupInfo yeonjeongs = new GroupInfo("연정이네", "/groupimg04.jpg", 27);
+
+        E.KEY.group_list.add(sodams);
+        E.KEY.group_list.add(heawons);
+        E.KEY.group_list.add(seungoks);
+        E.KEY.group_list.add(yeonjeongs);
+
+
+        //================================================
+
+
+       // final String[] groupName = {/*"슬비네그룹",*/ "소담이네그룹", "혜원이네", "승옥이네" , "연정이네"};
+
+        GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, E.KEY.group_list);
         GridView gridView = (GridView) findViewById(R.id.group_grid);
         gridView.setAdapter(gridAdapter);
 //
