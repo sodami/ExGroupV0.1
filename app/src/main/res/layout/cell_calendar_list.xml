@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="닉네임"
-                android:textSize="@dimen/text_defalt"
+                android:textSize="@dimen/text_default"
                 android:textStyle="bold" />
 
             <TextView
@@ -57,6 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gmd_margin_default"
             android:text="줄넘기 500번 30분(서머리)"
-            android:textSize="@dimen/text_defalt" />
+            android:textSize="@dimen/text_default" />
     </LinearLayout>
 </LinearLayout>

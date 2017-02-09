@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="그룹 다이어트"
                 android:textStyle="bold"
-                android:textSize="@dimen/text_defalt"
+                android:textSize="@dimen/text_default"
                 android:textColor="@color/babyPink"
                 android:id="@+id/title"
                 android:layout_marginTop="90dp"

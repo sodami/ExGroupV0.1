@@ -133,6 +133,6 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/gmd_margin_default"
             android:text="UPLOAD"
-            android:textSize="@dimen/text_defalt" />
+            android:textSize="@dimen/text_default" />
     </LinearLayout>
 </RelativeLayout>

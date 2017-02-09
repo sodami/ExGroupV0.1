@@ -95,10 +95,10 @@ public class WriteWeightActivity extends AppCompatActivity {
     private String renamePicture(String menu) {
 
         String nameMenu = menu;
-        String[] yyMMdd = U.getInstance().currentYYmmDD();
+        String[] currentYYmmDD = U.getInstance().currentYYmmDD();
         String[] hhMMss = U.getInstance().currentTime();
 
-        String fullname = menu+"_"+yyMMdd[0]+yyMMdd[1]+yyMMdd[2]+hhMMss[0]+hhMMss[1]+hhMMss[2];
+        String fullname = menu+"_"+currentYYmmDD[0]+currentYYmmDD[1]+currentYYmmDD[2]+hhMMss[0]+hhMMss[1]+hhMMss[2];
 
         return fullname;
     }
