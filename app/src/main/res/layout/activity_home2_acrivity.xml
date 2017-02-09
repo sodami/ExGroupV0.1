@@ -14,11 +14,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+
+
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header_home2_acrivity"
-            app:menu="@menu/activity_home2_acrivity_drawer" />
+            app:menu="@menu/activity_home2_acrivity_drawer" >
+
+
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="210dp"
+                    android:layout_marginLeft="220dp"
+                    android:textOn="ON"
+                    android:textOff="OFF"
+                    android:id="@+id/toggleButton"
+                    android:elevation="1dp" />
+
+                <ToggleButton
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="260dp"
+                    android:layout_marginLeft="220dp"
+                    android:textOn="ON"
+                    android:textOff="OFF"
+                    android:elevation="1dp" />
+
+
+        </android.support.design.widget.NavigationView>
+
+
+
 </android.support.v4.widget.DrawerLayout>
