@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-    android:id="@+id/cell_shot_card"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cell_shot_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/gmd_margin_default"
-    android:layout_marginStart="@dimen/gmd_margin_default"
-    android:layout_marginEnd="@dimen/gmd_margin_default">
+    android:layout_margin="4dp">
 
     <LinearLayout
         android:id="@+id/card_contents"
@@ -80,14 +77,30 @@
             android:layout_height="200dp"
             android:background="#888888" />
 
-        <TextView
-            android:id="@+id/summary"
+        <LinearLayout
+            android:layout_marginStart="@dimen/gmd_margin_default"
+            android:layout_marginEnd="@dimen/gmd_margin_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gmd_margin_default"
-            android:lines="1"
-            android:text="운동 한줄요약 ex) 줄넘기 2천번 30분간"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/weightTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weight_today"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:lines="1"
+                android:text="운동 한줄요약 ex) 줄넘기 2천번 30분간"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/content_shot"
@@ -124,8 +137,8 @@
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginStart="4dp"
                 android:layout_marginBottom="@dimen/gmd_margin_default"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="@dimen/gmd_margin_default"
                 android:background="@drawable/comments_gray" />
 

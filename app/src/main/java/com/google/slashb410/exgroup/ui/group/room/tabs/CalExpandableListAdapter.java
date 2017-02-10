@@ -20,13 +20,22 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
     ArrayList<String> mainList;
     ArrayList<ArrayList<CalendarListData>> childList;
     LayoutInflater inflater;
-    CalListViewHolder viewHolder;
+    CalListViewHolder mainHolder;
     CalChildListHolder childListHolder;
 
     public CalExpandableListAdapter(Context context, ArrayList<String> mainList, ArrayList<ArrayList<CalendarListData>> childList) {
         this.mainList = mainList;
         this.childList = childList;
         this.inflater = LayoutInflater.from(context);
+
+        notifyDataSetChanged();
+
+    }
+
+    public void setNewData(ArrayList<String> _mainList, ArrayList<ArrayList<CalendarListData>> _childList){
+
+        if(_mainList!=null) this.mainList = _mainList;
+        if(_childList!=null) this.childList = _childList;
 
     }
 
@@ -68,12 +77,12 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         View view = convertView;
-       // viewHolder = new CalListViewHolder(view);
+
         view = inflater.inflate(R.layout.cell_calendar_main_list, parent, false);
 
-
-        if(view==null){
-            viewHolder.groupAct.setText(mainList.get(groupPosition));
+        if (view == null) {
+            mainHolder = new CalListViewHolder(view);
+            mainHolder.groupAct.setText(mainList.get(groupPosition));
         }
 
         return view;
@@ -82,25 +91,24 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         View view = convertView;
-        childListHolder = new CalChildListHolder(view);
-        if(view==null){
+
+
+        if (view == null) {
             view = inflater.inflate(R.layout.cell_calendar_list, null);
         }
+        childListHolder = new CalChildListHolder(view);
 
-        if(childList.get(0).get(childPosition)==null) return view;
-
-        switch (childList.get(0).get(childPosition).getBoardType()+"") {
-            case "0" :
+        switch (childList.get(0).get(childPosition).getBoardType() + "") {
+            case "0":
                 childListHolder.menuImg.setImageResource(R.drawable.scale_black);
                 break;
-            case "1" :
+            case "1":
                 childListHolder.menuImg.setImageResource(R.drawable.exercise_black);
                 break;
-            case "2" :
+            case "2":
                 childListHolder.menuImg.setImageResource(R.drawable.meal_black);
                 break;
         }
-
 
 
         //childListHolder.profileImg.setImageResource();

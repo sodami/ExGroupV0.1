@@ -42,7 +42,7 @@ public class GroupCalendarFragment extends Fragment {
 
         ArrayList<CalendarListData> inData = new ArrayList<>();
 
-        inData.add(new CalendarListData(0, "asdf", "슬비닉네임", "2017년 2월 7일 17시 49분", "3키로 감량!"));
+       inData.add(new CalendarListData(1, "asdf", "슬비닉네임", "2017년 2월 7일 17시 49분", "1시간동안 15키로 자전거!"));
         theDayActList.add(0, inData);
 
         theDay = new ArrayList<>();
@@ -62,8 +62,10 @@ public class GroupCalendarFragment extends Fragment {
                 Date dateSelected = date;
                 SimpleDateFormat transFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
                 theDay = new ArrayList<String>();
-                theDay.add(transFormat.format(dateSelected));
-              //  listView.setAdapter(new CalExpandableListAdapter(getContext(), theDay, null));
+                theDay.add(0, transFormat.format(dateSelected));
+                adapter.setNewData(theDay, null);
+                listView.invalidateViews();
+
             }
 
             @Override
