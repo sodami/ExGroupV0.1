@@ -39,6 +39,7 @@ public class WriteWeightActivity extends AppCompatActivity {
 
     String[] groupNames;
     boolean[] checkGroups;
+    String dateNTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +155,15 @@ public class WriteWeightActivity extends AppCompatActivity {
                 String[] currentDate = U.getInstance().currentYYmmDD();
                 String[] currentTime = U.getInstance().currentTime();
 
-                String dateNTime = currentDate[0]+"년 "+currentDate[1]+"월 "+currentDate[2]+"일 "+currentTime[0]+"시 "+currentTime[1]+"분";
+                dateNTime = currentDate[0]+"년 "+currentDate[1]+"월 "+currentDate[2]+"일 "+currentTime[0]+"시 "+currentTime[1]+"분";
+
+
+            }
+        }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //======================FAKE DATA INPUT
 
                 E.KEY.new_write.setNickName("이슬비");
                 E.KEY.new_write.setBoardType(0);
@@ -162,10 +171,7 @@ public class WriteWeightActivity extends AppCompatActivity {
                 E.KEY.new_write.setContent(content.getText().toString());
                 E.KEY.new_write.setDateNTime(dateNTime);
 
-            }
-        }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                //================================
 
 
                 Handler handler = new Handler() {
