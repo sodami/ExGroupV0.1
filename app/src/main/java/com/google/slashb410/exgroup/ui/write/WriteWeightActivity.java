@@ -152,10 +152,6 @@ public class WriteWeightActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checkGroups[which] = isChecked;
-                String[] currentDate = U.getInstance().currentYYmmDD();
-                String[] currentTime = U.getInstance().currentTime();
-
-                dateNTime = currentDate[0]+"년 "+currentDate[1]+"월 "+currentDate[2]+"일 "+currentTime[0]+"시 "+currentTime[1]+"분";
 
 
             }
@@ -165,9 +161,14 @@ public class WriteWeightActivity extends AppCompatActivity {
 
                 //======================FAKE DATA INPUT
 
+                String[] currentDate = U.getInstance().currentYYmmDD();
+                String[] currentTime = U.getInstance().currentTime();
+
+                dateNTime = currentDate[0]+"년 "+currentDate[1]+"월 "+currentDate[2]+"일 "+currentTime[0]+"시 "+currentTime[1]+"분";
+
                 E.KEY.new_write.setNickName("이슬비");
                 E.KEY.new_write.setBoardType(0);
-                E.KEY.new_write.setSummary(inputWeight.getText().toString());
+                E.KEY.new_write.setSummary(inputWeight.getText().toString()+"kg");
                 E.KEY.new_write.setContent(content.getText().toString());
                 E.KEY.new_write.setDateNTime(dateNTime);
 

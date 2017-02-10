@@ -23,6 +23,8 @@ class ShotsHolder extends RecyclerView.ViewHolder {
     TextView numLike;
     TextView numComments;
 
+    TextView todayWeight;
+
 
     public ShotsHolder(View itemView) {
         super(itemView);
@@ -35,6 +37,8 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         content = (TextView) itemView.findViewById(R.id.content_shot);
         numLike = (TextView) itemView.findViewById(R.id.numLike);
         numComments = (TextView) itemView.findViewById(R.id.numComments);
+
+        todayWeight = (TextView) itemView.findViewById(R.id.weightTxt);
     }
 
     public void bindOnCard(ShotData results) {
@@ -43,6 +47,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         switch (mResults.getBoardType()+"") {
             case "0":
                 menuImg.setImageResource(R.drawable.scale_white);
+                todayWeight.setVisibility(View.VISIBLE);
                 break;
             case "1":
                 menuImg.setImageResource(R.drawable.exercise_white);
