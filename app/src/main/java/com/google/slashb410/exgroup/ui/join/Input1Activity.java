@@ -21,7 +21,7 @@ public class Input1Activity extends AppCompatActivity {
 
     @OnClick(R.id.nextBtn1)
     public void goNext(){
-        U.getInstance().goNext(this, Input2Activity.class, true);
+        U.getInstance().goNext(this, Input2Activity.class, true, true);
         finish();
     }
 }

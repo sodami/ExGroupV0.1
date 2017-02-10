@@ -21,6 +21,6 @@ public class InputInit2Activity extends AppCompatActivity {
 
     @OnClick(R.id.nextBtn4)
     public void goNext() {
-        U.getInstance().goNext(this, Home2Activity.class, false);
+        U.getInstance().goNext(this, Home2Activity.class, false, false);
     }
 }

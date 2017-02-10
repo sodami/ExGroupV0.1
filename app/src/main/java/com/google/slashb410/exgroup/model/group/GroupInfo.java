@@ -19,6 +19,12 @@ public class GroupInfo {
         this.term = term;
     }
 
+    public void deleteGroupInfo(){
+        this.groupName = null;
+        this.groupImgPath = null;
+        this.term = 0;
+    }
+
     public String getGroupName() {
         return groupName;
     }

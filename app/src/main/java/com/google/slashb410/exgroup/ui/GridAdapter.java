@@ -61,10 +61,11 @@ class GridAdapter extends BaseAdapter {
         TextView textView;
         TextView textView2;
         ImageView imageView;
-        CardView cardView;
+        CardView  cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+        CardView groupCardview = (CardView) convertView.findViewById(R.id.group_cardview);
 
         if (position == E.KEY.GROUP_MAX) {
-            cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+            groupCardview.setVisibility(View.GONE);
             cardView.setVisibility(View.VISIBLE);
             cardView.setClickable(false);
             cardView.setBackgroundResource(R.color.babyPink);
@@ -76,29 +77,38 @@ class GridAdapter extends BaseAdapter {
 
 
         } else if (position == groupInfos.size()) {
-            cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+            groupCardview.setVisibility(View.GONE);
             cardView.setVisibility(View.VISIBLE);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    U.getInstance().goNext(v.getContext(), GroupAddActivity.class, false);
+                    U.getInstance().goNext(v.getContext(), GroupAddActivity.class, false, false);
                 }
             });
         } else {
-            cardView = (CardView) convertView.findViewById(R.id.group_cardview);
+            groupCardview.setVisibility(View.VISIBLE);
+            cardView.setVisibility(View.GONE);
             textView = (TextView) convertView.findViewById(R.id.group_name_card);
 //            imageView = (ImageView) convertView.findViewById(R.id.group_cardImg);
+<<<<<<< HEAD
             //       textView2 = (TextView) convertView.findViewById(R.id.group_term);
+=======
+     //       textView2 = (TextView) convertView.findViewById(R.id.group_term);
+>>>>>>> c1bcd35ef73c942d25a65c341e201cb52fcf44b5
 
             textView.setText(groupInfos.get(position).getGroupName());
 //            textView2.setText(groupInfos.get(position).getTerm()+"");
 
+<<<<<<< HEAD
             //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
+=======
+     //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
+>>>>>>> c1bcd35ef73c942d25a65c341e201cb52fcf44b5
 
-            cardView.setOnClickListener(new View.OnClickListener() {
+            groupCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    U.getInstance().goNext(v.getContext(), GroupHomeActivity.class, false);
+                    U.getInstance().goNext(v.getContext(), GroupHomeActivity.class, false, false);
                 }
             });
         }

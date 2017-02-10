@@ -62,10 +62,14 @@ public class U {
 
 
     //다음 액티비티로 + 슬라이드 애니메이션(true, false)
-    public void goNext(Context context, Class nextActivity, boolean isSliding){
+    public void goNext(Context context, Class nextActivity, boolean isSliding, boolean kill){
         Intent intent = new Intent(context, nextActivity);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+        if (kill) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
 
         context.startActivity(intent);
         if(isSliding){
@@ -208,7 +212,7 @@ public class U {
                 });
     }
 
-    private void loadImage(Activity activity, String path, ImageView imageView) {
+    public void loadImage(Activity activity, String path, ImageView imageView) {
         String url = "file://" + path;
 
         Picasso.with(activity).setLoggingEnabled(true);
@@ -216,4 +220,5 @@ public class U {
         Picasso.with(activity).load(url).into(imageView);
 
     }
+
 }

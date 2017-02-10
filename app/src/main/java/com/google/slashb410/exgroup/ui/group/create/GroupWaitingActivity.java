@@ -30,7 +30,8 @@ public class GroupWaitingActivity extends AppCompatActivity {
 
 
     public void goNext(){
-        U.getInstance().goNext(this, GroupHomeActivity.class, false);
+        U.getInstance().goNext(this, GroupHomeActivity.class, false, false);
+        finish();
     }
 
 }
