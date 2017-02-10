@@ -4,8 +4,6 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
-        config {
-        }
     }
     compileSdkVersion 24
     buildToolsVersion "25.0.2"

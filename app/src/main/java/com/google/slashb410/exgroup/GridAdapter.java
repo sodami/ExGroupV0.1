@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.ui;
+package com.google.slashb410.exgroup;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.GroupInfo;
 import com.google.slashb410.exgroup.ui.group.create.GroupAddActivity;
@@ -20,9 +19,10 @@ import com.google.slashb410.exgroup.util.U;
 import java.util.ArrayList;
 
 /**
- * Created by Tacademy on 2017-02-01.
+ * Created by Tacademy on 2017-02-10.
  */
-class GridAdapter extends BaseAdapter {
+
+public class GridAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<GroupInfo> groupInfos;
@@ -61,7 +61,7 @@ class GridAdapter extends BaseAdapter {
         TextView textView;
         TextView textView2;
         ImageView imageView;
-        CardView  cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
+        CardView cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
         CardView groupCardview = (CardView) convertView.findViewById(R.id.group_cardview);
 
         if (position == E.KEY.GROUP_MAX) {
