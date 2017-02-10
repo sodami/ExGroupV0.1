@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.ShotData;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+
+import static com.google.slashb410.exgroup.db.E.KEY.shotData;
 
 /**
  * Created by Tacademy on 2017-02-02.
@@ -25,7 +28,6 @@ public class GroupShotsFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
 
     ArrayList<ShotData> results = new ArrayList<>();
-    ShotData shotData;
 
 
     @Nullable
@@ -41,6 +43,12 @@ public class GroupShotsFragment extends Fragment {
 
         shotData = new ShotData(2, "ss", "슬비의닉네임", "2017년 2월 5일", "사과 1개 시리얼 한사발", "아 벌써 배고프다", "000", 30, 5);
         results.add(1, shotData);
+
+        if(E.KEY.new_write.getNickName()!=null){
+            shotData = new ShotData(E.KEY.new_write.getBoardType(), "123", E.KEY.new_write.getNickName(), E.KEY.new_write.getDateNTime(),
+                    E.KEY.new_write.getSummary(), E.KEY.new_write.getContent(), "pic", 0, 0);
+            results.add(2, shotData);
+        }
         //====================
 
         View view = inflater.inflate(R.layout.fragment_group_shots, container, false);

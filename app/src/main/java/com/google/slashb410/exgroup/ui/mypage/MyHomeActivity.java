@@ -37,7 +37,8 @@ public class MyHomeActivity extends AppCompatActivity {
     EditText nickname;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_home);
@@ -73,7 +74,6 @@ public class MyHomeActivity extends AppCompatActivity {
         // 2017. 02. 09
 //        nickname.setText("멍청이");
     }
-
     //  2017. 02. 01
     public void onPhoto(View view)
     {
@@ -146,7 +146,6 @@ public class MyHomeActivity extends AppCompatActivity {
         Picasso.with(this).invalidate(url);
         Picasso.with(this).load(url).into(profile_change);
     }
-
     // 2017.02.05
     public void setLineGraph()
     {
@@ -211,7 +210,6 @@ public class MyHomeActivity extends AppCompatActivity {
 //				marginTop, marginRight, maxValue, increment, legendArr, arrGraph, R.drawable.bg);
         return vo;
     }
-
     // 2017.02.06
     // 앨범에서 사진 하나 선택했을 때 result를 받아서 비트맵으로 변경 후 프로필에 적용
     @Override

@@ -68,7 +68,7 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         View view = convertView;
-        viewHolder = new CalListViewHolder(view);
+       // viewHolder = new CalListViewHolder(view);
         view = inflater.inflate(R.layout.cell_calendar_main_list, parent, false);
 
 

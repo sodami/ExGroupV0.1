@@ -35,34 +35,48 @@
 
 
                 <ImageView
+                    android:id="@+id/group_cardImg"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="#cccccc" />
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="4dp"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="0"
-                android:text="남은 기간 0일"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/text_small" />
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="0"
+                    android:text="D-"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:id="@+id/group_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:visibility="gone"
         android:id="@+id/group_add_cardview"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_margin="8dp"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,14 +91,14 @@
                 android:src="@drawable/add_gray" />
 
             <TextView
-                android:layout_margin="4dp"
+                android:padding="@dimen/gmd_margin_default"
                 android:id="@+id/group_addTxt"
                 android:layout_width="match_parent"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:gravity="center"
                 android:text="그룹 만들기"
                 android:textColor="#888888" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-</RelativeLayout>

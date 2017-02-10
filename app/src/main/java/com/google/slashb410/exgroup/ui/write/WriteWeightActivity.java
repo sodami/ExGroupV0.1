@@ -7,11 +7,13 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.util.U;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.ScreenSize;
@@ -30,10 +32,13 @@ public class WriteWeightActivity extends AppCompatActivity {
     ImageView pictureThumbnail;
     @BindView(R.id.pictureTitle)
     TextView pictureTitle;
+    @BindView(R.id.input_weight)
+    EditText inputWeight;
+    @BindView(R.id.content_weight)
+    EditText content;
 
-    String[] groups = {"그룹1", "그룹2", "그룹3", "그룹4"};
-
-    boolean[] checkGroups = new boolean[groups.length];
+    String[] groupNames;
+    boolean[] checkGroups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +46,21 @@ public class WriteWeightActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write_weight);
         ButterKnife.bind(this);
 
-        for(int i=0;i<groups.length;++i){
+
+        int length = E.KEY.group_list.size();
+
+        checkGroups = new boolean[length];
+        groupNames = new String[length];
+
+        for (int i = 0; i < length; i++) {
+            groupNames[i] = (E.KEY.group_list.get(i).getGroupName());
             checkGroups[i] = true;
         }
+
     }
 
     @OnClick(R.id.cameraBtn)
-    public void onCamera(){
+    public void onCamera() {
         RxPaparazzo.takeImage(this)
                 .size(new ScreenSize())
                 .usingCamera()
@@ -65,10 +78,10 @@ public class WriteWeightActivity extends AppCompatActivity {
 
     private void popUpProgress(String path) {
 
-        Handler handler = new Handler(){
+        Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what==0){
+                if (msg.what == 0) {
                     goUpload(path);
                 }
             }
@@ -77,7 +90,7 @@ public class WriteWeightActivity extends AppCompatActivity {
         U.getInstance().onProgress(handler, this, "사진 업로드 중");
     }
 
-    public void goUpload(String path){
+    public void goUpload(String path) {
         cameraView.setVisibility(View.GONE);
 
         String url = "file://" + path;
@@ -98,13 +111,13 @@ public class WriteWeightActivity extends AppCompatActivity {
         String[] currentYYmmDD = U.getInstance().currentYYmmDD();
         String[] hhMMss = U.getInstance().currentTime();
 
-        String fullname = menu+"_"+currentYYmmDD[0]+currentYYmmDD[1]+currentYYmmDD[2]+hhMMss[0]+hhMMss[1]+hhMMss[2];
+        String fullname = menu + "_" + currentYYmmDD[0] + currentYYmmDD[1] + currentYYmmDD[2] + hhMMss[0] + hhMMss[1] + hhMMss[2];
 
         return fullname;
     }
 
     @OnClick(R.id.pic_deleteBtn)
-    public void onDelete(){
+    public void onDelete() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("사진 입력을 취소하시겠습니까?");
         alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -125,29 +138,40 @@ public class WriteWeightActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.uploadBtn)
-    public void onUpload(){
+    public void onUpload() {
         pickGroup();
 
     }
 
 
-    public void pickGroup(){
+    public void pickGroup() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("게시할 그룹을 선택하세요.");
-        alert.setMultiChoiceItems(groups, checkGroups, new DialogInterface.OnMultiChoiceClickListener() {
+        alert.setMultiChoiceItems(groupNames, checkGroups, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checkGroups[which] = isChecked;
+                String[] currentDate = U.getInstance().currentYYmmDD();
+                String[] currentTime = U.getInstance().currentTime();
+
+                String dateNTime = currentDate[0]+"년 "+currentDate[1]+"월 "+currentDate[2]+"일 "+currentTime[0]+"시 "+currentTime[1]+"분";
+
+                E.KEY.new_write.setNickName("이슬비");
+                E.KEY.new_write.setBoardType(0);
+                E.KEY.new_write.setSummary(inputWeight.getText().toString());
+                E.KEY.new_write.setContent(content.getText().toString());
+                E.KEY.new_write.setDateNTime(dateNTime);
+
             }
         }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
 
-                Handler handler = new Handler(){
+                Handler handler = new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
-                        if(msg.what==0){
+                        if (msg.what == 0) {
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(WriteWeightActivity.this);
                             builder.setTitle("업로드를 완료하였습니다!")
@@ -157,8 +181,8 @@ public class WriteWeightActivity extends AppCompatActivity {
                                             WriteWeightActivity.this.finish();
                                         }
                                     }).show();
-                            }
                         }
+                    }
                 };
 
                 U.getInstance().onProgress(handler, WriteWeightActivity.this, "게시하는 중입니다.");
@@ -173,7 +197,7 @@ public class WriteWeightActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.cancelBtn)
-    public void onCancel(){
+    public void onCancel() {
         finish();
     }
 }

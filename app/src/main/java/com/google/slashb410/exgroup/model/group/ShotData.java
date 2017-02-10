@@ -16,6 +16,9 @@ public class ShotData {
     int numLike;
     int numComment;
 
+    public ShotData() {
+    }
+
     public ShotData(int boardType, String profile, String nickname, String dateNtime, String summary, String content, String pic, int numLike, int numComment) {
         this.boardType = boardType;
         this.profile = profile;

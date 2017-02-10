@@ -1,5 +1,11 @@
 package com.google.slashb410.exgroup.db;
 
+import com.google.slashb410.exgroup.model.group.GroupInfo;
+import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.model.group.WriteData;
+
+import java.util.ArrayList;
+
 /**
  * Created by Tacademy on 2017-02-09.
  */
@@ -13,7 +19,10 @@ public class E {
         public static final int GROUP_TERM_MAX = 30;
 
         //----fake data
-        public static final String[] GROUPS ={"소담이네", "혜원이네", "연정이네", "승옥이네"};
+        public static final ArrayList<GroupInfo> group_list = new ArrayList<>();
+        public static final GroupInfo new_group = new GroupInfo();
+        public static final WriteData new_write = new WriteData();
+        public static ShotData shotData = new ShotData();
     }
 
     public static class NET {

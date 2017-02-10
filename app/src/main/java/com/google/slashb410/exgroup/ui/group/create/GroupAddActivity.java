@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.slashb410.exgroup.R;
@@ -30,12 +31,16 @@ public class GroupAddActivity extends AppCompatActivity {
     Button datepickBtn;
     @BindView(R.id.group_profileImg)
     ImageView groupProfileImg;
+    @BindView(R.id.group_name_add)
+    EditText groupName;
+    int groupTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_add);
         ButterKnife.bind(this);
+
     }
 
     @OnClick(R.id.datepickBtn)
@@ -64,7 +69,9 @@ public class GroupAddActivity extends AppCompatActivity {
                                             selectedDay = year + monthOfYear + dayOfMonth + "";
                                         }
 
-                                        if(isAllowedTerm(today, selectedDay)){
+                                        groupTerm = getTerm(today, selectedDay);
+
+                                        if(groupTerm>= E.KEY.GROUP_TERM_MIN && groupTerm <= E.KEY.GROUP_TERM_MAX) {
                                             datepickBtn.setText(year+"년 "+monthOfYear+"월 "+dayOfMonth+"일");
                                         }else{
                                             U.getInstance().popSimpleDialog(null, GroupAddActivity.this, null, "그룹 활동기간은 최소 7일, 최대 30일입니다.");
@@ -81,7 +88,7 @@ public class GroupAddActivity extends AppCompatActivity {
         return super.onCreateDialog(id);
     }
 
-    private boolean isAllowedTerm(String today, String selectedDay) {
+    private int getTerm(String today, String selectedDay) {
 
         U.getInstance().myLog(today);
         U.getInstance().myLog(selectedDay);
@@ -100,16 +107,22 @@ public class GroupAddActivity extends AppCompatActivity {
         long diff = endDate.getTime() - beginDate.getTime();
         long diffDays = diff / (24 * 60 * 60 * 1000);
 
-        U.getInstance().myLog(diffDays+"");
+        int term = Integer.parseInt(diffDays+"");
 
-        if(diffDays>= E.KEY.GROUP_TERM_MIN && diffDays <= E.KEY.GROUP_TERM_MAX)  return true;
-        else return false;
+        return term;
 
     }
 
 
     @OnClick(R.id.group_add)
     public void goAdd(){
+
+        E.KEY.new_group.setGroupName(groupName.getText().toString());
+        //E.KEY.new_group.setGroupImgPath();
+        E.KEY.new_group.setTerm(groupTerm);
+
+        E.KEY.group_list.add(E.KEY.new_group);
+
         U.getInstance().goNext(this, WeightCheckActivity.class, false);
     }
 
