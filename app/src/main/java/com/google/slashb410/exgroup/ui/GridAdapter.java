@@ -89,11 +89,11 @@ class GridAdapter extends BaseAdapter {
             groupCardview.setVisibility(View.VISIBLE);
             cardView.setVisibility(View.GONE);
             textView = (TextView) convertView.findViewById(R.id.group_name_card);
-//            imageView = (ImageView) convertView.findViewById(R.id.group_cardImg);
-     //       textView2 = (TextView) convertView.findViewById(R.id.group_term);
+            imageView = (ImageView) convertView.findViewById(R.id.group_cardImg);
+            textView2 = (TextView) convertView.findViewById(R.id.group_term);
 
             textView.setText(groupInfos.get(position).getGroupName());
-//            textView2.setText(groupInfos.get(position).getTerm()+"");
+            textView2.setText(groupInfos.get(position).getTerm()+"");
 
      //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
 
