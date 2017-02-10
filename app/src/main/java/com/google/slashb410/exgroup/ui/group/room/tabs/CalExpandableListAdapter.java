@@ -28,14 +28,14 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
         this.childList = childList;
         this.inflater = LayoutInflater.from(context);
 
-        notifyDataSetChanged();
-
     }
 
     public void setNewData(ArrayList<String> _mainList, ArrayList<ArrayList<CalendarListData>> _childList){
 
         if(_mainList!=null) this.mainList = _mainList;
         if(_childList!=null) this.childList = _childList;
+
+        notifyDataSetChanged();
 
     }
 
