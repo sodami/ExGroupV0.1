@@ -54,6 +54,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+
         //=============================================================================
 
         <activity
@@ -70,7 +71,6 @@
         <activity
             android:name=".ui.join.Input2Activity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.join.InputInit1Activity" />
         <activity
             android:name=".ui.mypage.MyHomeActivity"

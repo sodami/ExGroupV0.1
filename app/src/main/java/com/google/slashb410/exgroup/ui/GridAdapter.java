@@ -95,7 +95,7 @@ class GridAdapter extends BaseAdapter {
             textView.setText(groupInfos.get(position).getGroupName());
             textView2.setText(groupInfos.get(position).getTerm()+"");
 
-     //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
+            //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
 
             groupCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
