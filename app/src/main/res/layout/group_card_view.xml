@@ -91,6 +91,7 @@
                 android:src="@drawable/add_gray" />
 
             <TextView
+                android:padding="@dimen/gmd_margin_default"
                 android:id="@+id/group_addTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

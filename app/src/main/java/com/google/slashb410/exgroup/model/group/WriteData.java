@@ -14,6 +14,17 @@ public class WriteData {
     String pic;
 
     public WriteData() {
+
+    }
+
+
+    public void deleteWriteData(){
+        this.boardType = 0;
+        this.nickName = null;
+        this.dateNTime = null;
+        this.summary = null;
+        this.content = null;
+        this.pic = null;
     }
 
     public WriteData(int boardType, String nickName, String dateNTime, String summary, String content, String pic) {
@@ -73,3 +84,4 @@ public class WriteData {
         this.pic = pic;
     }
 }
+

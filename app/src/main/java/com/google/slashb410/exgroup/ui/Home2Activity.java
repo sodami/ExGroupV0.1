@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,6 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
-import com.google.slashb410.exgroup.model.group.GroupInfo;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity;
 import com.google.slashb410.exgroup.ui.write.WriteMealActivity;
@@ -46,6 +46,8 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.quick_meal)
     FloatingActionButton mealQuick;
 
+    GridAdapter gridAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,36 +62,23 @@ public class Home2Activity extends AppCompatActivity
         // 2017. 02. 01 추가
         ButterKnife.bind(this);
 
-        //======================================FAKE DATA
 
-        GroupInfo sodams = new GroupInfo("소담이네", "/groupimg01.jpg", 30);
-        GroupInfo heawons = new GroupInfo("혜원이네", "/groupimg02.jpg", 6);
-        GroupInfo seungoks = new GroupInfo("승옥이네", "/groupimg03.jpg", 2);
-        GroupInfo yeonjeongs = new GroupInfo("연정이네", "/groupimg04.jpg", 27);
+        // final String[] groupName = {/*"슬비네그룹",*/ "소담이네그룹", "혜원이네", "승옥이네" , "연정이네"};
 
-        E.KEY.group_list.add(sodams);
-        E.KEY.group_list.add(heawons);
-        E.KEY.group_list.add(seungoks);
-        E.KEY.group_list.add(yeonjeongs);
-
-
-        //================================================
-
-
-       // final String[] groupName = {/*"슬비네그룹",*/ "소담이네그룹", "혜원이네", "승옥이네" , "연정이네"};
-
-        GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, E.KEY.group_list);
+        gridAdapter = new GridAdapter(this, R.layout.group_card_view, E.KEY.group_list);
         GridView gridView = (GridView) findViewById(R.id.group_grid);
+        gridAdapter.notifyDataSetChanged();
         gridView.setAdapter(gridAdapter);
+
 //
 //        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //
 //                if(position==groupName.length-1){
-//                    U.getInstance().goNext(getApplicationContext(), GroupAddActivity.class, false);
+//                    U.getInstance().goNext(getApplicationContext(), GroupAddActivity.class, false, false);
 //                }else{
-//                    U.getInstance().goNext(getApplicationContext(), GroupHomeActivity.class, false);
+//                     U.getInstance().goNext(getApplicationContext(), GroupHomeActivity.class, false, false);
 //                }
 //            }
 //        });
@@ -98,13 +87,13 @@ public class Home2Activity extends AppCompatActivity
         scaleQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteWeightActivity.class, false);
+                U.getInstance().goNext(getApplicationContext(), WriteWeightActivity.class, false, false);
             }
         });
         exerciseQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteExcerciseActivity.class, false);
+                U.getInstance().goNext(getApplicationContext(), WriteExcerciseActivity.class, false, false);
             }
         });
 
@@ -112,7 +101,7 @@ public class Home2Activity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteMealActivity.class, false);
+                U.getInstance().goNext(getApplicationContext(), WriteMealActivity.class, false, false);
             }
         });
 
@@ -125,6 +114,12 @@ public class Home2Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gridAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -154,14 +149,14 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.activity_developer_message,(ViewGroup) findViewById(R.id.popup));
+            View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
             AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
             aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
-                aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+            aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
+                }
+            });
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
@@ -178,9 +173,24 @@ public class Home2Activity extends AppCompatActivity
 
     // 2017. 02. 01 추가
     @OnClick(R.id.profile_box)
-    public void goMyPage(){
-        U.getInstance().goNext(this, MyHomeActivity.class, false);
+    public void goMyPage() {
+        U.getInstance().goNext(this, MyHomeActivity.class, false, false);
     }
 
 
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            E.KEY.group_list.clear();
+            E.KEY.new_group.deleteGroupInfo();
+            E.KEY.new_write.deleteWriteData();
+            E.KEY.shotData.deleteShotData();
+            this.finish();
+
+
+        }
+        return true;
+    }
 }

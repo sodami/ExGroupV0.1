@@ -25,7 +25,7 @@ public class EnterActivity extends AppCompatActivity {
 
     @OnClick(R.id.joinBtn)
     public void onJoin(){
-        U.getInstance().goNext(this, Input1Activity.class, false);
+        U.getInstance().goNext(this, Input1Activity.class, false, false);
         finish();
     }
 
@@ -36,7 +36,8 @@ public class EnterActivity extends AppCompatActivity {
 
         }else {
             //아니면 홈화면
-            U.getInstance().goNext(this, Home2Activity.class, false);
+            U.getInstance().goNext(this, Home2Activity.class, false, false);
+            finish();
         }
 
     }

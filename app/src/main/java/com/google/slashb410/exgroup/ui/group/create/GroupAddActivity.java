@@ -123,7 +123,8 @@ public class GroupAddActivity extends AppCompatActivity {
 
         E.KEY.group_list.add(E.KEY.new_group);
 
-        U.getInstance().goNext(this, WeightCheckActivity.class, false);
+        U.getInstance().goNext(this, WeightCheckActivity.class, false, false);
+        finish();
     }
 
     @OnClick(R.id.group_profileImg)

@@ -18,12 +18,11 @@ public class Input2Activity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
     }
 
     @OnClick(R.id.nextBtn2)
     public void goNext(){
-        U.getInstance().goNext(this, InputInit1Activity.class, true);
+        U.getInstance().goNext(this, InputInit1Activity.class, true, true);
         finish();
     }
 }

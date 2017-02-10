@@ -38,6 +38,7 @@ public class GroupShotsFragment extends Fragment {
         ButterKnife.bind(getActivity());
 
         //==========FAKE DATA
+
         shotData = new ShotData(1, "ss", "슬비의닉네임", "2017년 2월 5일", "줄넘기 500번 30분", "오랜만에 운동했더니 좀만해도 피곤하다", "000", 100, 2);
         results.add(0, shotData);
 
@@ -55,6 +56,8 @@ public class GroupShotsFragment extends Fragment {
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.shot_recyclerview);
         ShotsAdapter shotsAdapter = new ShotsAdapter(getContext(), results);
+        shotsAdapter.notifyDataSetChanged();
+
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 

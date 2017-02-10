@@ -19,6 +19,18 @@ public class ShotData {
     public ShotData() {
     }
 
+    public void deleteShotData(){
+        this.boardType = 0;
+        this.profile = null;
+        this.nickname = null;
+        this.dateNtime = null;
+        this.summary = null;
+        this.content = null;
+        this.pic = null;
+        this.numLike = 0;
+        this.numComment = 0;
+    }
+
     public ShotData(int boardType, String profile, String nickname, String dateNtime, String summary, String content, String pic, int numLike, int numComment) {
         this.boardType = boardType;
         this.profile = profile;
