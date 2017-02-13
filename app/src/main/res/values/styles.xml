@@ -5,9 +5,8 @@
         <!-- Customize your theme here. -->
 
         <item name="actionBarSize">56dp</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#ffffff</item>
+        <item name="titleTextColor">@color/babyPink</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -24,6 +23,12 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:actionBarSize">56dp</item>
         <item name="actionBarSize">56dp</item>
+
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+
+        <item name="android:textColorSecondary">@color/babyPink</item>
     </style>
 
 </resources>

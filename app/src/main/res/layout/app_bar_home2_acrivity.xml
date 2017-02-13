@@ -16,10 +16,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gmd_bar_height"
-            android:background="@color/babyPink"
+            android:background="#ffffff"
             app:titleTextColor="#ffffff"
             android:gravity="center"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:theme="@style/ToolbarColoredBackArrow"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageView
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:src="@drawable/title_logo"
+                android:scaleType="centerInside"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
