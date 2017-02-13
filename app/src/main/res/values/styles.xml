@@ -16,7 +16,6 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-
         <item name="actionBarSize">56dp</item>
     </style>
 
