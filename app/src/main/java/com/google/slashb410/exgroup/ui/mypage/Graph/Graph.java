@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.ui.mypage;
+package com.google.slashb410.exgroup.ui.mypage.Graph;
 
 /**
  * Created by Tacademy on 2017-02-03.

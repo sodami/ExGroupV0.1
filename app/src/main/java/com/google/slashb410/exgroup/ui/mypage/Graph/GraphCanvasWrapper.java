@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.ui.mypage;
+package com.google.slashb410.exgroup.ui.mypage.Graph;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
