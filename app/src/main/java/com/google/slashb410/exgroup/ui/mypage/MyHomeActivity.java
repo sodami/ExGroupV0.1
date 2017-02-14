@@ -15,6 +15,11 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.ui.mypage.Graph.GraphAnimation;
+import com.google.slashb410.exgroup.ui.mypage.Graph.GraphNameBox;
+import com.google.slashb410.exgroup.ui.mypage.Graph.LineGraph;
+import com.google.slashb410.exgroup.ui.mypage.Graph.LineGraphVO;
+import com.google.slashb410.exgroup.ui.mypage.Graph.LineGraphView;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.SmallSize;
 import com.squareup.picasso.Picasso;
