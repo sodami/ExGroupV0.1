@@ -25,11 +25,16 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
+import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity;
 import com.google.slashb410.exgroup.ui.write.WriteMealActivity;
 import com.google.slashb410.exgroup.ui.write.WriteWeightActivity;
 import com.google.slashb410.exgroup.util.U;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +60,8 @@ public class Home2Activity extends AppCompatActivity
         setContentView(R.layout.activity_home2_acrivity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        checkAttend();
 
 
         String token = FirebaseInstanceId.getInstance().getToken();
@@ -115,6 +122,62 @@ public class Home2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    private void checkAttend() {
+
+        //1. 마지막 접속일자 가져오기
+        String lastdate = getLastDate(this);
+
+        //2. 오늘날짜 가져오기
+        String[] todays = U.getInstance().currentYYmmDD();
+        String today = todays[0]+"-"+todays[1]+"-"+todays[2];
+
+        //#. 최초 접속 예외 처리
+        if(lastdate==null){
+            U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
+            setLastDate(this, today);
+        }else {
+
+            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+            Date today_date = null;
+            Date lastdate_date = null;
+            try {
+                today_date = format.parse(today);
+                lastdate_date = format.parse(lastdate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            //3. 마지막 접속일자와 오늘날짜가 다르다면 출석체크
+
+            if (today_date != null && lastdate_date != null) {
+                int compare = today_date.compareTo(lastdate_date);
+                if (compare != 0) {
+                    //마지막 접속일자가 오늘이 아니라면 출석체크
+
+                    U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
+
+                } else {
+
+                }
+
+            }
+        }
+
+        //4. 지금 날짜를 마지막 접속일자로 입력
+        setLastDate(this, today);
+
+    }
+
+    private String getLastDate(Context context) {
+        return StorageHelper.getInstance().getString(context, E.KEY.LASTDATE_KEY);
+    }
+
+    private void setLastDate(Context context, String today){
+
+        StorageHelper.getInstance().setString(context, E.KEY.LASTDATE_KEY, today);
 
     }
 

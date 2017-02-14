@@ -25,7 +25,7 @@ public class StorageHelper {
 
     public String getString(Context context, String key) {
 
-        return context.getSharedPreferences(E.KEY.STORAGE_KEY, 0).getString(key, "NO DATA");
+        return context.getSharedPreferences(E.KEY.STORAGE_KEY, 0).getString(key, null);
 
     }
 

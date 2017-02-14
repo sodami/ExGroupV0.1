@@ -18,6 +18,8 @@ public class E {
         public static final int GROUP_TERM_MIN = 7;
         public static final int GROUP_TERM_MAX = 30;
 
+        public static final String LASTDATE_KEY = "lastdate";
+
         //----fake data
         public static final ArrayList<GroupInfo> group_list = new ArrayList<>();
         public static final GroupInfo new_group = new GroupInfo();

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "49261019138-coesg4ppopgtceiecg5lgtqh7321h66s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.slashb410.exgroup",
+            "certificate_hash": "77D1CB1D208D91196D500D7617139C59DCBE1E0E"
+          }
+        },
+        {
           "client_id": "49261019138-mbaj3af1l9gqlij3pinl062msdknv38d.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -22,9 +30,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyBknHEH5HBe1IenFSWUwdI8STYcj7yT4lU"
-        },
-        {
-          "current_key": "AIzaSyC92h-hm7EXlNiU4_vTElrsa2ZPunA_3qk"
         }
       ],
       "services": {
@@ -54,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "49261019138-kr87ode98795aq3bn6ml87q80a6a5o5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tacademy.fcm_test",
+            "certificate_hash": "77D1CB1D208D91196D500D7617139C59DCBE1E0E"
+          }
+        },
+        {
           "client_id": "49261019138-mbaj3af1l9gqlij3pinl062msdknv38d.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -61,9 +74,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyBknHEH5HBe1IenFSWUwdI8STYcj7yT4lU"
-        },
-        {
-          "current_key": "AIzaSyC92h-hm7EXlNiU4_vTElrsa2ZPunA_3qk"
         }
       ],
       "services": {

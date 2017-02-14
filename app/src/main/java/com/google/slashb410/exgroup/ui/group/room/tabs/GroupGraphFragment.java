@@ -43,6 +43,7 @@ public class GroupGraphFragment extends Fragment {
 //
 //        LineData data = new LineData(labels, dataSet);
 //        lineChart.setData(data);
+//        lineChart.
 ////
 //        lineChart.setDescription("체중감량표");
 //
