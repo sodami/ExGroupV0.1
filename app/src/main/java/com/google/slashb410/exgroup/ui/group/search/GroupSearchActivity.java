@@ -17,6 +17,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+
     }
 
     @Override

@@ -60,6 +60,8 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     //서버로 데이터를 보낼때 okhttp를 사용한다면 추가
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
+
+    compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
 }
 
 apply plugin: 'com.google.gms.google-services'

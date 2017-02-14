@@ -43,6 +43,11 @@
             android:text="id 복사"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/kakao_invite"
+            android:text="카카오톡으로 초대"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:text="홈으로"
