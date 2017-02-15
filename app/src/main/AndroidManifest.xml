@@ -134,7 +134,11 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".ui.group.create.GroupInviteActivity"></activity>
+        <activity android:name=".ui.group.create.GroupInviteActivity" />
+        <activity
+            android:name=".ui.GetPlanetActivity"
+            android:label="@string/title_activity_get_planet"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

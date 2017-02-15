@@ -36,7 +36,7 @@ public class ShotsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ((ShotsHolder)holder).bindOnCard(results.get(position));
+        ((ShotsHolder)holder).bindOnCard(context, results.get(position));
 
 
     }

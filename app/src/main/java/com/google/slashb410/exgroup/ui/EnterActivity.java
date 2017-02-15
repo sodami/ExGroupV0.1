@@ -19,8 +19,6 @@ public class EnterActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
-
     }
 
     @OnClick(R.id.joinBtn)

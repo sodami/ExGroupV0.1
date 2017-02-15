@@ -39,15 +39,15 @@ public class GroupShotsFragment extends Fragment {
 
         //==========FAKE DATA
 
-        shotData = new ShotData(1, "ss", "슬비의닉네임", "2017년 2월 5일", "줄넘기 500번 30분", "오랜만에 운동했더니 좀만해도 피곤하다", "000", 100, 2);
+        shotData = new ShotData(0, 1, "ss", "슬비의닉네임", "2017년 2월 5일", "줄넘기 500번 30분", "오랜만에 운동했더니 좀만해도 피곤하다", "000", 100, 2, false);
         results.add(0, shotData);
 
-        shotData = new ShotData(2, "ss", "슬비의닉네임", "2017년 2월 5일", "사과 1개 시리얼 한사발", "아 벌써 배고프다", "000", 30, 5);
+        shotData = new ShotData(1, 2, "ss", "슬비의닉네임", "2017년 2월 5일", "사과 1개 시리얼 한사발", "아 벌써 배고프다", "000", 30, 5, false);
         results.add(1, shotData);
 
         if(E.KEY.new_write.getNickName()!=null){
-            shotData = new ShotData(E.KEY.new_write.getBoardType(), "123", E.KEY.new_write.getNickName(), E.KEY.new_write.getDateNTime(),
-                    E.KEY.new_write.getSummary(), E.KEY.new_write.getContent(), "pic", 0, 0);
+            shotData = new ShotData(2, E.KEY.new_write.getBoardType(), "123", E.KEY.new_write.getNickName(), E.KEY.new_write.getDateNTime(),
+                    E.KEY.new_write.getSummary(), E.KEY.new_write.getContent(), "pic", 0, 0, false);
             results.add(2, shotData);
         }
         //====================
@@ -71,5 +71,10 @@ public class GroupShotsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    public void deleteShot(int idx){
+        results.remove(idx);
+        results.notifyAll();
     }
 }

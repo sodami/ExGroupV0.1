@@ -46,7 +46,7 @@ public class QuickWriteActivity extends AppCompatActivity {
     EditText summaryInput_weight;
     @BindView(R.id.kgTxt)
     TextView kgTxt;
-    
+
     String[] groupNames;
     boolean[] checkGroups;
     String dateNTime;

@@ -11,10 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.db.E;
-import com.google.slashb410.exgroup.model.group.GroupInfo;
+import com.google.slashb410.exgroup.model.group.GroupData;
 import com.google.slashb410.exgroup.ui.group.create.GroupAddActivity;
 import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.google.slashb410.exgroup.util.U;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,27 +26,27 @@ import java.util.ArrayList;
 public class GridAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<GroupInfo> groupInfos;
+    ArrayList<GroupData.Data> groupData;
     int layout;
     LayoutInflater inflater;
 
-    public GridAdapter(Context context, int layout, ArrayList<GroupInfo> groupInfos) {
+    public GridAdapter(Context context, int layout, ArrayList<GroupData.Data> groupData) {
         this.context = context;
         this.layout = layout;
-        this.groupInfos = groupInfos;
+        this.groupData = groupData;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return (groupInfos.size() + 1);
+        return (groupData.size() + 1);
     }
 
     @Override
     public Object getItem(int position) {
 
-        if (groupInfos.size() == position) return null;
-        return groupInfos.get(position);
+        if (groupData.size() == position) return null;
+        return groupData.get(position);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class GridAdapter extends BaseAdapter {
             textView.setTextColor(Color.WHITE);
 
 
-        } else if (position == groupInfos.size()) {
+        } else if (position == groupData.size()) {
             groupCardview.setVisibility(View.GONE);
             cardView.setVisibility(View.VISIBLE);
             cardView.setOnClickListener(new View.OnClickListener() {
@@ -92,10 +93,12 @@ public class GridAdapter extends BaseAdapter {
             imageView = (ImageView) convertView.findViewById(R.id.group_cardImg);
             textView2 = (TextView) convertView.findViewById(R.id.group_term);
 
-            textView.setText(groupInfos.get(position).getGroupName());
-            textView2.setText(groupInfos.get(position).getTerm()+"");
+            textView.setText(groupData.get(position).getGroupTitle());
+            Picasso.with(context)
+                    .load(groupData.get(position).getPicUrl())
+                    .into(imageView);
 
-            //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupInfos.get(position).getGroupImgPath(), imageView);
+            //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupData.get(position).getGroupImgPath(), imageView);
 
             groupCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
