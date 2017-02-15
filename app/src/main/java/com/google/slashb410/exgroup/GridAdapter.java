@@ -96,6 +96,8 @@ public class GridAdapter extends BaseAdapter {
             textView.setText(groupData.get(position).getGroupTitle());
             Picasso.with(context)
                     .load(groupData.get(position).getPicUrl())
+                    .fit()
+                    .centerCrop()
                     .into(imageView);
 
             //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupData.get(position).getGroupImgPath(), imageView);

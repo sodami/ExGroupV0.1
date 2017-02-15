@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+             <!-- 비활성화 카드 -->
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/waiting_layout"

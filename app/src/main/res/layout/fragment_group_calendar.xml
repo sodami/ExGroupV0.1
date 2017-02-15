@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:calendar="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.google.slashb410.exgroup.ui.group.room.tabs.GroupCalendarFragment">
 
@@ -10,10 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:groupIndicator="@null"/>
-    <com.squareup.timessquare.CalendarPickerView
-        android:layout_weight="1"
-        android:id="@+id/group_calendar"
+
+    <com.andexert.calendarlistview.library.DayPickerView
+        android:id="@+id/pickerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="match_parent"
+        calendar:drawRoundRect="true" />
 
 </LinearLayout>

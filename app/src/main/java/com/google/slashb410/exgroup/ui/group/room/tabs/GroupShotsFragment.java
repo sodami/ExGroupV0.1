@@ -16,6 +16,7 @@ import com.google.slashb410.exgroup.model.group.ShotData;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.google.slashb410.exgroup.db.E.KEY.shotData;
 
@@ -73,8 +74,4 @@ public class GroupShotsFragment extends Fragment {
 
     }
 
-    public void deleteShot(int idx){
-        results.remove(idx);
-        results.notifyAll();
-    }
 }

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
     TextView numLike;
     TextView numComments;
         TextView todayWeight;
+    ImageButton likeBtn;
 
 
     public ShotsHolder(View itemView) {
@@ -39,6 +41,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         shot = (ImageView) itemView.findViewById(R.id.shotImg);
         summary = (TextView) itemView.findViewById(R.id.summary);
         content = (TextView) itemView.findViewById(R.id.content_shot);
+        likeBtn = (ImageButton) itemView.findViewById(R.id.likeBtn);
         numLike = (TextView) itemView.findViewById(R.id.numLike);
         numComments = (TextView) itemView.findViewById(R.id.numComments);
 
@@ -61,15 +64,24 @@ class ShotsHolder extends RecyclerView.ViewHolder {
                 break;
         }
 
-        if(results.isLike()){
-            
-        }
 
         //holder.profileImg.setImageDrawable(mResults.getPic());
         nickname.setText(mResults.getNickname());
         dateNtime.setText(mResults.getDateNtime());
         summary.setText(mResults.getSummary());
         content.setText(mResults.getContent());
+        likeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!results.isLike()){
+                    likeBtn.setImageResource(R.drawable.like_pink);
+                    //db 변경 islike->true
+                }else{
+                    likeBtn.setImageResource(R.drawable.like_gray);
+                    //db 변경 islike->false
+                }
+            }
+        });
         numLike.setText(mResults.getNumLike()+"");
         numComments.setText(mResults.getNumComment()+"");
         delete.setOnClickListener(new View.OnClickListener() {

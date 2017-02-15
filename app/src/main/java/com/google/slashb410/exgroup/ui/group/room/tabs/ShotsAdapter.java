@@ -38,12 +38,17 @@ public class ShotsAdapter extends RecyclerView.Adapter {
 
         ((ShotsHolder)holder).bindOnCard(context, results.get(position));
 
-
     }
 
     @Override
     public int getItemCount() {
         return this.results.size();
+    }
+
+
+    public void deleteShot(int idx){
+        results.remove(idx);
+        results.notifyAll();
     }
 }
 
