@@ -39,15 +39,13 @@
     <string name="group_img">그룹 이미지 설정</string>
     <string name="weigh_start">시작 체중 인증하기</string>
     <string name="input_weight">체중 입력</string>
-    <string name="title_activity_home2_acrivity">Home2Acrivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
 
-    <string name="input_picture_exercise">운동 인증샷을 첨부해 주세요.</string>
-    <string name="input_picture_weight">체중 인증 사진을 입력해 주세요</string>
+    <string name="input_picture">인증샷을 입력해 주세요</string>
     <string name="weight_today">오늘의 체중 :</string>
     <string name="waiting_info">초대자 가입대기중</string>
     <string name="beforeAuth_info">인증전</string>

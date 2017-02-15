@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_excercise"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_write_weight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity">
+    tools:context="com.google.slashb410.exgroup.ui.write.QuickWriteActivity">
 
     <ImageView
+        android:id="@+id/menu_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@android:drawable/ic_menu_upload" />
+        android:src="@drawable/scale_black" />
 
     <ImageButton
+        android:id="@+id/cancelBtn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+        android:background="@drawable/cancel_black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,23 +30,37 @@
         android:orientation="vertical">
 
         <!--카메라 인증 강제 뷰-->
+
         <LinearLayout
+            android:id="@+id/cameraView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#cccccc"
-            android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_menu_camera" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#cccccc">
+
+            <ImageButton
+                android:onClick="onCamera"
+                android:id="@+id/cameraBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/camera_white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/input_picture_exercise" />
+                android:text="@string/input_picture" />
+            </LinearLayout>
         </LinearLayout>
 
         <!--진짜 뷰-->
@@ -56,19 +72,26 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/pictureThumbnail"
+                android:background="#888888"
                 android:layout_width="86dp"
                 android:layout_height="86dp"
                 android:layout_margin="4dp" />
 
             <TextView
+                android:id="@+id/pictureTitle"
+                android:layout_margin="@dimen/gmd_margin_default"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="사진 제목" />
 
             <ImageButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:id="@+id/pic_deleteBtn"
+                android:background="@drawable/delete_black"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_margin="4dp" />
         </LinearLayout>
@@ -76,27 +99,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/summaryTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:text="운동 한줄요약" />
-
+                android:text="체중 입력" />
             <EditText
-                android:layout_width="0dp"
+                android:id="@+id/summaryInput"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/summaryInput_weight"
+                android:inputType="number"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/kgTxt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:text="@string/weight_unit"/>
         </LinearLayout>
 
         <EditText
+            android:id="@+id/content_weight"
+            android:padding="4dp"
+            android:gravity="top"
+            android:hint="오늘은 어땠나요?"
+            android:background="#eeeeee"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/uploadBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

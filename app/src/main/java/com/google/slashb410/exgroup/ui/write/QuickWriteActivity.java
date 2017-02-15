@@ -1,6 +1,7 @@
 package com.google.slashb410.exgroup.ui.write;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
@@ -25,18 +27,26 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class WriteWeightActivity extends AppCompatActivity {
+public class QuickWriteActivity extends AppCompatActivity {
     @BindView(R.id.cameraView)
     LinearLayout cameraView;
     @BindView(R.id.pictureThumbnail)
     ImageView pictureThumbnail;
     @BindView(R.id.pictureTitle)
     TextView pictureTitle;
-    @BindView(R.id.input_weight)
-    EditText inputWeight;
     @BindView(R.id.content_weight)
     EditText content;
-
+    @BindView(R.id.menu_icon)
+    ImageView menuIcon;
+    @BindView(R.id.summaryTxt)
+    TextView summaryTxt;
+    @BindView(R.id.summaryInput)
+    EditText summaryInput;
+    @BindView(R.id.summaryInput_weight)
+    EditText summaryInput_weight;
+    @BindView(R.id.kgTxt)
+    TextView kgTxt;
+    
     String[] groupNames;
     boolean[] checkGroups;
     String dateNTime;
@@ -44,9 +54,34 @@ public class WriteWeightActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_weight);
+        setContentView(R.layout.activity_quick_write);
         ButterKnife.bind(this);
 
+        // # 메뉴에 따라 레이아웃 구성
+        // [ menu type ] 0:에러 1:체중 2:운동 3:식단
+        Intent intent = getIntent();
+        int menu = intent.getIntExtra("menu", 0);
+
+        switch (menu){
+            case 0 :
+                Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                break;
+            case 1 :
+                menuIcon.setImageResource(R.drawable.scale_black);
+                summaryInput.setVisibility(View.GONE);
+                summaryInput_weight.setVisibility(View.VISIBLE);
+                break;
+            case 2 :
+                menuIcon.setImageResource(R.drawable.exercise_black);
+                summaryTxt.setText("운동 한줄요약 : ");
+                kgTxt.setVisibility(View.GONE);
+                break;
+            case 3 :
+                menuIcon.setImageResource(R.drawable.meal_black);
+                summaryTxt.setText("식단 한줄요약 : ");
+                kgTxt.setVisibility(View.GONE);
+                break;
+        }
 
         int length = E.KEY.group_list.size();
 
@@ -168,7 +203,7 @@ public class WriteWeightActivity extends AppCompatActivity {
 
                 E.KEY.new_write.setNickName("이슬비");
                 E.KEY.new_write.setBoardType(0);
-                E.KEY.new_write.setSummary(inputWeight.getText().toString()+"kg");
+      //          E.KEY.new_write.setSummary(inputWeight.getText().toString()+"kg");
                 E.KEY.new_write.setContent(content.getText().toString());
                 E.KEY.new_write.setDateNTime(dateNTime);
 
@@ -180,19 +215,19 @@ public class WriteWeightActivity extends AppCompatActivity {
                     public void handleMessage(Message msg) {
                         if (msg.what == 0) {
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WriteWeightActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(QuickWriteActivity.this);
                             builder.setTitle("업로드를 완료하였습니다!")
                                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            WriteWeightActivity.this.finish();
+                                            QuickWriteActivity.this.finish();
                                         }
                                     }).show();
                         }
                     }
                 };
 
-                U.getInstance().onProgress(handler, WriteWeightActivity.this, "게시하는 중입니다.");
+                U.getInstance().onProgress(handler, QuickWriteActivity.this, "게시하는 중입니다.");
 
             }
         }).setNegativeButton("취소", new DialogInterface.OnClickListener() {

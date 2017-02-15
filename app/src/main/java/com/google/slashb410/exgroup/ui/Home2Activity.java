@@ -29,9 +29,7 @@ import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
-import com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity;
-import com.google.slashb410.exgroup.ui.write.WriteMealActivity;
-import com.google.slashb410.exgroup.ui.write.WriteWeightActivity;
+import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
 
 import java.text.ParseException;
@@ -115,24 +113,24 @@ public class Home2Activity extends AppCompatActivity
 //        });
         //-------------------------------------------------------------------------------------------
 
+        // [ menu type ] 0:에러 1:체중 2:운동 3:식단
         scaleQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteWeightActivity.class, false, false);
+                goQuickMenu(1);
             }
         });
         exerciseQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteExcerciseActivity.class, false, false);
-            }
+                goQuickMenu(2);            }
         });
 
         mealQuick.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteMealActivity.class, false, false);
+                goQuickMenu(3);
             }
         });
 
@@ -145,6 +143,12 @@ public class Home2Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    private void goQuickMenu(int i) {
+        Intent intent = new Intent(this, QuickWriteActivity.class);
+        intent.putExtra("menu", i);
+        startActivity(intent);
     }
 
     private void checkAttend() {
@@ -244,6 +248,7 @@ public class Home2Activity extends AppCompatActivity
 
                 }
             });
+
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
@@ -258,14 +263,10 @@ public class Home2Activity extends AppCompatActivity
         return true;
     }
 
-    // 2017. 02. 01 추가
     @OnClick(R.id.profile_box)
     public void goMyPage() {
         U.getInstance().goNext(this, MyHomeActivity.class, false, false);
     }
-
-
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
