@@ -48,26 +48,26 @@
     </LinearLayout>
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="@dimen/gmd_margin_default"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
         app:fab_colorNormal="@color/universeBlack"
         app:menu_labels_colorNormal="@color/universeBlack"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         app:menu_icon="@drawable/planet_white"
         app:menu_colorNormal="@color/universeBlack"
         app:menu_colorRipple="@color/universeBlack"
         app:menu_colorPressed="@color/universeBlack"
-        app:menu_openDirection="down">
+        app:menu_openDirection="up">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/quick_scale"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="4dp"
-            android:src="@drawable/scale_white_24dp"
-            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/scale_24px"
+            app:fab_colorPressed="@color/nightSky"
+            android:scaleType="centerInside"
             app:fab_label="체중"
             app:fab_colorNormal="@color/universeBlack"
             app:fab_size="mini" />
@@ -76,7 +76,9 @@
             android:id="@+id/quick_exercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/exercise_white"
+            android:src="@drawable/exercise_24px"
+            app:fab_colorPressed="@color/nightSky"
+            app:fab_colorNormal="@color/universeBlack"
             app:fab_label="운동"
             app:fab_size="mini" />
 
@@ -84,7 +86,9 @@
             android:id="@+id/quick_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/meal_white"
+            app:fab_colorNormal="@color/universeBlack"
+            app:fab_colorPressed="@color/nightSky"
+            android:src="@drawable/meal_24px"
             app:fab_label="식단"
             app:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
