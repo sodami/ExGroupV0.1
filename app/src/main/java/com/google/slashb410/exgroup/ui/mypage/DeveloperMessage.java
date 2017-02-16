@@ -14,4 +14,7 @@ public class DeveloperMessage extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_developer_message);
     }
+    public void onClick() {
+
+    }
 }
