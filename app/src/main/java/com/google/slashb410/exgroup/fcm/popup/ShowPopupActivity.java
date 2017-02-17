@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.ui.settings.popup;
+package com.google.slashb410.exgroup.fcm.popup;
 
 import android.content.Intent;
 import android.os.Bundle;

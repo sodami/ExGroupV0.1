@@ -110,7 +110,6 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
                 break;
         }
 
-
         //childListHolder.profileImg.setImageResource();
         childListHolder.nickname.setText(childList.get(groupPosition).get(childPosition).getNickname());
         childListHolder.dateNtime.setText(childList.get(groupPosition).get(childPosition).getDateNtime());

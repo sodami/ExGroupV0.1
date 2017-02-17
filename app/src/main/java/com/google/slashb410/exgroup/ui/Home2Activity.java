@@ -1,5 +1,7 @@
 package com.google.slashb410.exgroup.ui;
 
+
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +10,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -20,19 +21,27 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
+import com.google.slashb410.exgroup.model.group.GroupData;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
-import com.google.slashb410.exgroup.ui.write.WriteExcerciseActivity;
-import com.google.slashb410.exgroup.ui.write.WriteMealActivity;
-import com.google.slashb410.exgroup.ui.write.WriteWeightActivity;
+import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +64,9 @@ public class Home2Activity extends AppCompatActivity
     FloatingActionButton mealQuick;
 
     GridAdapter gridAdapter;
+    String groups_url = "http://ec2-52-78-98-243.ap-northeast-2.compute.amazonaws.com/groups";
+    RequestQueue requestQueue;
+    GroupData groupData;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,27 +92,41 @@ public class Home2Activity extends AppCompatActivity
         setContentView(R.layout.activity_home2_acrivity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
-
-
+        //출석체크
         checkAttend();
+
+        Gson gson = new Gson();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, groups_url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        U.getInstance().myLog(response.toString());
+                     groupData = gson.fromJson(response.toString(), GroupData.class);
+                        gridAdapter = new GridAdapter(getApplicationContext(), R.layout.group_card_view, groupData.getResult().getData());
+                        GridView gridView = (GridView) findViewById(R.id.group_grid);
+                        gridAdapter.notifyDataSetChanged();
+                        gridView.setAdapter(gridAdapter);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        U.getInstance().myLog("에러");
+                    }
+                });
+
+
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjectRequest);
 
 
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
 
-        //------------------------------------------------------------------------------------------
-        // 2017. 02. 01 추가
-        ButterKnife.bind(this);
 
-
-        // final String[] groupName = {/*"슬비네그룹",*/ "소담이네그룹", "혜원이네", "승옥이네" , "연정이네"};
-
-        gridAdapter = new GridAdapter(this, R.layout.group_card_view, E.KEY.group_list);
-        GridView gridView = (GridView) findViewById(R.id.group_grid);
-        gridAdapter.notifyDataSetChanged();
-        gridView.setAdapter(gridAdapter);
-
+//
 //
 //        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -115,24 +141,24 @@ public class Home2Activity extends AppCompatActivity
 //        });
         //-------------------------------------------------------------------------------------------
 
+        // [ menu type ] 0:에러 1:체중 2:운동 3:식단
         scaleQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteWeightActivity.class, false, false);
+                goQuickMenu(1);
             }
         });
         exerciseQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteExcerciseActivity.class, false, false);
-            }
+                goQuickMenu(2);            }
         });
 
         mealQuick.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(getApplicationContext(), WriteMealActivity.class, false, false);
+                goQuickMenu(3);
             }
         });
 
@@ -145,6 +171,14 @@ public class Home2Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+
+
+    private void goQuickMenu(int i) {
+        Intent intent = new Intent(this, QuickWriteActivity.class);
+        intent.putExtra("menu", i);
+        startActivity(intent);
     }
 
     private void checkAttend() {
@@ -206,7 +240,7 @@ public class Home2Activity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        gridAdapter.notifyDataSetChanged();
+    //    gridAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -244,6 +278,7 @@ public class Home2Activity extends AppCompatActivity
 
                 }
             });
+
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
@@ -258,14 +293,10 @@ public class Home2Activity extends AppCompatActivity
         return true;
     }
 
-    // 2017. 02. 01 추가
     @OnClick(R.id.profile_box)
     public void goMyPage() {
         U.getInstance().goNext(this, MyHomeActivity.class, false, false);
     }
-
-
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {

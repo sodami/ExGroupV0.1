@@ -63,7 +63,7 @@ public class WeightCheckActivity extends AppCompatActivity {
                 String value = input.getText().toString();
                 value.toString();
 
-                U.getInstance().goNext(getApplicationContext(), GroupWaitingActivity.class, false, false);
+                U.getInstance().goNext(getApplicationContext(), GroupInviteActivity.class, false, false);
                 finish();
             }
         });

@@ -8,18 +8,22 @@
     tools:context="com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity">
 
     <LinearLayout
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:background="@drawable/box_pink"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="56dp">
         <EditText
+            android:padding="4dp"
+            android:hint="그룹 ID를 붙여넣으세요."
             android:background="@null"
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
         <ImageButton
+            android:id="@+id/searchBtn"
             android:padding="8dp"
             android:background="@color/babyPink"
             android:scaleType="centerInside"

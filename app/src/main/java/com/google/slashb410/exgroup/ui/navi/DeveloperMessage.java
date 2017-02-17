@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.ui.mypage;
+package com.google.slashb410.exgroup.ui.navi;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

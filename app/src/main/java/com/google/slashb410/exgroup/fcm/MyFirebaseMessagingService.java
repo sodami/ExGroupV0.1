@@ -16,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.ui.Home2Activity;
-import com.google.slashb410.exgroup.ui.settings.popup.ShowPopupActivity;
+import com.google.slashb410.exgroup.fcm.popup.ShowPopupActivity;
 
 import java.util.List;
 

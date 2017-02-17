@@ -2,17 +2,9 @@ package com.google.slashb410.exgroup.fcm;
 
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.google.slashb410.exgroup.User;
 import com.google.slashb410.exgroup.db.StorageHelper;
-import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * FCM 고유 토큰, 아이디를 발급하는 서비스
@@ -39,35 +31,33 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService
         // 별 숫자 변경 및 어던 사람이 눌렀는지 여부 처리
         // 로그아웃을 할경우 회원가입여부를 확인할수 없다.
         // UID는 다로 저장해서 사용하는편이 나을지도..
-        if( FirebaseAuth.getInstance().getCurrentUser()          != null &&
-            FirebaseAuth.getInstance().getCurrentUser().getUid() != null     ){
-            Log.i("FCM", "토큰이 변경되었으니 디비값을 수정해라");
-            DatabaseReference userReference
-                    = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            // 수정을 위한 트렌젝션
-            userReference.runTransaction(new Transaction.Handler() {
-                // 트렌젝션 수행
-                @Override
-                public Transaction.Result doTransaction(MutableData mutableData) {
-                    User user = mutableData.getValue(User.class);
-                    if( user == null ){
-                        return Transaction.success(mutableData);
-                    }
-                    user.setToken(token);
-                    // 변경 내용을 다시 삽입
-                    mutableData.setValue(user);
-                    Log.i("FCM", "토큰 수정 완료");
-                    return Transaction.success(mutableData);
-                }
-                @Override
-                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                    // 완료
-                }
-            });
+//        if( FirebaseAuth.getInstance().getCurrentUser()          != null &&
+//            FirebaseAuth.getInstance().getCurrentUser().getUid() != null     ){
+//            Log.i("FCM", "토큰이 변경되었으니 디비값을 수정해라");
+//            DatabaseReference userReference
+//                    = FirebaseDatabase.getInstance().getReference()
+//                    .child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//            // 수정을 위한 트렌젝션
+//            userReference.runTransaction(new Transaction.Handler() {
+//                // 트렌젝션 수행
+//                @Override
+//                public Transaction.Result doTransaction(MutableData mutableData) {
+//                    User user = mutableData.getValue(User.class);
+//                    if( user == null ){
+//                        return Transaction.success(mutableData);
+//                    }
+//                    user.setToken(token);
+//                    // 변경 내용을 다시 삽입
+//                    mutableData.setValue(user);
+//                    Log.i("FCM", "토큰 수정 완료");
+//                    return Transaction.success(mutableData);
+//                }
+//                @Override
+//                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//                    // 완료
+//                }
+//            });
 
         }
-
-    }
 }
 

@@ -6,6 +6,7 @@ package com.google.slashb410.exgroup.model.group;
 
 public class ShotData {
 
+    int idx;
     int boardType;
     String profile;
     String nickname;
@@ -15,11 +16,13 @@ public class ShotData {
     String pic;
     int numLike;
     int numComment;
+    boolean isLike;
 
     public ShotData() {
     }
 
     public void deleteShotData(){
+        this.idx = 0;
         this.boardType = 0;
         this.profile = null;
         this.nickname = null;
@@ -29,9 +32,11 @@ public class ShotData {
         this.pic = null;
         this.numLike = 0;
         this.numComment = 0;
+        this.isLike = false;
     }
 
-    public ShotData(int boardType, String profile, String nickname, String dateNtime, String summary, String content, String pic, int numLike, int numComment) {
+    public ShotData(int idx, int boardType, String profile, String nickname, String dateNtime, String summary, String content, String pic, int numLike, int numComment, boolean isLike) {
+        this.idx = idx;
         this.boardType = boardType;
         this.profile = profile;
         this.nickname = nickname;
@@ -41,6 +46,24 @@ public class ShotData {
         this.pic = pic;
         this.numLike = numLike;
         this.numComment = numComment;
+        this.isLike = isLike;
+    }
+
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public void setIdx(int idx) {
+        this.idx = idx;
     }
 
     public String getNickname() {
