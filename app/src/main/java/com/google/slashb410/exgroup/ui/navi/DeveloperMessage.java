@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.ui.mypage;
+package com.google.slashb410.exgroup.ui.navi;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,5 +13,8 @@ public class DeveloperMessage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_developer_message);
+    }
+    public void onClick() {
+
     }
 }
