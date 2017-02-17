@@ -66,7 +66,7 @@ public class SearchListAdapter extends BaseAdapter {
 //        Picasso.with(context).load(searchData.get(position).getResult().getPicUrl())
 //                .fit().centerCrop().into(viewHolder.groupProfile);
 //
-//        U.getInstance().myLog(searchData.get(position).getResult().getGroupTitle());
+        U.getInstance().myLog(searchData.get(position).getResult().getGroupTitle());
 //
 //        viewHolder.groupTitle.setText(searchData.get(position).getResult().getGroupTitle());
 //        viewHolder.gourpStartday.setText(searchData.get(position).getResult().getStartDate());
