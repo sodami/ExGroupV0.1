@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.SearchData;
-import com.squareup.picasso.Picasso;
+import com.google.slashb410.exgroup.util.U;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class SearchListAdapter extends BaseAdapter {
     ArrayList<SearchData> searchData;
     LayoutInflater inflater;
 
-    public SearchListAdapter(Context context,  ArrayList<SearchData> searchData) {
+    public SearchListAdapter(Context context, ArrayList<SearchData> searchData) {
         this.context = context;
         this.searchData = searchData;
         this.inflater = LayoutInflater.from(context);
@@ -33,6 +33,7 @@ public class SearchListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        U.getInstance().myLog(searchData.size() + "");
         return searchData.size();
     }
 
@@ -52,31 +53,31 @@ public class SearchListAdapter extends BaseAdapter {
         View view = convertView;
         ViewHolder viewHolder = new ViewHolder();
 
-        if(view==null) {
-         view= inflater.inflate(R.layout.cell_search_list, parent, false);
+        if (view == null)
+            view = inflater.inflate(R.layout.cell_search_list, parent, false);
 
-            viewHolder.groupTitle = (TextView) view.findViewById(R.id.group_title_search);
-            viewHolder.gourpStartday = (TextView) view.findViewById(R.id.group_start_search);
-            viewHolder.countMem = (TextView) view.findViewById(R.id.nowMem);
-            viewHolder.maxMem = (TextView) view.findViewById(R.id.maxMem);
-            viewHolder.groupProfile = (CircleImageView) view.findViewById(R.id.group_profileImg_search);
+        viewHolder.groupTitle = (TextView) view.findViewById(R.id.group_title_search);
+        viewHolder.gourpStartday = (TextView) view.findViewById(R.id.group_start_search);
+        viewHolder.countMem = (TextView) view.findViewById(R.id.nowMem);
+        viewHolder.maxMem = (TextView) view.findViewById(R.id.maxMem);
+        viewHolder.groupProfile = (CircleImageView) view.findViewById(R.id.group_profileImg_search);
 
-        }
-        if(searchData!=null){
-            Picasso.with(context).load(searchData.get(position).getResult().getPicUrl())
-                    .fit().centerCrop().into(viewHolder.groupProfile);
 
-            viewHolder.groupTitle.setText(searchData.get(position).getResult().getGroupTitle());
-            viewHolder.gourpStartday.setText(searchData.get(position).getResult().getStartDate());
-            viewHolder.countMem.setText(searchData.get(position).getResult().getCountNum());
-            viewHolder.maxMem.setText(searchData.get(position).getResult().getMaxNum());
+//        Picasso.with(context).load(searchData.get(position).getResult().getPicUrl())
+//                .fit().centerCrop().into(viewHolder.groupProfile);
+//
+//        U.getInstance().myLog(searchData.get(position).getResult().getGroupTitle());
+//
+//        viewHolder.groupTitle.setText(searchData.get(position).getResult().getGroupTitle());
+//        viewHolder.gourpStartday.setText(searchData.get(position).getResult().getStartDate());
+//        viewHolder.countMem.setText(searchData.get(position).getResult().getCountNum());
+//        viewHolder.maxMem.setText(searchData.get(position).getResult().getMaxNum());
 
-        }
         return view;
     }
 
 
-    class ViewHolder{
+    class ViewHolder {
         CircleImageView groupProfile;
         TextView groupTitle;
         TextView gourpStartday;

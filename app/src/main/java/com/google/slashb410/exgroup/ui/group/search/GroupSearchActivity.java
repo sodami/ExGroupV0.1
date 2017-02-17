@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.InnerSearchData;
 import com.google.slashb410.exgroup.model.group.SearchData;
+import com.google.slashb410.exgroup.util.U;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 public class GroupSearchActivity extends AppCompatActivity {
 
     ArrayList<SearchData> searchDatas;
+    @BindView(R.id.search_list)
     ListView searchList;
     SearchListAdapter searchListAdapter;
     @BindView(R.id.searchBtn)
@@ -48,6 +50,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         searchListAdapter = new SearchListAdapter(this, searchDatas);
         searchList.setAdapter(searchListAdapter);
 
+
     }
 
     @Override
@@ -63,6 +66,7 @@ public class GroupSearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.searchBtn)
     public void goSearch(){
+        U.getInstance().myLog("들어오긴함");
         InnerSearchData data2 = new InnerSearchData(2, "소담이네그룹", "2017년 2월 10일", "http://image.fmkorea.com/files/attach/new/20160714/486616/2489100/413010944/99b983892094b5c6d2fc3736e15da7d1.jpg", 2, 3);
         SearchData searchData2 = new SearchData();
         searchData2.setResult(data2);

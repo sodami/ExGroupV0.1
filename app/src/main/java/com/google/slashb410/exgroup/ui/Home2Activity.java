@@ -102,7 +102,7 @@ public class Home2Activity extends AppCompatActivity
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        U.getInstance().myLog(response.toString());
+//                        U.getInstance().myLog(response.toString());
                      groupData = gson.fromJson(response.toString(), GroupData.class);
                         gridAdapter = new GridAdapter(getApplicationContext(), R.layout.group_card_view, groupData.getResult().getData());
                         GridView gridView = (GridView) findViewById(R.id.group_grid);

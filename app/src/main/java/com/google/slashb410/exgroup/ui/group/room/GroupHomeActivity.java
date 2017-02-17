@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.ui.group.room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -17,9 +18,11 @@ public class GroupHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_home);
 
-    //    getSupportActionBar().hide();
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Intent intent = getIntent();
+        String groupTitle = intent.getStringExtra("title");
+        if(groupTitle!=null)  {
+            setTitle(groupTitle);
+        }
 
 //        FadingActionBarHelper fadingActionBarHelper = new FadingActionBarHelper()
 //                .actionBarBackground(new ColorDrawable(Color.parseColor("#337733")))

@@ -1,6 +1,7 @@
 package com.google.slashb410.exgroup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -105,7 +106,10 @@ public class GridAdapter extends BaseAdapter {
             groupCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    U.getInstance().goNext(v.getContext(), GroupHomeActivity.class, false, false);
+                    Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
+                    intent.putExtra("title", groupData.get(position).getGroupTitle());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    v.getContext().startActivity(intent);
                 }
             });
         }
