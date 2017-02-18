@@ -31,7 +31,9 @@
     <string name="group_add">그룹 만들기</string>
     <string name="group_startday">활동시작일</string>
     <string name="group_endday">활동종료일</string>
-    <string name="when_group_start">그룹 생성일</string>
+
+
+    <string name="when_group_start">초대자 전원 가입시</string>
     <string name="date_pick">날짜 선택</string>
     <string name="group_member">그룹 멤버 수</string>
     <string name="person_unit">명</string>
@@ -51,4 +53,6 @@
     <string name="beforeAuth_info">인증전</string>
     <string name="group_search">그룹 검색</string>
     <string name="title_activity_get_planet">GetPlanetActivity</string>
+    <string name="group_activeday">활동기간</string>
+    <string name="comment_title">댓글 보기</string>
 </resources>

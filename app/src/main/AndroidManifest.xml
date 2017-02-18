@@ -99,7 +99,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.group.room.tabs.comments.GroupShotsCommentsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/comment_title"/>
         <activity
             android:name=".ui.navi.DeveloperMessage"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.ui.group.room.tabs.comments.GroupShotsCommentsActivity;
+import com.google.slashb410.exgroup.util.U;
 
 /**
  * Created by Tacademy on 2017-02-03.
@@ -29,6 +31,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
     TextView numComments;
         TextView todayWeight;
     ImageButton likeBtn;
+    ImageButton commentBtn;
 
 
     public ShotsHolder(View itemView) {
@@ -45,6 +48,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         numLike = (TextView) itemView.findViewById(R.id.numLike);
         numComments = (TextView) itemView.findViewById(R.id.numComments);
 
+        commentBtn = (ImageButton) itemView.findViewById(R.id.commentImgBtn);
         todayWeight = (TextView) itemView.findViewById(R.id.weightTxt);
     }
 
@@ -109,6 +113,12 @@ class ShotsHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                U.getInstance().goNext(context, GroupShotsCommentsActivity.class, false, false);
+            }
+        });
 
     }
 

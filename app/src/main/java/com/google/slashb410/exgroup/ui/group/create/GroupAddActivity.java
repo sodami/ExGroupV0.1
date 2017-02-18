@@ -27,8 +27,7 @@ public class GroupAddActivity extends AppCompatActivity {
 
     final int DIALOG_DATE = 1;
     String[] currentYYmmDD = U.getInstance().currentYYmmDD();
-    @BindView(R.id.datepickBtn)
-    Button datepickBtn;
+
     @BindView(R.id.group_profileImg)
     ImageView groupProfileImg;
     @BindView(R.id.group_name_add)
@@ -41,51 +40,6 @@ public class GroupAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_add);
         ButterKnife.bind(this);
 
-    }
-
-    @OnClick(R.id.datepickBtn)
-    public void pickDate(){
-        showDialog(DIALOG_DATE);
-    }
-
-    @Override
-    @Deprecated
-    protected Dialog onCreateDialog(int id) {
-        switch(id){
-            case DIALOG_DATE :
-                DatePickerDialog dpd = new DatePickerDialog
-                        (this, // 현재화면의 제어권자
-                                new DatePickerDialog.OnDateSetListener() {
-                                    public void onDateSet(DatePicker view,
-                                                          int year, int monthOfYear,int dayOfMonth) {
-                                        String today = (currentYYmmDD[0]+currentYYmmDD[1]+currentYYmmDD[2]);
-                                        String selectedDay;
-
-                                        ++monthOfYear;
-                                        if(monthOfYear<10){
-                                            String monthOfYear_str = "0"+monthOfYear;
-                                            selectedDay = year+monthOfYear_str+dayOfMonth;
-                                        }else {
-                                            selectedDay = year + monthOfYear + dayOfMonth + "";
-                                        }
-
-                                        groupTerm = getTerm(today, selectedDay);
-
-                                        if(groupTerm>= E.KEY.GROUP_TERM_MIN && groupTerm <= E.KEY.GROUP_TERM_MAX) {
-                                            datepickBtn.setText(year+"년 "+monthOfYear+"월 "+dayOfMonth+"일");
-                                        }else{
-                                            U.getInstance().popSimpleDialog(null, GroupAddActivity.this, null, "그룹 활동기간은 최소 7일, 최대 30일입니다.");
-                                        }
-                                    }
-                                }
-                                ,
-                                Integer.parseInt(currentYYmmDD[0]), Integer.parseInt(currentYYmmDD[1])-1, Integer.parseInt(currentYYmmDD[2])); // 기본값 연월일
-                return dpd;
-
-        }
-
-
-        return super.onCreateDialog(id);
     }
 
     private int getTerm(String today, String selectedDay) {
@@ -107,15 +61,14 @@ public class GroupAddActivity extends AppCompatActivity {
         long diff = endDate.getTime() - beginDate.getTime();
         long diffDays = diff / (24 * 60 * 60 * 1000);
 
-        int term = Integer.parseInt(diffDays+"");
+        int term = Integer.parseInt(diffDays + "");
 
         return term;
 
     }
 
-
     @OnClick(R.id.group_add)
-    public void goAdd(){
+    public void goAdd() {
 
         E.KEY.new_group.setGroupName(groupName.getText().toString());
         //E.KEY.new_group.setGroupImgPath();
@@ -128,7 +81,7 @@ public class GroupAddActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.group_profileImg)
-    public void onSetProfile(){
+    public void onSetProfile() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String[] items = {"카메라", "갤러리"};
 
@@ -136,15 +89,17 @@ public class GroupAddActivity extends AppCompatActivity {
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0 : {
+                        switch (which) {
+                            case 0: {
                                 U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
-                            } break;
-                            case 1 : {
+                            }
+                            break;
+                            case 1: {
                                 U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
-                            } break;
+                            }
+                            break;
                         }
                     }
                 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
