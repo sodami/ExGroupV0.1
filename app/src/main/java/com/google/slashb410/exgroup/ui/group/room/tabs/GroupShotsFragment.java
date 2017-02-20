@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.ui.group.room.tabs.comments.GroupShotsCommentsActivity;
+import com.google.slashb410.exgroup.util.U;
 
 import java.util.ArrayList;
 
@@ -35,8 +37,8 @@ public class GroupShotsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_group_shots, container, false);
 
-        ButterKnife.bind(getActivity());
 
         //==========FAKE DATA
 
@@ -53,7 +55,6 @@ public class GroupShotsFragment extends Fragment {
         }
         //====================
 
-        View view = inflater.inflate(R.layout.fragment_group_shots, container, false);
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.shot_recyclerview);
         ShotsAdapter shotsAdapter = new ShotsAdapter(getContext(), results);

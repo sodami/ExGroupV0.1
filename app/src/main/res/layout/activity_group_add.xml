@@ -114,20 +114,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/gmd_bar_height"
                     android:gravity="end|center_vertical"
-                    android:text="@string/group_endday"
+                    android:text="@string/group_activeday"
                     android:textSize="@dimen/text_default" />
 
-                <Button
-                    android:padding="4dp"
-                    android:id="@+id/datepickBtn"
+                <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/gmd_button_height"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:background="@drawable/button_white"
-                    android:gravity="center"
-                    android:text="@string/date_pick"
-                    android:textColor="@color/universeBlack"
-                    android:textSize="@dimen/text_default" />
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_default"/>
             </TableRow>
         </TableLayout>
 
