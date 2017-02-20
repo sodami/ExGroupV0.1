@@ -59,7 +59,7 @@
 
             <EditText
                 android:id="@+id/email_login"
-                android:inputType="textEmailAddress"
+                android:inputType="textWebEmailAddress"
                 android:hint="@string/email"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_big" />

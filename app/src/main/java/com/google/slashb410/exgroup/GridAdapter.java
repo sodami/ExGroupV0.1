@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.db.E;
-import com.google.slashb410.exgroup.model.group.GroupData;
+import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.ui.group.create.GroupAddActivity;
 import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.google.slashb410.exgroup.util.U;
@@ -27,11 +27,11 @@ import java.util.ArrayList;
 public class GridAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<GroupData.Data> groupData;
+    ArrayList<ResGroupData.Data> groupData;
     int layout;
     LayoutInflater inflater;
 
-    public GridAdapter(Context context, int layout, ArrayList<GroupData.Data> groupData) {
+    public GridAdapter(Context context, int layout, ArrayList<ResGroupData.Data> groupData) {
         this.context = context;
         this.layout = layout;
         this.groupData = groupData;
@@ -108,6 +108,7 @@ public class GridAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
                     intent.putExtra("title", groupData.get(position).getGroupTitle());
+                    intent.putExtra("image", groupData.get(position).getPicUrl());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     v.getContext().startActivity(intent);
                 }

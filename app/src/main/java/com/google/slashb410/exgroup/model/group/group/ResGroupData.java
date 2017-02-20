@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.model.group;
+package com.google.slashb410.exgroup.model.group.group;
 
 import java.util.ArrayList;
 
@@ -6,14 +6,14 @@ import java.util.ArrayList;
  * Created by Tacademy on 2017-02-15.
  */
 
-public class GroupData {
+public class ResGroupData {
 
     Result result;
     int resultCode;
 
     public class Result{
 
-        ArrayList<Data>  data = new ArrayList<>();
+        private ArrayList<Data>  data = new ArrayList<>();
 
         public ArrayList<Data> getData() {
             return data;

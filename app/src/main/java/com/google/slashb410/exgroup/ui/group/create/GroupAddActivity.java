@@ -116,12 +116,12 @@ public class GroupAddActivity extends AppCompatActivity {
 
     @OnClick(R.id.group_add)
     public void goAdd(){
-
-        E.KEY.new_group.setGroupName(groupName.getText().toString());
-        //E.KEY.new_group.setGroupImgPath();
-        E.KEY.new_group.setTerm(groupTerm);
-
-        E.KEY.group_list.add(E.KEY.new_group);
+//
+//        E.KEY.new_group.setGroupName(groupName.getText().toString());
+//        //E.KEY.new_group.setGroupImgPath();
+//        E.KEY.new_group.setTerm(groupTerm);
+//
+//        E.KEY.group_list.add(E.KEY.new_group);
 
         U.getInstance().goNext(this, WeightCheckActivity.class, false, false);
         finish();

@@ -51,4 +51,5 @@
     <string name="beforeAuth_info">인증전</string>
     <string name="group_search">그룹 검색</string>
     <string name="title_activity_get_planet">GetPlanetActivity</string>
+    <string name="write">글쓰기</string>
 </resources>
