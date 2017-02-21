@@ -1,38 +1,56 @@
 package com.google.slashb410.exgroup.ui.group.room;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 
 public class GroupHomeActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    TextView groupTitleView;
+    ImageView groupImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_home);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.collapse_toolbar);
+        setSupportActionBar(toolbar);
 
-    //    getSupportActionBar().hide();
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar_layout);
+        groupTitleView = (TextView) findViewById(R.id.group_home_title);
+        groupImg = (ImageView) findViewById(R.id.collapseImg);
 
-//        FadingActionBarHelper fadingActionBarHelper = new FadingActionBarHelper()
-//                .actionBarBackground(new ColorDrawable(Color.parseColor("#337733")))
-//                .headerLayout(R.layout.header_group_home)
-//                .contentLayout(R.layout.fragment_group_shots);
-//        setContentView(fadingActionBarHelper.createView(this));
-//        fadingActionBarHelper.initActionBar(this);
+        Intent intent = getIntent();
+        String groupTitle = intent.getStringExtra("title");
+        String groupPicUrl = intent.getStringExtra("image");
+        Uri picUrl = Uri.parse(groupPicUrl);
+
+        if (groupTitle != null) {
+            groupTitleView.setText(groupTitle);
+            groupImg.setImageURI(picUrl);
+        }
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("행성"));
-        tabLayout.addTab(tabLayout.newTab().setText("그래프"));
-        tabLayout.addTab(tabLayout.newTab().setText("인증샷"));
-        tabLayout.addTab(tabLayout.newTab().setText("캘린더"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.planet_white));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.chart_white));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.feed_white));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.calendar_white));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -58,5 +76,42 @@ public class GroupHomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.group_home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.write) {
+            String[] items = {"체중", "운동", "식단"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("어느 인증샷을 업로드하시겠습니까?")
+                    .setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(GroupHomeActivity.this, QuickWriteActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            switch (which){
+                                case 0 : intent.putExtra("menu", 1);
+                                    break;
+                                case 1 : intent.putExtra("menu", 2);
+                                    break;
+                                case 2 : intent.putExtra("menu", 3);
+                                    break;
+                            }
+                            startActivity(intent);
+                        }
+                    }).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

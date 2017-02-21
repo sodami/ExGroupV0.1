@@ -13,6 +13,7 @@
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapse_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -24,37 +25,31 @@
                 android:id="@+id/collapseImg"
                 android:layout_width="match_parent"
                 android:layout_height="176dp"
-                android:background="#888888"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/collapse_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/gmd_bar_height"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/group_home_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="그룹명" />
-            </android.support.v7.widget.Toolbar>
+                android:popupTheme="@style/AppTheme.PopupOverlay"
+                app:layout_collapseMode="pin" />
         </android.support.design.widget.CollapsingToolbarLayout>
 
-    </android.support.design.widget.AppBarLayout>
 
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
@@ -64,7 +59,6 @@
             android:background="@color/babyPink"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
-            app:tabIndicatorColor="#ffffff"
             app:tabSelectedTextColor="@color/shadowPink"
             app:tabTextColor="@color/babyPink" />
 

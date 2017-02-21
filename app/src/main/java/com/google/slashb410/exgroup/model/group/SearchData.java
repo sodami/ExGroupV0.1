@@ -6,6 +6,13 @@ package com.google.slashb410.exgroup.model.group;
 
 public class SearchData {
 
+    @Override
+    public String toString() {
+        return "SearchData{" +
+                "result=" + result +
+                '}';
+    }
+
     private InnerSearchData result;
 
     public SearchData() {

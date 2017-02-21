@@ -82,16 +82,16 @@ public class QuickWriteActivity extends AppCompatActivity {
                 kgTxt.setVisibility(View.GONE);
                 break;
         }
-
-        int length = E.KEY.group_list.size();
-
-        checkGroups = new boolean[length];
-        groupNames = new String[length];
-
-        for (int i = 0; i < length; i++) {
-            groupNames[i] = (E.KEY.group_list.get(i).getGroupName());
-            checkGroups[i] = true;
-        }
+//
+//        int length = E.KEY.group_list.size();
+//
+//        checkGroups = new boolean[length];
+//        groupNames = new String[length];
+//
+//        for (int i = 0; i < length; i++) {
+//            groupNames[i] = (E.KEY.group_list.get(i).getGroupName());
+//            checkGroups[i] = true;
+//        }
 
     }
 

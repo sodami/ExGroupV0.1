@@ -21,27 +21,18 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
-import com.google.slashb410.exgroup.model.group.GroupData;
+import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
-
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,9 +55,9 @@ public class Home2Activity extends AppCompatActivity
     FloatingActionButton mealQuick;
 
     GridAdapter gridAdapter;
-    String groups_url = "http://ec2-52-78-98-243.ap-northeast-2.compute.amazonaws.com/groups";
-    RequestQueue requestQueue;
-    GroupData groupData;
+    ResGroupData resGroupData;
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,36 +88,11 @@ public class Home2Activity extends AppCompatActivity
         //출석체크
         checkAttend();
 
-        Gson gson = new Gson();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, groups_url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        U.getInstance().myLog(response.toString());
-                     groupData = gson.fromJson(response.toString(), GroupData.class);
-                        gridAdapter = new GridAdapter(getApplicationContext(), R.layout.group_card_view, groupData.getResult().getData());
-                        GridView gridView = (GridView) findViewById(R.id.group_grid);
-                        gridAdapter.notifyDataSetChanged();
-                        gridView.setAdapter(gridAdapter);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        U.getInstance().myLog("에러");
-                    }
-                });
-
-
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjectRequest);
-
-
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
 
-
-//
+        GridView gridView = (GridView) findViewById(R.id.group_grid);
+//        GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, ResGroupData.Result);
 //
 //        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -215,10 +181,7 @@ public class Home2Activity extends AppCompatActivity
 
                     U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
 
-                } else {
-
                 }
-
             }
         }
 
@@ -301,8 +264,8 @@ public class Home2Activity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            E.KEY.group_list.clear();
-            E.KEY.new_group.deleteGroupInfo();
+//            E.KEY.group_list.clear();
+//            E.KEY.new_group.deleteGroupInfo();
             E.KEY.new_write.deleteWriteData();
             E.KEY.shotData.deleteShotData();
             this.finish();

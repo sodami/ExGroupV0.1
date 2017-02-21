@@ -1,10 +1,7 @@
 package com.google.slashb410.exgroup.db;
 
-import com.google.slashb410.exgroup.model.group.GroupInfo;
 import com.google.slashb410.exgroup.model.group.ShotData;
 import com.google.slashb410.exgroup.model.group.WriteData;
-
-import java.util.ArrayList;
 
 /**
  * Created by Tacademy on 2017-02-09.
@@ -21,8 +18,6 @@ public class E {
         public static final String LASTDATE_KEY = "lastdate";
 
         //----fake data
-        public static final ArrayList<GroupInfo> group_list = new ArrayList<>();
-        public static final GroupInfo new_group = new GroupInfo();
         public static final WriteData new_write = new WriteData();
         public static ShotData shotData = new ShotData();
     }
