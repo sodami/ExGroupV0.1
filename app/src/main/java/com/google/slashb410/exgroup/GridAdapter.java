@@ -47,9 +47,14 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-//
-        if (actGroup.size() == position) return null;
-        return actGroup.get(position);
+        if(position<actGroup.size()){
+            return actGroup.get(position);
+        }else if(position==(actGroup.size()+unActGroup.size())) {
+            return null;
+        }else{
+            position = position - actGroup.size();
+            return unActGroup.get(position);
+        }
     }
 
     @Override
@@ -68,7 +73,7 @@ public class GridAdapter extends BaseAdapter {
         CardView cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
         CardView groupCardview = (CardView) convertView.findViewById(R.id.group_cardview);
 
-        if (position == E.KEY.GROUP_MAX) {
+        if (actGroup.size() > E.KEY.GROUP_MAX) {
             groupCardview.setVisibility(View.GONE);
             cardView.setVisibility(View.VISIBLE);
             cardView.setClickable(false);
