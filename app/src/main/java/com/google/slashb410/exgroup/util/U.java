@@ -179,8 +179,9 @@ public class U {
     }
 
 
-    public void onCamera(Activity activity, String folder, ImageView imageView){
+    public String onCamera(Activity activity, ImageView imageView){
 
+        final String[] path = new String[1];
         RxPaparazzo.takeImage(activity)
                 .size(new ScreenSize())
                 .usingCamera()
@@ -191,13 +192,14 @@ public class U {
                         //  response.targetUI().showUserCanceled();
                         return;
                     }
-                    if(imageView!=null) loadImage(activity, response.data(), imageView);
-                     uploadFireBase(activity, folder, response.data());
+                    if(imageView!=null) setImage(activity, response.data(), imageView);
+                    path[0] = "file://"+response.data();
                 });
-
+        return path[0];
     }
 
-    public void onGallery(Activity activity, String folder, ImageView imageView){
+    public String onGallery(Activity activity, ImageView imageView){
+        final String[] path = new String[1];
         RxPaparazzo.takeImage(activity)
                 .usingGallery()
                 .subscribeOn(Schedulers.io())
@@ -207,12 +209,13 @@ public class U {
                         //  response.targetUI().showUserCanceled();
                         return;
                     }
-                    if(imageView!=null) loadImage(activity, response.data(), imageView);
-                    uploadFireBase(activity, folder, response.data());
+                    if(imageView!=null) setImage(activity, response.data(), imageView);
+                    path[0] = "file://"+response.data();
                 });
+        return path[0];
     }
 
-    public void loadImage(Activity activity, String path, ImageView imageView) {
+    public void setImage(Activity activity, String path, ImageView imageView) {
         String url = "file://" + path;
 
         Picasso.with(activity).setLoggingEnabled(true);

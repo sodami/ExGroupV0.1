@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -29,6 +30,9 @@ import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
+import com.google.slashb410.exgroup.model.group.group.ResGroupList;
+import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
@@ -41,6 +45,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Home2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,10 +60,16 @@ public class Home2Activity extends AppCompatActivity
     FloatingActionButton exerciseQuick;
     @BindView(R.id.quick_meal)
     FloatingActionButton mealQuick;
+    @BindView(R.id.profile_nick)
+    TextView nick_profile;
+    @BindView(R.id.seqAttendNum)
+    TextView seqAttendNum;
+    @BindView(R.id.bmi)
+    TextView bmi;
+
 
     GridAdapter gridAdapter;
     ResGroupData resGroupData;
-
 
 
     @Override
@@ -87,6 +100,10 @@ public class Home2Activity extends AppCompatActivity
 
         //출석체크
         checkAttend();
+        //프로필박스 세팅
+//        setProfileBox();
+        //그룹리스트 세팅
+        setGroupList();
 
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
@@ -117,7 +134,8 @@ public class Home2Activity extends AppCompatActivity
         exerciseQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goQuickMenu(2);            }
+                goQuickMenu(2);
+            }
         });
 
         mealQuick.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +157,43 @@ public class Home2Activity extends AppCompatActivity
 
     }
 
+    private void setGroupList() {
+        Call<ResGroupList> resMe = NetSSL.getInstance().getGroupImpFactory().groupList();
+        resMe.enqueue(new Callback<ResGroupList>() {
+            @Override
+            public void onResponse(Call<ResGroupList> call, Response<ResGroupList> response) {
+                U.getInstance().myLog(response.body().getResultCode()+"");
+            }
+
+            @Override
+            public void onFailure(Call<ResGroupList> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : "+t.toString());
+            }
+        });
+
+    }
+
+    private void setProfileBox() {
+        Call<ResMe> resMe = NetSSL.getInstance().getMemberImpFactory().userMe();
+        resMe.enqueue(new Callback<ResMe>() {
+            @Override
+            public void onResponse(Call<ResMe> call, Response<ResMe> response) {
+                if(response.body().getNickname().equals("")){
+                    U.getInstance().myLog("바디 널");
+                }else {
+                    nick_profile.setText(response.body().getNickname());
+                    bmi.setText(response.body().getBMI());
+                    seqAttendNum.setText(response.body().getSeqAttendNum());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResMe> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : "+t.toString());
+            }
+        });
+
+    }
 
 
     private void goQuickMenu(int i) {
@@ -154,13 +209,13 @@ public class Home2Activity extends AppCompatActivity
 
         //2. 오늘날짜 가져오기
         String[] todays = U.getInstance().currentYYmmDD();
-        String today = todays[0]+"-"+todays[1]+"-"+todays[2];
+        String today = todays[0] + "-" + todays[1] + "-" + todays[2];
 
         //#. 최초 접속 예외 처리
-        if(lastdate==null){
+        if (lastdate == null) {
             U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
             setLastDate(this, today);
-        }else {
+        } else {
 
             SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
             Date today_date = null;
@@ -194,7 +249,7 @@ public class Home2Activity extends AppCompatActivity
         return StorageHelper.getInstance().getString(context, E.KEY.LASTDATE_KEY);
     }
 
-    private void setLastDate(Context context, String today){
+    private void setLastDate(Context context, String today) {
 
         StorageHelper.getInstance().setString(context, E.KEY.LASTDATE_KEY, today);
 
@@ -203,7 +258,7 @@ public class Home2Activity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-    //    gridAdapter.notifyDataSetChanged();
+        //    gridAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -262,7 +317,7 @@ public class Home2Activity extends AppCompatActivity
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 //            E.KEY.group_list.clear();
 //            E.KEY.new_group.deleteGroupInfo();

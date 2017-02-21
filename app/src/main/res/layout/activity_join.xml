@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.google.slashb410.exgroup.ui.join.Input1Activity">
+    tools:context="com.google.slashb410.exgroup.ui.join.JoinActivity">
 
 
     <LinearLayout
@@ -17,18 +17,21 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/email_join"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_big"
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <EditText
+            android:id="@+id/password_join"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_big"
             android:hint="@string/password"
             android:inputType="textPassword" />
 
         <EditText
+            android:id="@+id/password_check_join"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_big"
             android:hint="@string/password_chk"

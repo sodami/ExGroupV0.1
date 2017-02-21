@@ -1,18 +1,13 @@
 package com.google.slashb410.exgroup.ui.group.create;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.util.U;
 
 import java.text.ParseException;
@@ -68,28 +63,15 @@ public class GroupAddActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.group_add)
-<<<<<<< HEAD
-    public void goAdd(){
+    public void goAdd() {
 //
 //        E.KEY.new_group.setGroupName(groupName.getText().toString());
 //        //E.KEY.new_group.setGroupImgPath();
 //        E.KEY.new_group.setTerm(groupTerm);
 //
 //        E.KEY.group_list.add(E.KEY.new_group);
-=======
-    public void goAdd() {
 
-        E.KEY.new_group.setGroupName(groupName.getText().toString());
-        //E.KEY.new_group.setGroupImgPath();
-        E.KEY.new_group.setTerm(groupTerm);
-
-        E.KEY.group_list.add(E.KEY.new_group);
->>>>>>> cb8ab04d4484124306665c83b5c2664c33f29ba4
-
-        U.getInstance().goNext(this, WeightCheckActivity.class, false, false);
-        finish();
     }
-
     @OnClick(R.id.group_profileImg)
     public void onSetProfile() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -101,12 +83,12 @@ public class GroupAddActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0: {
-                                U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
+                                //U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
                             }
                             break;
                             case 1: {
-                                U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
+                               // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
                             }
                             break;
