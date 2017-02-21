@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.google.slashb410.exgroup.ExActivity">
 
-    <com.github.mikephil.charting.charts.LineChart
+    <com.example.linechart.custom.CustomLineChart
         android:id="@+id/chart_ex"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,17 +1,16 @@
 package com.google.slashb410.exgroup.ui.mypage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,61 +31,50 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MyHomeActivity extends AppCompatActivity {
+public class MyHomeActivity extends Activity {
 
     ImageView           profile_change;
     SweetAlertDialog    alert;
-    private ViewGroup   layoutGraphView;
     EditText            nickname;
     CalendarView        cal;
-
     //[개인 그래프]==================================================================
+    private ViewGroup   layoutGraphView;
     private CustomLineChart chart;
     private float           yValue[] = { 100, 150, 170, 250, 270, 250, 300 };
     private String          xValue[] = { "May 21", "May 22", "May 23", "May 24",
                                         "May 25", "May 26", "May 27" };
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_home);
-        layoutGraphView = (ViewGroup) findViewById(R.id.tab1);
-
+        profile_change  = (ImageView) findViewById(R.id.profile_change);
+        nickname        = (EditText)findViewById(R.id.nickname);
         // 2017. 02. 01
         TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
-        profile_change = (ImageView) findViewById(R.id.profile_change);
-        nickname = (EditText)findViewById(R.id.nickname);
         tabHost.setup();
-
         TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
         spec.setContent(R.id.tab1);
         spec.setIndicator("BMI");
         tabHost.addTab(spec);
-
         spec = tabHost.newTabSpec("tag2");
         spec.setContent(R.id.tab2);
         spec.setIndicator("Calendar");
         tabHost.addTab(spec);
-
         spec = tabHost.newTabSpec("tag3");
         spec.setContent(R.id.tab3);
         spec.setIndicator("Planet");
         tabHost.addTab(spec);
+        // tabHost.setCurrentTab(0);
 
-        tabHost.setCurrentTab(0);
-
-        // individual Graph 2017. 02. 17
-        inti();
+        layoutGraphView = (ViewGroup) findViewById(R.id.tab1);
+        //inti();
 
         // individual Calendar 2017. 02. 17
-        cal = (CalendarView) findViewById(R.id.calendarView1);
-
+        cal             = (CalendarView) findViewById(R.id.calendarView1);
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month,
-                                            int dayOfMonth) {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 Toast.makeText(getBaseContext(),"Selected Date is\n\n"
                                 +dayOfMonth+" : "+month+" : "+year ,
                         Toast.LENGTH_LONG).show();
@@ -95,40 +83,32 @@ public class MyHomeActivity extends AppCompatActivity {
             }
         });
     }
-
-    // individual Graph 2017. 02. 17
-    private void inti()
-    {
+    // indvidual Graph 2017. 02. 17
+    private void inti() {
         intiView();
         intiChartData();
     }
-    private void intiView()
-    {
-        chart = (CustomLineChart) findViewById(R.id.chart);
-
+    private void intiView() {
+        //chart = (CustomLineChart) findViewById(R.id.chart);
     }
-    private void intiChartData()
-    {
+    private void intiChartData() {
         chart.setxValue(xValue);
         chart.setyValue(yValue);
         chart.invalidate();
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
     // profile  2017. 02. 01
     public void onPhoto(View view)
     {
@@ -201,7 +181,6 @@ public class MyHomeActivity extends AppCompatActivity {
         Picasso.with(this).invalidate(url);
         Picasso.with(this).load(url).into(profile_change);
     }
-
     // 2017.02.06 앨범에서 사진 하나 선택했을 때 result를 받아서 비트맵으로 변경 후 프로필에 적용
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
@@ -220,6 +199,11 @@ public class MyHomeActivity extends AppCompatActivity {
                     }
                 }
         }
+    }
+    public void onEditText(View v)
+    {
+        Intent intent = new Intent(MyHomeActivity.this, NameSettingPage.class);
+        startActivity(intent);
     }
 }
 
