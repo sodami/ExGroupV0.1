@@ -7,23 +7,22 @@
     android:layout_height="match_parent"
     tools:context="com.google.slashb410.exgroup.ui.mypage.MyHomeActivity">
 
-<LinearLayout
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    android:background="@color/calendar_bg">
+        android:background="@color/calendar_bg"/>
 
+    <!-- 프로필 영역 -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
-
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginTop="10dp"
                     android:layout_width="80sp"
@@ -70,9 +69,10 @@
                         android:cursorVisible="true" />
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="19dp"
-                        app:srcCompat="@android:drawable/ic_menu_info_details"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@color/babyPink"
+                        app:srcCompat="@android:drawable/ic_menu_edit"
                         android:id="@+id/imageView"
                         android:layout_gravity="bottom"
                         android:onClick="onEditText"
@@ -81,125 +81,124 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                <!--<LinearLayout-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center">-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/lv_1"
-                        android:id="@+id/imageView7"
-                        android:layout_weight="1" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:background="@drawable/pl_lv10"-->
+                        <!--android:id="@+id/imageView7"-->
+                        <!--android:layout_weight="1" />-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/lv_2"
-                        android:id="@+id/imageView6"
-                        android:layout_weight="1" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:background="@drawable/pl_lv10"-->
+                        <!--android:id="@+id/imageView6"-->
+                        <!--android:layout_weight="1" />-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/lv_3"
-                        android:id="@+id/imageView5"
-                        android:layout_weight="1" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:background="@drawable/pl_lv10"-->
+                        <!--android:id="@+id/imageView5"-->
+                        <!--android:layout_weight="1" />-->
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/lv_4"
-                        android:id="@+id/imageView4"
-                        android:layout_weight="1" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:background="@drawable/pl_lv10"-->
+                        <!--android:id="@+id/imageView4"-->
+                        <!--android:layout_weight="1" />-->
                 </LinearLayout>
-
             </LinearLayout>
-        </LinearLayout>
-
+        <!--</LinearLayout>-->
+    <!-- 탭 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="180dp">
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TabHost
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tabHost">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
+                    android:layout_height="wrap_content"
+                    android:background="@color/babyPink"/>
                 <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
-                        <RelativeLayout
-                            android:id="@+id/tab1"
-                            android:layout_width="350dp"
-                            android:layout_height="350dp"
-                            android:layout_gravity="center">
-                            </RelativeLayout>
-
-                        <LinearLayout
-                            android:id="@+id/tab2"
+                    <!-- BMI -->
+                    <RelativeLayout
+                        android:id="@+id/tab1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <!--<tacademy.example.com.linechart.CustomLineChart-->
+                            <!--android:id="@+id/chart"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="400dp" />-->
+                    </RelativeLayout>
+                    <!-- Calendar -->
+                    <LinearLayout
+                        android:id="@+id/tab2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <CalendarView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-                            <CalendarView
-                                android:layout_width="match_parent"
-                                android:layout_height="300dp"
-                                android:minDate="12/12/2016"
-                                android:maxDate="12/31/2017"
-                                android:focusedMonthDateColor="@color/blue_btn_bg_color"
-                                android:unfocusedMonthDateColor="@color/button_text_color"
-                                android:id="@+id/calendarView" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/tab3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="4">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@drawable/lv_1"
-                                android:id="@+id/imageView9"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@drawable/lv_2"
-                                android:id="@+id/imageView10"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@drawable/lv_2"
-                                android:id="@+id/imageView11"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@drawable/lv_2"
-                                android:id="@+id/imageView12"
-                                android:layout_weight="1" />
-                            </LinearLayout>
-                        </FrameLayout>
+                            android:layout_height="300dp"
+                            android:id="@+id/calendarView1" />
                     </LinearLayout>
-                </TabHost>
-            </ScrollView>
+                    <!-- Palnet -->
+                    <LinearLayout
+                        android:id="@+id/tab3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <!--<ImageView-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="100dp"-->
+                            <!--android:background="@drawable/pl_lv10"-->
+                            <!--android:id="@+id/imageView9"-->
+                            <!--android:layout_weight="1" />-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="80dp"-->
+                            <!--android:background="@drawable/pl_lv10"-->
+                            <!--android:id="@+id/imageView10"-->
+                            <!--android:layout_weight="1" />-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="80dp"-->
+                            <!--android:background="@drawable/lv_2"-->
+                            <!--android:id="@+id/imageView11"-->
+                            <!--android:layout_weight="1" />-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="80dp"-->
+                            <!--android:layout_height="80dp"-->
+                            <!--android:background="@drawable/lv_2"-->
+                            <!--android:id="@+id/imageView12"-->
+                            <!--android:layout_weight="1" />-->
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </TabHost>
+        </ScrollView>
     </LinearLayout>
 </RelativeLayout>
