@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.ui.group.create;
 
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -61,7 +62,6 @@ public class GroupAddActivity extends AppCompatActivity {
         return term;
 
     }
-
     @OnClick(R.id.group_add)
     public void goAdd() {
 //
@@ -88,7 +88,7 @@ public class GroupAddActivity extends AppCompatActivity {
                             }
                             break;
                             case 1: {
-                               // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
+                                // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
                             }
                             break;
@@ -102,5 +102,4 @@ public class GroupAddActivity extends AppCompatActivity {
         }).show();
 
     }
-
 }

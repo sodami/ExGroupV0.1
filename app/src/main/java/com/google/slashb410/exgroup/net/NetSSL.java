@@ -85,7 +85,6 @@ public class NetSSL {
         }
         return memberImpFactory;
     }
-
     GroupImpFactory groupImpFactory;
     public GroupImpFactory getGroupImpFactory(){
         if(groupImpFactory == null){

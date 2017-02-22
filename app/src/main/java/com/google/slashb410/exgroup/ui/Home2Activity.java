@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +56,8 @@ import retrofit2.Response;
 public class Home2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+
     @BindView(R.id.fab)
     FloatingActionMenu floatingActionMenu;
     @BindView(R.id.quick_scale)
@@ -68,8 +73,13 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
+<<<<<<< HEAD
     GridAdapter gridAdapter;
     GridView gridView;
+=======
+    GridView gridView;
+    GridAdapter gridAdapter;
+>>>>>>> c6588e50f736f6c14078548778278815c2951744
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,11 +108,11 @@ public class Home2Activity extends AppCompatActivity
         ButterKnife.bind(this);
 
         //출석체크
-        checkAttend();
+        //checkAttend();
         //프로필박스 세팅
         setProfileBox();
         //그룹리스트 세팅
-        setGroupList();
+        //setGroupList();
 
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
@@ -122,9 +132,7 @@ public class Home2Activity extends AppCompatActivity
                 goQuickMenu(2);
             }
         });
-
         mealQuick.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 goQuickMenu(3);
@@ -134,6 +142,7 @@ public class Home2Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                //this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -141,6 +150,8 @@ public class Home2Activity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
+
 
     private void setGroupList() {
         Call<ResGroupList> resMe = NetSSL.getInstance().getGroupImpFactory().groupList();
@@ -177,9 +188,9 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if(response.body().getNickname().equals("")){
+                if (response.body().getNickname().equals("")) {
                     U.getInstance().myLog("바디 널");
-                }else {
+                } else {
                     nick_profile.setText(response.body().getNickname());
                     bmi.setText(response.body().getBMI());
                     seqAttendNum.setText(response.body().getSeqAttendNum());
@@ -188,10 +199,9 @@ public class Home2Activity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<ResMe> call, Throwable t) {
-                U.getInstance().myLog("접근실패 : "+t.toString());
+                U.getInstance().myLog("접근실패 : " + t.toString());
             }
         });
-
     }
 
 
@@ -201,8 +211,8 @@ public class Home2Activity extends AppCompatActivity
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkAttend() {
-
         //1. 마지막 접속일자 가져오기
         String lastdate = getLastDate(this);
 
@@ -215,7 +225,6 @@ public class Home2Activity extends AppCompatActivity
             U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
             setLastDate(this, today);
         } else {
-
             SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
             Date today_date = null;
             Date lastdate_date = null;
@@ -225,7 +234,6 @@ public class Home2Activity extends AppCompatActivity
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             //3. 마지막 접속일자와 오늘날짜가 다르다면 출석체크
             if (today_date != null && lastdate_date != null) {
                 int compare = today_date.compareTo(lastdate_date);
@@ -285,14 +293,34 @@ public class Home2Activity extends AppCompatActivity
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
+            final EditText title    =    (EditText)layout.findViewById(R.id.editText1);
+            final EditText sendto   =    (EditText)layout.findViewById(R.id.editText2);
+            final EditText content  =    (EditText)layout.findViewById(R.id.editText3);
             AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
             aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
             aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+                    String to       =   title.getText().toString();
+                    String subject  =   sendto.getText().toString();
+                    String message  =   content.getText().toString();
+                    Intent email    =   new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
+                    email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    email.putExtra(Intent.EXTRA_TEXT, message);
 
+                    //need this to prompts email client only
+                    email.setType("message/rfc822");
+
+                    startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                    Toast.makeText(getApplicationContext(), "메일 발송", Toast.LENGTH_SHORT).show();
                 }
             });
-
+//            aDialog.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
