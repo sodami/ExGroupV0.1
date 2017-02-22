@@ -8,7 +8,8 @@ public class GroupData{
     private int id;
     private int user_id;
     private int group_id;
-    private String manager;
+    private int manager;
+    private int waitActRst;
     private String ctime;
     private String utime;
     private String weight;
@@ -22,6 +23,14 @@ public class GroupData{
     private String goalDate;
     private String groupCreateDate;
     private int activation;
+
+    public int getWaitActRst() {
+        return waitActRst;
+    }
+
+    public void setWaitActRst(int waitActRst) {
+        this.waitActRst = waitActRst;
+    }
 
     public int getId() {
         return id;
@@ -47,11 +56,11 @@ public class GroupData{
         this.group_id = group_id;
     }
 
-    public String getManager() {
+    public int getManager() {
         return manager;
     }
 
-    public void setManager(String manager) {
+    public void setManager(int manager) {
         this.manager = manager;
     }
 

@@ -63,6 +63,8 @@ public class NetSSL {
             client = new OkHttpClient.Builder()
                     .sslSocketFactory(sslSocketFactory, x509TrustManager)
                     .hostnameVerifier(hostnameVerifier)
+                    .addInterceptor(new AddCookiesInterceptor(context))
+                    .addInterceptor(new ReceivedCookiesInterceptor(context))
                     .build();
             retrofit = new Retrofit.Builder()
                     .baseUrl("http://ec2-52-78-98-243.ap-northeast-2.compute.amazonaws.com")

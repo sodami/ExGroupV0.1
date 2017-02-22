@@ -29,7 +29,7 @@ import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
-import com.google.slashb410.exgroup.model.group.group.ResGroupData;
+import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
@@ -40,6 +40,7 @@ import com.google.slashb410.exgroup.util.U;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -67,10 +68,8 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
-
     GridAdapter gridAdapter;
-    ResGroupData resGroupData;
-
+    GridView gridView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,27 +100,13 @@ public class Home2Activity extends AppCompatActivity
         //출석체크
         checkAttend();
         //프로필박스 세팅
-//        setProfileBox();
+        setProfileBox();
         //그룹리스트 세팅
         setGroupList();
 
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
 
-        GridView gridView = (GridView) findViewById(R.id.group_grid);
-//        GridAdapter gridAdapter = new GridAdapter(this, R.layout.group_card_view, ResGroupData.Result);
-//
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                if(position==groupName.length-1){
-//                    U.getInstance().goNext(getApplicationContext(), GroupAddActivity.class, false, false);
-//                }else{
-//                     U.getInstance().goNext(getApplicationContext(), GroupHomeActivity.class, false, false);
-//                }
-//            }
-//        });
         //-------------------------------------------------------------------------------------------
 
         // [ menu type ] 0:에러 1:체중 2:운동 3:식단
@@ -162,7 +147,21 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResGroupList>() {
             @Override
             public void onResponse(Call<ResGroupList> call, Response<ResGroupList> response) {
-                U.getInstance().myLog(response.body().getResultCode()+"");
+                if(response.body()==null) {
+                    U.getInstance().myLog("setGroupList body is NULL");
+                    return;
+                }
+                if(response.body().getResultCode()==1) {
+                    ArrayList<GroupData> actRst = response.body().getResult().getActRst();
+                    ArrayList<GroupData> unActRst = response.body().getResult().getUnActRst();
+                    U.getInstance().myLog(response.body().getResult().getActRst().toString());
+                    gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, unActRst);
+                    gridView = (GridView) findViewById(R.id.group_grid);
+                    gridView.setAdapter(gridAdapter);
+
+                }else{
+                    U.getInstance().myLog("setGroupList resultCode : "+response.body().getResultCode());
+                }
             }
 
             @Override
@@ -228,14 +227,11 @@ public class Home2Activity extends AppCompatActivity
             }
 
             //3. 마지막 접속일자와 오늘날짜가 다르다면 출석체크
-
             if (today_date != null && lastdate_date != null) {
                 int compare = today_date.compareTo(lastdate_date);
                 if (compare != 0) {
                     //마지막 접속일자가 오늘이 아니라면 출석체크
-
                     U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
-
                 }
             }
         }
@@ -324,7 +320,6 @@ public class Home2Activity extends AppCompatActivity
             E.KEY.new_write.deleteWriteData();
             E.KEY.shotData.deleteShotData();
             this.finish();
-
 
         }
         return true;

@@ -3,6 +3,8 @@ package com.google.slashb410.exgroup.db;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Set;
+
 import static com.google.slashb410.exgroup.db.E.KEY.STORAGE_KEY;
 
 /**
@@ -16,6 +18,19 @@ public class StorageHelper {
     }
 
     private StorageHelper() {
+    }
+
+    public void setSetString(Context context, String key, Set<String> value){
+        SharedPreferences.Editor editor = context.getSharedPreferences(STORAGE_KEY, 0).edit();
+        editor.putStringSet(key, value);
+        editor.commit();
+    }
+
+
+    public Set<String> getSetString(Context context, String key) {
+
+        return context.getSharedPreferences(STORAGE_KEY, 0).getStringSet(key, null);
+
     }
 
     public void setString(Context context, String key, String value) {

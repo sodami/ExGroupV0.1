@@ -56,7 +56,7 @@ public interface MemberImpFactory {
     @POST("users")
     Call<ResJoin> join(@Body ReqJoin reqJoin);
 
-    //A_7 로그인
+    //A_7. 로그인
     @POST("auth/local/login")
     Call<ResLogin> login(@Body ReqLogin reqLogin);
 

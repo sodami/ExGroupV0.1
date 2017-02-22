@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp">
         <EditText
+            android:id="@+id/search_groupId"
             android:padding="4dp"
             android:hint="그룹 ID를 붙여넣으세요."
             android:background="@null"
