@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_InputInit0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.google.slashb410.exgroup.ui.join.InputInit0Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_join"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:src="@drawable/com_facebook_profile_picture_blank_square" />
+
+            <ImageView
+                android:clickable="false"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/camera_black" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/nickname_join"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_big"
+            android:hint="@string/nickname" />
+
+        <EditText
+            android:id="@+id/phone_number_join"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_big"
+            android:hint="@string/phone"
+            android:inputType="phone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_phone"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/nextBtn_init0"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/gmd_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/gmd_button_margin"
+        android:background="@drawable/button_white"
+        android:text="다음으로" />
+
+</RelativeLayout>

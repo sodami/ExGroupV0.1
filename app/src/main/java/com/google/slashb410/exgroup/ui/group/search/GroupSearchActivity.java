@@ -1,15 +1,20 @@
 package com.google.slashb410.exgroup.ui.group.search;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.InnerSearchData;
 import com.google.slashb410.exgroup.model.group.SearchData;
+import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
 
 import java.util.ArrayList;
@@ -17,6 +22,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GroupSearchActivity extends AppCompatActivity {
 
@@ -26,6 +34,8 @@ public class GroupSearchActivity extends AppCompatActivity {
     SearchListAdapter searchListAdapter;
     @BindView(R.id.searchBtn)
     ImageButton searchBtn;
+    @BindView(R.id.search_groupId)
+    EditText inputId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +48,6 @@ public class GroupSearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         searchDatas = new ArrayList<>();
-        searchList = new ListView(this);
         searchList.findViewById(R.id.search_list);
 
         InnerSearchData data1 = new InnerSearchData(1, "슬비네그룹", "2017년 2월 16일", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTljSpp2dT2sosNYj5qVV7UkgZP-S8mNRJ-kSyEWU_3IRa16PazCQGGKg", 3, 5);
@@ -65,13 +74,32 @@ public class GroupSearchActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchBtn)
-    public void goSearch(){
-        U.getInstance().myLog("들어오긴함");
-        InnerSearchData data2 = new InnerSearchData(2, "소담이네그룹", "2017년 2월 10일", "http://image.fmkorea.com/files/attach/new/20160714/486616/2489100/413010944/99b983892094b5c6d2fc3736e15da7d1.jpg", 2, 3);
-        SearchData searchData2 = new SearchData();
-        searchData2.setResult(data2);
-        searchDatas.add(1, searchData2);
+    public void goSearch(View view){
+        U.getInstance().myLog("검색버튼 들어오긴함");
+        String keyword = inputId.getText().toString();
+        Call<ResGroupSearch> resSearchCall = NetSSL.getInstance().getGroupImpFactory().searchGroup(keyword);
+        resSearchCall.enqueue(new Callback<ResGroupSearch>() {
+            @Override
+            public void onResponse(Call<ResGroupSearch> call, Response<ResGroupSearch> response) {
+                if (response.body() == null) {
+                    U.getInstance().myLog("body is null");
+                    return;
+                }
+                if (response.body().getResultCode() == 1) {
+                    U.getInstance().myLog(response.body().toString());
 
-        searchListAdapter.notifyDataSetChanged();
+                } else {
+                    //resultCode == 0
+                    Snackbar.make(view, "죄송합니다. 다시 시도해 주세요.", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResGroupSearch> call, Throwable t) {
+
+            }
+
+        });
+
     }
 }

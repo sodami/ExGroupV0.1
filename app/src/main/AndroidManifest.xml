@@ -11,7 +11,7 @@
     <uses-feature android:name="android.hardware.camera2" />
 
     <application
-        android:name=".util.CameraApplication"
+        android:name=".util.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +30,6 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
         <!-- [END fcm_default_icon] -->
-        //=============================================================================
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -48,8 +47,6 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
-        //=============================================================================
-        //=============================================================================
         <activity
             android:name=".ui.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -59,22 +56,27 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".ui.join.Input1Activity"
+            android:name=".ui.join.JoinActivity"
+            android:label="@string/join"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.join.Input2Activity"
+            android:name=".ui.join.InputInit0Activity"
+            android:label="@string/join"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.join.InputInit1Activity" />
+        <activity android:name=".ui.join.InputInit1Activity"
+            android:label="@string/input_init"/>
+        <activity android:name=".ui.join.InputInit2Activity"
+            android:label="@string/input_init" />
         <activity
             android:name=".ui.mypage.MyHomeActivity"
             android:label="@string/mypage" />
-        <activity android:name=".ui.join.InputInit2Activity" />
         <activity
             android:name=".ui.group.create.GroupAddActivity"
             android:label="@string/group_add" />
         <activity
             android:name=".ui.group.room.GroupHomeActivity"
-            android:label="@string/group_name" />
+            android:label="@string/group_name"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.group.create.GroupWaitingActivity" />
         <activity
             android:name=".ui.EnterActivity"
@@ -99,7 +101,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.group.room.tabs.comments.GroupShotsCommentsActivity"
-            android:label="@string/comment_title"/>
+            android:label="@string/comment_title" />
         <activity
             android:name=".ui.navi.DeveloperMessage"
             android:theme="@style/AppTheme.NoActionBar" />

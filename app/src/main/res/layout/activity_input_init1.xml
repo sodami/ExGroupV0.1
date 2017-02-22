@@ -9,73 +9,85 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.google.slashb410.exgroup.ui.join.InputInit1Activity">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/text_big" />
-<TextView
-    android:text="@string/age_unit"
-    android:textSize="@dimen/text_default"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/text_default" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
+                android:id="@+id/age_join"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/text_big"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/text_default"
+                android:text="@string/age_unit"
+                android:textSize="@dimen/text_default" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/height_join"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/text_big"
                 android:layout_weight="1"
-                android:id="@+id/height"
-                android:inputType="number"
                 android:hint="@string/height"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/text_big" />
+                android:inputType="number" />
+
             <TextView
-                android:text="@string/height_unit"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/text_default" />
+                android:layout_height="@dimen/text_default"
+                android:text="@string/height_unit" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
-                android:layout_weight="1"
-                android:inputType="number"
-                android:id="@+id/weight"
-                android:hint="@string/weight"
+                android:id="@+id/weight_join"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/text_big" />
+                android:layout_height="@dimen/text_big"
+                android:layout_weight="1"
+                android:hint="@string/weight"
+                android:inputType="number" />
+
             <TextView
-                android:text="@string/weight_unit"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/text_default" />
+                android:layout_height="@dimen/text_default"
+                android:text="@string/weight_unit" />
         </LinearLayout>
+
         <TextView
-            android:text="@string/info_bmi"
             android:layout_width="match_parent"
-            android:textSize="@dimen/text_small"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/info_bmi"
+            android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 
     <Button
-        android:background="@drawable/button_white"
-        android:text="다음으로"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:id="@+id/nextBtn3"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/gmd_button_height"
-        android:layout_margin="@dimen/gmd_button_margin"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/gmd_button_margin"
+        android:background="@drawable/button_white"
+        android:text="다음으로" />
 </RelativeLayout>

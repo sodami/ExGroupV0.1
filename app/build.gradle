@@ -60,14 +60,13 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     //서버로 데이터를 보낼때 okhttp를 사용한다면 추가
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
-
     compile 'com.firebaseui:firebase-ui-database:1.1.0'
     compile 'com.github.traex.calendarlistview:library:1.2.3'
-
     compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
     // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile files('MPAndroidChart-3.0.1/gradle/wrapper/gradle-wrapper.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'
