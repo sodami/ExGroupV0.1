@@ -31,6 +31,7 @@ import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
+import com.google.slashb410.exgroup.ui.navi.DeveloperMessage;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
 
@@ -45,6 +46,8 @@ import butterknife.OnClick;
 public class Home2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+
     @BindView(R.id.fab)
     FloatingActionMenu floatingActionMenu;
     @BindView(R.id.quick_scale)
@@ -56,8 +59,6 @@ public class Home2Activity extends AppCompatActivity
 
     GridAdapter gridAdapter;
     ResGroupData resGroupData;
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,6 +85,7 @@ public class Home2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+
 
         //출석체크
         checkAttend();
@@ -119,9 +121,7 @@ public class Home2Activity extends AppCompatActivity
             public void onClick(View v) {
                 goQuickMenu(2);            }
         });
-
         mealQuick.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 goQuickMenu(3);
@@ -161,7 +161,6 @@ public class Home2Activity extends AppCompatActivity
             U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
             setLastDate(this, today);
         }else {
-
             SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
             Date today_date = null;
             Date lastdate_date = null;
@@ -238,10 +237,27 @@ public class Home2Activity extends AppCompatActivity
             aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
             aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+                    String to       =   DeveloperMessage.editTextTo.getText().toString();
+                    String subject  =   DeveloperMessage.editTextSubject.getText().toString();
+                    String message  =   DeveloperMessage.editTextMessage.getText().toString();
+                    Intent email    =   new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
+                    email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    email.putExtra(Intent.EXTRA_TEXT, message);
 
+                    //need this to prompts email client only
+                    email.setType("message/rfc822");
+
+                    startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                    Toast.makeText(getApplicationContext(), "메일 발송", Toast.LENGTH_SHORT).show();
                 }
             });
-
+//            aDialog.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();

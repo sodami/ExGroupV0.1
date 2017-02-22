@@ -53,10 +53,7 @@
     <string name="beforeAuth_info">인증전</string>
     <string name="group_search">그룹 검색</string>
     <string name="title_activity_get_planet">GetPlanetActivity</string>
-<<<<<<< HEAD
     <string name="write">글쓰기</string>
-=======
     <string name="group_activeday">활동기간</string>
     <string name="comment_title">댓글 보기</string>
->>>>>>> cb8ab04d4484124306665c83b5c2664c33f29ba4
 </resources>
