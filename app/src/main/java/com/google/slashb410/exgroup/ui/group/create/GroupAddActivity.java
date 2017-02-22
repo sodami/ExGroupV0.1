@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.ui.group.create;
 
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -61,48 +62,13 @@ public class GroupAddActivity extends AppCompatActivity {
         return term;
 
     }
-
-<<<<<<< HEAD
-//    @OnClick(R.id.group_add)
-
-//        public void goAdd () {
-=======
     @OnClick(R.id.group_add)
     public void goAdd() {
->>>>>>> e17a066077aeee68413868be874540a616d561ed
 //
-//            E.KEY.new_group.setGroupName(groupName.getText().toString());
-//            //E.KEY.new_group.setGroupImgPath();
-//            E.KEY.new_group.setTerm(groupTerm);
+//        E.KEY.new_group.setGroupName(groupName.getText().toString());
+//        //E.KEY.new_group.setGroupImgPath();
+//        E.KEY.new_group.setTerm(groupTerm);
 //
-<<<<<<< HEAD
-//            E.KEY.group_list.add(E.KEY.new_group);
-//
-//            U.getInstance().goNext(this, WeightCheckActivity.class, false, false);
-//            finish();
-//        }
-
-        @OnClick(R.id.group_profileImg)
-        public void onSetProfile () {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            String[] items = {"카메라", "갤러리"};
-
-            builder.setTitle("그룹 대표이미지 선택")
-                    .setItems(items, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 0: {
-                                    U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
-                                    dialog.dismiss();
-                                }
-                                break;
-                                case 1: {
-                                    U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
-                                    dialog.dismiss();
-                                }
-                                break;
-=======
 //        E.KEY.group_list.add(E.KEY.new_group);
 
     }
@@ -122,17 +88,18 @@ public class GroupAddActivity extends AppCompatActivity {
                             }
                             break;
                             case 1: {
-                               // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
+                                // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
->>>>>>> e17a066077aeee68413868be874540a616d561ed
                             }
+                            break;
                         }
-                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            }).show();
+                    }
+                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
 
-        }
+    }
 }

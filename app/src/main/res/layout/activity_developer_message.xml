@@ -67,13 +67,4 @@
         android:layout_alignParentLeft="true"
         android:text="Message:" />
 
-    <!--<Button-->
-        <!--android:id="@+id/button1"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/editText3"-->
-        <!--android:layout_below="@+id/editText3"-->
-        <!--android:layout_marginLeft="76dp"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:text="Send" />-->
     </RelativeLayout>

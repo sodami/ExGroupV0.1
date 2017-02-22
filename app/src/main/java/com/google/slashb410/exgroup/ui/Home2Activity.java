@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,18 +32,18 @@ import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
-import com.google.slashb410.exgroup.model.group.group.ResGroupData;
+import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
-import com.google.slashb410.exgroup.ui.navi.DeveloperMessage;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -70,14 +73,9 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
-
+    GridView gridView;
     GridAdapter gridAdapter;
-    ResGroupData resGroupData;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e17a066077aeee68413868be874540a616d561ed
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home2_menu, menu);
@@ -104,13 +102,12 @@ public class Home2Activity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-
         //출석체크
-        checkAttend();
+        //checkAttend();
         //프로필박스 세팅
 //        setProfileBox();
         //그룹리스트 세팅
-        setGroupList();
+        //setGroupList();
 
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
@@ -154,6 +151,7 @@ public class Home2Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                //this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -162,12 +160,28 @@ public class Home2Activity extends AppCompatActivity
 
     }
 
+
+
     private void setGroupList() {
         Call<ResGroupList> resMe = NetSSL.getInstance().getGroupImpFactory().groupList();
         resMe.enqueue(new Callback<ResGroupList>() {
             @Override
             public void onResponse(Call<ResGroupList> call, Response<ResGroupList> response) {
-                U.getInstance().myLog(response.body().getResultCode()+"");
+                if(response.body()==null) {
+                    U.getInstance().myLog("setGroupList body is NULL");
+                    return;
+                }
+                if(response.body().getResultCode()==1) {
+                    ArrayList<GroupData> actRst = response.body().getResult().getActRst();
+                    ArrayList<GroupData> unActRst = response.body().getResult().getUnActRst();
+                    U.getInstance().myLog(response.body().getResult().getActRst().toString());
+                    gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, unActRst);
+                    gridView = (GridView) findViewById(R.id.group_grid);
+                    gridView.setAdapter(gridAdapter);
+
+                }else{
+                    U.getInstance().myLog("setGroupList resultCode : "+response.body().getResultCode());
+                }
             }
 
             @Override
@@ -183,9 +197,9 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if(response.body().getNickname().equals("")){
+                if (response.body().getNickname().equals("")) {
                     U.getInstance().myLog("바디 널");
-                }else {
+                } else {
                     nick_profile.setText(response.body().getNickname());
                     bmi.setText(response.body().getBMI());
                     seqAttendNum.setText(response.body().getSeqAttendNum());
@@ -194,10 +208,9 @@ public class Home2Activity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<ResMe> call, Throwable t) {
-                U.getInstance().myLog("접근실패 : "+t.toString());
+                U.getInstance().myLog("접근실패 : " + t.toString());
             }
         });
-
     }
 
 
@@ -207,8 +220,8 @@ public class Home2Activity extends AppCompatActivity
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkAttend() {
-
         //1. 마지막 접속일자 가져오기
         String lastdate = getLastDate(this);
 
@@ -220,12 +233,7 @@ public class Home2Activity extends AppCompatActivity
         if (lastdate == null) {
             U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
             setLastDate(this, today);
-<<<<<<< HEAD
-        }else {
-=======
         } else {
-
->>>>>>> e17a066077aeee68413868be874540a616d561ed
             SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
             Date today_date = null;
             Date lastdate_date = null;
@@ -235,7 +243,6 @@ public class Home2Activity extends AppCompatActivity
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             //3. 마지막 접속일자와 오늘날짜가 다르다면 출석체크
 
             if (today_date != null && lastdate_date != null) {
@@ -298,13 +305,16 @@ public class Home2Activity extends AppCompatActivity
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
+            final EditText title    =    (EditText)layout.findViewById(R.id.editText1);
+            final EditText sendto   =    (EditText)layout.findViewById(R.id.editText2);
+            final EditText content  =    (EditText)layout.findViewById(R.id.editText3);
             AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
             aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
             aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    String to       =   DeveloperMessage.editTextTo.getText().toString();
-                    String subject  =   DeveloperMessage.editTextSubject.getText().toString();
-                    String message  =   DeveloperMessage.editTextMessage.getText().toString();
+                    String to       =   title.getText().toString();
+                    String subject  =   sendto.getText().toString();
+                    String message  =   content.getText().toString();
                     Intent email    =   new Intent(Intent.ACTION_SEND);
                     email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
                     email.putExtra(Intent.EXTRA_SUBJECT, subject);

@@ -56,8 +56,5 @@
     <string name="write">글쓰기</string>
     <string name="group_activeday">활동기간</string>
     <string name="comment_title">댓글 보기</string>
-<<<<<<< HEAD
-=======
     <string name="input_init">기본 정보 입력</string>
->>>>>>> e17a066077aeee68413868be874540a616d561ed
 </resources>

@@ -3,7 +3,6 @@ package com.google.slashb410.exgroup.ui.navi;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.slashb410.exgroup.R;
@@ -11,7 +10,7 @@ import com.google.slashb410.exgroup.R;
 public class DeveloperMessage extends AppCompatActivity {
 
     public static EditText editTextTo,editTextSubject,editTextMessage;
-    public static Button send;
+    // public static Button send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
