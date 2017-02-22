@@ -83,6 +83,14 @@ public class NetSSL {
         }
         return memberImpFactory;
     }
+
+    GroupImpFactory groupImpFactory;
+    public GroupImpFactory getGroupImpFactory(){
+        if(groupImpFactory == null){
+            groupImpFactory = retrofit.create(GroupImpFactory.class);
+        }
+        return groupImpFactory;
+    }
     ////////////////////////////////////////////////////////////////////////
     // HostnameVerifier
     private  HostnameVerifier getHostnameVerifier()

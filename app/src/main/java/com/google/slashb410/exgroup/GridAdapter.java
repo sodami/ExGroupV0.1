@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.db.E;
-import com.google.slashb410.exgroup.model.group.group.ResGroupData;
+import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.ui.group.create.GroupAddActivity;
 import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.google.slashb410.exgroup.util.U;
@@ -27,27 +27,34 @@ import java.util.ArrayList;
 public class GridAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<ResGroupData.Data> groupData;
+    ArrayList<GroupData> actGroup;
+    ArrayList<GroupData> unActGroup;
     int layout;
     LayoutInflater inflater;
 
-    public GridAdapter(Context context, int layout, ArrayList<ResGroupData.Data> groupData) {
+    public GridAdapter(Context context, int layout, ArrayList<GroupData> actGroup, ArrayList<GroupData> unActGroup) {
         this.context = context;
         this.layout = layout;
-        this.groupData = groupData;
+        this.actGroup = actGroup;
+        this.unActGroup = unActGroup;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return (groupData.size() + 1);
+        return (actGroup.size() + unActGroup.size() + 1);
     }
 
     @Override
     public Object getItem(int position) {
-
-        if (groupData.size() == position) return null;
-        return groupData.get(position);
+        if(position<actGroup.size()){
+            return actGroup.get(position);
+        }else if(position==(actGroup.size()+unActGroup.size())) {
+            return null;
+        }else{
+            position = position - actGroup.size();
+            return unActGroup.get(position);
+        }
     }
 
     @Override
@@ -66,7 +73,7 @@ public class GridAdapter extends BaseAdapter {
         CardView cardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
         CardView groupCardview = (CardView) convertView.findViewById(R.id.group_cardview);
 
-        if (position == E.KEY.GROUP_MAX) {
+        if (actGroup.size() > E.KEY.GROUP_MAX) {
             groupCardview.setVisibility(View.GONE);
             cardView.setVisibility(View.VISIBLE);
             cardView.setClickable(false);
@@ -78,7 +85,7 @@ public class GridAdapter extends BaseAdapter {
             textView.setTextColor(Color.WHITE);
 
 
-        } else if (position == groupData.size()) {
+        } else if (position == actGroup.size()) {
             groupCardview.setVisibility(View.GONE);
             cardView.setVisibility(View.VISIBLE);
             cardView.setOnClickListener(new View.OnClickListener() {
@@ -94,21 +101,21 @@ public class GridAdapter extends BaseAdapter {
             imageView = (ImageView) convertView.findViewById(R.id.group_cardImg);
             textView2 = (TextView) convertView.findViewById(R.id.group_term);
 
-            textView.setText(groupData.get(position).getGroupTitle());
+            textView.setText(actGroup.get(position).getGroupTitle());
             Picasso.with(context)
-                    .load(groupData.get(position).getPicUrl())
+                    .load(actGroup.get(position).getGroupPicUrl())
                     .fit()
                     .centerCrop()
                     .into(imageView);
 
-            //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), groupData.get(position).getGroupImgPath(), imageView);
+            //   FireBaseStorageHelper.getInstance().getImage(convertView.getContext(), actGroup.get(position).getGroupImgPath(), imageView);
 
             groupCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
-                    intent.putExtra("title", groupData.get(position).getGroupTitle());
-                    intent.putExtra("image", groupData.get(position).getPicUrl());
+                    intent.putExtra("title", actGroup.get(position).getGroupTitle());
+                    intent.putExtra("image", actGroup.get(position).getGroupPicUrl());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     v.getContext().startActivity(intent);
                 }

@@ -1,11 +1,11 @@
 package com.google.slashb410.exgroup.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import com.facebook.CallbackManager;
@@ -19,7 +19,7 @@ import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
 import com.google.slashb410.exgroup.net.NetSSL;
-import com.google.slashb410.exgroup.ui.join.InputInit1Activity;
+import com.google.slashb410.exgroup.ui.join.JoinActivity;
 import com.google.slashb410.exgroup.util.U;
 
 import org.json.JSONObject;
@@ -91,61 +91,62 @@ public class EnterActivity extends AppCompatActivity {
 
     @OnClick(R.id.joinBtn)
     public void onJoin() {
-        reqLogin.setUsername(email.getText().toString()+"");
-        reqLogin.setPassword(password.getText().toString()+"");
-
-        Call<ResLogin> resLoginCall = NetSSL.getInstance().getMemberImpFactory().login(reqLogin);
-        resLoginCall.enqueue(new Callback<ResLogin>() {
-            @Override
-            public void onResponse(Call<ResLogin> call, Response<ResLogin> response) {
-                if(response.body()==null) {
-                    U.getInstance().myLog("body is null");
-                    return;
-                }
-                if(response.body().getResultCode()==1){
-                    U.getInstance().myLog(response.body().getMessage());
-                    U.getInstance().myLog("activation : "+response.body().getUser().getActivation());
-                    if(response.body().getUser().getActivation()==1){
-                        //계정 활성화
-                        U.getInstance().goNext(EnterActivity.this, Home2Activity.class, false, false);
-                        finish();
-                    }else{
-                        //계정 비활성화 -> 정보입력
-                        U.getInstance().goNext(EnterActivity.this, InputInit1Activity.class, false, false);
-                        finish();
-                    }
-                }else{
-                    //resultCode == 0
-                    AlertDialog.Builder builder = new AlertDialog.Builder(EnterActivity.this);
-                    builder.setTitle("로그인 에러")
-                            .setMessage("다시 로그인해주시기 바랍니다.")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResLogin> call, Throwable t) {
-
-            }
-        });
+        U.getInstance().goNext(this, JoinActivity.class, false, false);
     }
 
     @OnClick(R.id.loginBtn)
-    public void onLogin() {
+    public void onLogin(View view) {
         //최초 로그인 시 튜토리얼 진행
         if (isFirstLogin()) {
 
         } else {
-            //아니면 홈화면
-            U.getInstance().goNext(this, Home2Activity.class, false, false);
-            finish();
+            if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
+                Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
+            } else {
+                reqLogin = new ReqLogin();
+                reqLogin.setUsername(email.getText().toString());
+                reqLogin.setPassword(password.getText().toString());
+
+                Call<ResLogin> resLoginCall = NetSSL.getInstance().getMemberImpFactory().login(reqLogin);
+                resLoginCall.enqueue(new Callback<ResLogin>() {
+                    @Override
+                    public void onResponse(Call<ResLogin> call, Response<ResLogin> response) {
+                        U.getInstance().goNext(EnterActivity.this, Home2Activity.class, false, false);
+//                        U.getInstance().myLog((response.body().toString()+""));
+//                        if (response.body().getResultCode() == 1) {
+//                            U.getInstance().myLog(response.body().getMessage());
+//                            U.getInstance().myLog("activation : " + response.body().getUser().getActivation());
+//                            if (response.body().getUser().getActivation() == 1) {
+//                                //계정 활성화
+//                                U.getInstance().goNext(EnterActivity.this, Home2Activity.class, false, false);
+//                                finish();
+//                            } else {
+//                                //계정 비활성화 -> 정보입력
+//                                U.getInstance().goNext(EnterActivity.this, InputInit0Activity.class, false, false);
+//                                finish();
+//                            }
+//                        } else {
+//                            //resultCode == 0
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(EnterActivity.this);
+//                            builder.setTitle("로그인 에러")
+//                                    .setMessage("다시 로그인해주시기 바랍니다.")
+//                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            dialog.dismiss();
+//                                        }
+//                                    })
+//                                    .show();
+//
+//                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResLogin> call, Throwable t) {
+                        U.getInstance().myLog("접근실패 : "+t.toString());
+                    }
+                });
+            }
         }
 
     }

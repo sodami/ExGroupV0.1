@@ -1,15 +1,21 @@
 package com.google.slashb410.exgroup.net;
 
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
+import com.google.slashb410.exgroup.model.group.home.ReqInitInfo;
+import com.google.slashb410.exgroup.model.group.home.ReqJoin;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
 import com.google.slashb410.exgroup.model.group.home.ReqUsers;
+import com.google.slashb410.exgroup.model.group.home.ResInitInfo;
+import com.google.slashb410.exgroup.model.group.home.ResJoin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
+import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.model.group.home.ResStandard;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 
 /**
@@ -38,6 +44,18 @@ public interface MemberImpFactory {
     @POST("users")
     Call<ResStandard> userInfo(@Body ReqUsers reqUsers);
 
+    //A_2. 기초 정보 등록
+    @PUT("users")
+    Call<ResInitInfo> initInfo(@Body ReqInitInfo reqInitInfo);
+
+//    A_3. 자신의 정보 보기
+    @GET("users/me")
+    Call<ResMe> userMe();
+
+    //A_6. 최초 회원가입
+    @POST("users")
+    Call<ResJoin> join(@Body ReqJoin reqJoin);
+
     //A_7 로그인
     @POST("auth/local/login")
     Call<ResLogin> login(@Body ReqLogin reqLogin);
@@ -45,6 +63,8 @@ public interface MemberImpFactory {
     //D_2. 가입 그룹 리스트 불러오기
     @GET("groups")
     Call<ResGroupData> groupData();
+
+
 
 }
 

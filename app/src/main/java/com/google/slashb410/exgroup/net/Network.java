@@ -36,6 +36,14 @@ public class Network {
         }
         return memberImpFactory;
     }
+
+    GroupImpFactory groupImpFactory;
+    public GroupImpFactory getGroupImpFactory(){
+        if(groupImpFactory == null){
+            groupImpFactory = retrofit.create(GroupImpFactory.class);
+        }
+        return groupImpFactory;
+    }
     ////////////////////////////////////////////////////////////////////////
 }
 
