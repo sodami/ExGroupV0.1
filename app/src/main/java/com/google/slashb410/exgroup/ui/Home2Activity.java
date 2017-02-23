@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +35,7 @@ import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
+import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
@@ -73,9 +75,14 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
+<<<<<<< HEAD
+    GridView gridView;
+    GridAdapter gridAdapter;
+=======
     GridAdapter gridAdapter;
     GridView gridView;
 
+>>>>>>> e786f379452fbed8c716a1a3cb00e0852baab484
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home2_menu, menu);
@@ -281,22 +288,30 @@ public class Home2Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            Intent intent = new Intent(this, EnterActivity.class);
-            startActivity(intent);
+            // 누르면 로그아웃
+              onLogout();
+//            Intent intent = new Intent(this, EnterActivity.class);
+//            startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
+            // 누르면 출석체크 푸쉬 on/off
 
         } else if (id == R.id.nav_slideshow) {
+            // 누르면 운동, 식당 인증 푸쉬 on/off
 
         } else if (id == R.id.nav_manage) {
+            // 누르면 개발자에게 문의하기
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
             final EditText title    =    (EditText)layout.findViewById(R.id.editText1);
             final EditText sendto   =    (EditText)layout.findViewById(R.id.editText2);
             final EditText content  =    (EditText)layout.findViewById(R.id.editText3);
+            // 알람창 띄우기
             AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
-            aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
+            // dialog.xml 파일을 뷰로 셋팅
+            aDialog.setView(layout);
+            // send 버튼 클릭 시 이벤트
             aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     String to       =   title.getText().toString();
@@ -311,7 +326,7 @@ public class Home2Activity extends AppCompatActivity
                     email.setType("message/rfc822");
 
                     startActivity(Intent.createChooser(email, "Choose an Email client :"));
-                    Toast.makeText(getApplicationContext(), "메일 발송", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "메일 발송이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
 //            aDialog.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
@@ -328,10 +343,38 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //로그아웃
+    public void onLogout(){
+        Call<ResLogout> res =
+                NetSSL.getInstance().getMemberImpFactory().logout(); //전문에 있는 양식 순서대로
+        res.enqueue(new Callback<ResLogout>() { //enqueue가 callback오니까
+            @Override
+            public void onResponse(Call<ResLogout> call, Response<ResLogout> response) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body().getReusltCode()==1) {
+                            Log.i("RF", "로그아웃성공" + response.body().getMessage());
+                        }else{
+                            Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
+                        }
+                    }else{
+                        Log.i("RF", "2로그아웃실패" + response.code()); //통신은 들어갔는데 오류
+                    }
+                }else{
+                    Log.i("RF", "3응답 데이터 오류");
+                }
+                // Log.i("RF", "가입실패   //" + response);
+            }
+            @Override
+            public void onFailure(Call<ResLogout> call, Throwable t) { //통신 자체 실패
+                Log.i("RF", "ERR"+t.getMessage());
+            }
+        });
     }
 
     @OnClick(R.id.profile_box)
