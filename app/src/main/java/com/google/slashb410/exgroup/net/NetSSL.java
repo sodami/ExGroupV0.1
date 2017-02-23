@@ -16,6 +16,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -65,6 +66,7 @@ public class NetSSL {
                     .hostnameVerifier(hostnameVerifier)
                     .addInterceptor(new AddCookiesInterceptor(context))
                     .addInterceptor(new ReceivedCookiesInterceptor(context))
+                    .connectTimeout(30, TimeUnit.SECONDS)
                     .build();
             retrofit = new Retrofit.Builder()
                     .baseUrl("https://ec2-52-78-98-243.ap-northeast-2.compute.amazonaws.com")

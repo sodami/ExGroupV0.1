@@ -4,7 +4,7 @@ import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ReqMakeGroup;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
-import com.google.slashb410.exgroup.model.group.group.ResGroupWaitingMember;
+import com.google.slashb410.exgroup.model.group.group.ResUncertifiedMem;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,7 +33,7 @@ public interface GroupImpFactory {
 
     //C_3. 그룹에 가입했지만 인증하지 않은 사람 나타내기
     @GET("groups/{groupid}/uncertifiedMem")
-    Call<ResGroupWaitingMember> waitingMember(@Path("groupid") String groupId);
+    Call<ResUncertifiedMem> uncertifiedMem (@Path("groupid") String groupId);
 
     //D_2. 가입 그룹 리스트 불러오기
     @GET("groups")
