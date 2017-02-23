@@ -8,8 +8,9 @@ import com.google.slashb410.exgroup.model.group.home.ReqUsers;
 import com.google.slashb410.exgroup.model.group.home.ResInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ResJoin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
+import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
-import com.google.slashb410.exgroup.model.group.home.ResStandard;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -48,9 +49,13 @@ public interface MemberImpFactory {
     @PUT("users")
     Call<ResInitInfo> initInfo(@Body ReqInitInfo reqInitInfo);
 
-//    A_3. 자신의 정보 보기
+    //A_3. 자신의 정보 보기
     @GET("users/me")
     Call<ResMe> userMe();
+
+    //A_4. 로그아웃
+    @GET("auth/local/logout")
+    Call<ResLogout> logout();
 
     //A_6. 최초 회원가입
     @POST("users")

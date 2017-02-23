@@ -179,8 +179,9 @@ public class U {
     }
 
 
-    public void onCamera(Activity activity, String folder, ImageView imageView){
+    public String onCamera(Activity activity, String folder, ImageView imageView){
 
+        final String[] path = new String[1];
         RxPaparazzo.takeImage(activity)
                 .size(new ScreenSize())
                 .usingCamera()
@@ -188,13 +189,12 @@ public class U {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {// See response.resultCode() doc
                     if (response.resultCode() != RESULT_OK) {
-                        //  response.targetUI().showUserCanceled();
-                        return;
+                        path[0] = "file://" + response.data();
                     }
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
-                     uploadFireBase(activity, folder, response.data());
                 });
 
+        return path[0];
     }
 
     public void onGallery(Activity activity, String folder, ImageView imageView){

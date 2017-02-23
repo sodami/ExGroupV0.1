@@ -1,23 +1,32 @@
 package com.google.slashb410.exgroup.ui.group.create;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.ResStandard;
+import com.google.slashb410.exgroup.model.group.group.ReqMakeGroup;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GroupAddActivity extends AppCompatActivity {
 
@@ -27,8 +36,19 @@ public class GroupAddActivity extends AppCompatActivity {
     @BindView(R.id.group_profileImg)
     ImageView groupProfileImg;
     @BindView(R.id.group_name_add)
-    EditText groupName;
-    int groupTerm;
+    EditText groupTitle;
+    @BindView(R.id.mem_numpicker)
+    NumberPicker memPicker;
+
+    @Nullable
+    @BindView(R.id.period_picker)
+    NumberPicker periodPicker;
+    @BindView(R.id.period)
+    Button period;
+
+    String profilePath;
+    ReqMakeGroup reqMakeGroup;
+    View peroidPickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,42 +56,11 @@ public class GroupAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_add);
         ButterKnife.bind(this);
 
-    }
-
-    private int getTerm(String today, String selectedDay) {
-
-        U.getInstance().myLog(today);
-        U.getInstance().myLog(selectedDay);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-
-        Date beginDate = null;
-        Date endDate = null;
-
-        try {
-            beginDate = formatter.parse(today);
-            endDate = formatter.parse(selectedDay);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        long diff = endDate.getTime() - beginDate.getTime();
-        long diffDays = diff / (24 * 60 * 60 * 1000);
-
-        int term = Integer.parseInt(diffDays + "");
-
-        return term;
+        memPicker.setMinValue(2);
+        memPicker.setMaxValue(5);
 
     }
-    @OnClick(R.id.group_add)
-    public void goAdd() {
-//
-//        E.KEY.new_group.setGroupName(groupName.getText().toString());
-//        //E.KEY.new_group.setGroupImgPath();
-//        E.KEY.new_group.setTerm(groupTerm);
-//
-//        E.KEY.group_list.add(E.KEY.new_group);
 
-    }
     @OnClick(R.id.group_profileImg)
     public void onSetProfile() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -83,7 +72,7 @@ public class GroupAddActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0: {
-                                //U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
+                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
                             }
                             break;
@@ -101,5 +90,66 @@ public class GroupAddActivity extends AppCompatActivity {
             }
         }).show();
 
+    }
+
+    @OnClick(R.id.period)
+    public void setPeriod(){
+        periodPicker.setMinValue(7);
+        periodPicker.setMaxValue(30);
+
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        peroidPickerView = inflater.inflate(R.layout.dialog_period_picker, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("활동기간 선택")
+                .setView(peroidPickerView)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        reqMakeGroup.setExPeriod(which);
+                        period.setText(which+"일");
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    @OnClick(R.id.group_add)
+    public void goAdd(View view) {
+        if(groupTitle.getText().equals("")||period.getText().equals("")){
+            Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        reqMakeGroup = new ReqMakeGroup();
+        reqMakeGroup.setGroupTitle(groupTitle.getText().toString());
+        reqMakeGroup.setMaxNum(memPicker.getValue());
+        reqMakeGroup.setPhoto(profilePath);
+//
+//        File file = FileUtils.getPath(this, profilePath);
+//        Requestb
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), )
+
+        Call<ResStandard> resMakeGroup = NetSSL.getInstance().getGroupImpFactory().makeGroup(reqMakeGroup);
+        resMakeGroup.enqueue(new Callback<ResStandard>() {
+            @Override
+            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+                if (response.body()==null) {
+                    U.getInstance().myLog("setProfileBox Body is NULL");
+                } else {
+                    U.getInstance().myLog(response.body().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResStandard> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : " + t.toString());
+            }
+        });
     }
 }

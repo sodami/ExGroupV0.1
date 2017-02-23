@@ -24,6 +24,30 @@ public class GroupData{
     private String groupCreateDate;
     private int activation;
 
+    @Override
+    public String toString() {
+        return "GroupData{" +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", group_id=" + group_id +
+                ", manager=" + manager +
+                ", waitActRst=" + waitActRst +
+                ", ctime='" + ctime + '\'' +
+                ", utime='" + utime + '\'' +
+                ", weight='" + weight + '\'' +
+                ", weightPicUrl='" + weightPicUrl + '\'' +
+                ", nowNum=" + nowNum +
+                ", maxNum=" + maxNum +
+                ", groupTitle='" + groupTitle + '\'' +
+                ", groupPicUrl='" + groupPicUrl + '\'' +
+                ", exPeriod=" + exPeriod +
+                ", startDate='" + startDate + '\'' +
+                ", goalDate='" + goalDate + '\'' +
+                ", groupCreateDate='" + groupCreateDate + '\'' +
+                ", activation=" + activation +
+                '}';
+    }
+
     public int getWaitActRst() {
         return waitActRst;
     }

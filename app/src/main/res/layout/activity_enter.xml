@@ -68,6 +68,7 @@
                 android:id="@+id/password_login"
                 android:inputType="textPassword"
                 android:hint="@string/password"
+                android:colorControlActivated="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_big" />
 

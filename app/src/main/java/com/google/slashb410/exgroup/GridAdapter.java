@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.db.E;
@@ -44,6 +45,7 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(actGroup.size()==0&&unActGroup.size()==0) return 0;
         return (actGroup.size() + unActGroup.size() + 1);
     }
 
@@ -114,14 +116,14 @@ public class GridAdapter extends BaseAdapter {
             textView2 = (TextView) convertView.findViewById(R.id.group_term);
 
             if (position < actGroup.size()) {
+                textView.setText(actGroup.get(position).getGroupTitle());
+                Picasso.with(context)
+                        .load(actGroup.get(position).getGroupPicUrl())
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
                 if (actGroup.get(position).getWaitActRst() == 1) {
                     //2-1. 활성화그룹
-                    textView.setText(actGroup.get(position).getGroupTitle());
-                    Picasso.with(context)
-                            .load(actGroup.get(position).getGroupPicUrl())
-                            .fit()
-                            .centerCrop()
-                            .into(imageView);
                     textView2.setText(actGroup.get(position).getExPeriod());
                     groupCardview.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -137,8 +139,14 @@ public class GridAdapter extends BaseAdapter {
 
                 } else {
                     //2-2. 활동대기 그룹
-                    LinearLayout waitingLayout = (LinearLayout) convertView.findViewById(R.id.waiting_layout);
+                    FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
                     waitingLayout.setVisibility(View.VISIBLE);
+                    Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
+                    waitingLockBtn.setVisibility(View.VISIBLE);
+
+                    textView2.setVisibility(View.GONE);
+                    TextView textView3 = (TextView) convertView.findViewById(R.id.d_day);
+                    textView3.setVisibility(View.GONE);
                     waitingLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -147,6 +155,7 @@ public class GridAdapter extends BaseAdapter {
                             intent.putExtra("title", actGroup.get(position).getGroupTitle());
                             intent.putExtra("nowNum", actGroup.get(position).getNowNum());
                             intent.putExtra("maxNum", actGroup.get(position).getMaxNum());
+                            intent.putExtra("date", actGroup.get(position).getGroupCreateDate());
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             v.getContext().startActivity(intent);
                         }

@@ -77,7 +77,8 @@
             android:name=".ui.group.room.GroupHomeActivity"
             android:label="@string/group_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.group.create.GroupWaitingActivity" />
+        <activity android:name=".ui.group.create.GroupWaitingActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.EnterActivity"
             android:theme="@style/AppTheme.NoActionBar" />

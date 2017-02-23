@@ -17,6 +17,22 @@ public class ResMe {
     private int point;
     private int activation;
 
+    @Override
+    public String toString() {
+        return "ResMe{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", weight='" + weight + '\'' +
+                ", height='" + height + '\'' +
+                ", age='" + age + '\'' +
+                ", BMI='" + BMI + '\'' +
+                ", seqAttendNum=" + seqAttendNum +
+                ", nickname='" + nickname + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                ", point=" + point +
+                ", activation=" + activation +
+                '}';
+    }
 
     public String getNickname() {
         return nickname;

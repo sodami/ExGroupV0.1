@@ -3,23 +3,29 @@ package com.google.slashb410.exgroup.model.group.group;
 import java.util.ArrayList;
 
 /**
- * Created by Tacademy on 2017-02-22.
+ * Created by Tacademy on 2017-02-23.
  */
 
-public class ResGroupWaitingMember {
+public class ResUncertifiedMem {
 
-    ArrayList<WaitingMember> data;
+    ArrayList<MemSimpleData> data;
 
-    public ArrayList<WaitingMember> getData() {
+    @Override
+    public String toString() {
+        return "ResUncertifiedMem{" +
+                "data=" + data +
+                '}';
+    }
+
+    public ArrayList<MemSimpleData> getData() {
         return data;
     }
 
-    public void setData(ArrayList<WaitingMember> data) {
+    public void setData(ArrayList<MemSimpleData> data) {
         this.data = data;
     }
 
-    public class WaitingMember{
-
+    public class MemSimpleData{
         String nickname;
         String picURL;
 
