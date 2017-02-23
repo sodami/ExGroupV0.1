@@ -67,7 +67,7 @@ public class NetSSL {
                     .addInterceptor(new ReceivedCookiesInterceptor(context))
                     .build();
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-52-78-98-243.ap-northeast-2.compute.amazonaws.com")
+                    .baseUrl("https://ec2-52-78-98-243.ap-northeast-2.compute.amazonaws.com")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();

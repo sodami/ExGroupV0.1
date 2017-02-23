@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 
 public class InnerGroupList {
-    ArrayList<GroupData> actRst;
-    ArrayList<GroupData> unActRst;
+    ArrayList<GroupData> actRst = new ArrayList<>();
+    ArrayList<GroupData> unActRst = new ArrayList<>();
 
     public ArrayList<GroupData> getActRst() {
         return actRst;

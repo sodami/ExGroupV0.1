@@ -18,33 +18,21 @@
             android:layout_height="match_parent">
 
             <!-- 비활성화 카드 -->
-            <LinearLayout
+            <Button
+                android:id="@+id/waiting_lock"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/lock_white"
+                android:visibility="gone" />
+
+            <FrameLayout
                 android:id="@+id/waiting_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#cc888888"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:background="#cc888888">
-
-                <Button
-                    android:id="@+id/waiting_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/button_pink"
-                    android:text="@string/waiting_info"
-                    android:textColor="#ffffff" />
-
-                <Button
-                    android:id="@+id/beforeAuth_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/button_pink"
-                    android:text="@string/beforeAuth_info"
-                    android:textColor="#ffffff" />
-
-            </LinearLayout>
+                android:visibility="gone" />
 
             <!---->
 
@@ -54,6 +42,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:background="#ffffff"
                     android:id="@+id/group_name_card"
                     android:layout_width="match_parent"
                     android:layout_height="24dp"
@@ -82,6 +71,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/d_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="D-"
