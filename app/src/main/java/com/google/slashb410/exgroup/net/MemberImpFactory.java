@@ -9,7 +9,7 @@ import com.google.slashb410.exgroup.model.group.home.ResInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ResJoin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
-import com.google.slashb410.exgroup.model.group.home.ResStandard;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

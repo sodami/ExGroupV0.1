@@ -3,6 +3,7 @@ package com.google.slashb410.exgroup.net;
 import android.content.Context;
 
 import com.google.slashb410.exgroup.db.StorageHelper;
+import com.google.slashb410.exgroup.util.U;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -23,12 +24,14 @@ public class ReceivedCookiesInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response originalResponse = chain.proceed(chain.request());
+        U.getInstance().myLog("쿠키 받기 들어옴");
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             HashSet<String> cookies = new HashSet<>();
             for (String header : originalResponse.headers("Set-Cookie")) {
                 cookies.add(header);
             } // Preference에 cookies를 넣어주는 작업을 수행
             StorageHelper.getInstance().setSetString(context, "Cookie", cookies);
+            U.getInstance().myLog("쿠키 받앗음");
         }
         return originalResponse;
     }

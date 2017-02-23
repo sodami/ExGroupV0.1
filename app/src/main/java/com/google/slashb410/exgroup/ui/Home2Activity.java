@@ -73,13 +73,8 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
-<<<<<<< HEAD
     GridAdapter gridAdapter;
     GridView gridView;
-=======
-    GridView gridView;
-    GridAdapter gridAdapter;
->>>>>>> c6588e50f736f6c14078548778278815c2951744
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,7 +107,7 @@ public class Home2Activity extends AppCompatActivity
         //프로필박스 세팅
         setProfileBox();
         //그룹리스트 세팅
-        //setGroupList();
+        setGroupList();
 
         String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.i("토큰 확인 : ", token);
@@ -165,7 +160,10 @@ public class Home2Activity extends AppCompatActivity
                 if(response.body().getResultCode()==1) {
                     ArrayList<GroupData> actRst = response.body().getResult().getActRst();
                     ArrayList<GroupData> unActRst = response.body().getResult().getUnActRst();
-                    U.getInstance().myLog(response.body().getResult().getActRst().toString());
+
+                    U.getInstance().myLog(response.body().getResult().getActRst().get(0).toString()+"");
+                    U.getInstance().myLog(response.body().getResult().getUnActRst().size()+"");
+
                     gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, unActRst);
                     gridView = (GridView) findViewById(R.id.group_grid);
                     gridView.setAdapter(gridAdapter);
@@ -188,12 +186,13 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if (response.body().getNickname().equals("")) {
-                    U.getInstance().myLog("바디 널");
+                if (response.body()==null) {
+                    U.getInstance().myLog("setProfileBox Body is NULL");
                 } else {
-                    nick_profile.setText(response.body().getNickname());
-                    bmi.setText(response.body().getBMI());
-                    seqAttendNum.setText(response.body().getSeqAttendNum());
+                    U.getInstance().myLog(response.body().toString());
+                    if(response.body().getNickname()!=null) nick_profile.setText(response.body().getNickname());
+                    if(response.body().getBMI()!=null) bmi.setText(response.body().getBMI());
+                    if(response.body().getSeqAttendNum()!=0) seqAttendNum.setText(response.body().getSeqAttendNum());
                 }
             }
 
