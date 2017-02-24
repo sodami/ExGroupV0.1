@@ -63,13 +63,16 @@
             android:name=".ui.join.InputInit0Activity"
             android:label="@string/join"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.join.InputInit1Activity"
-            android:label="@string/input_init"/>
-        <activity android:name=".ui.join.InputInit2Activity"
+        <activity
+            android:name=".ui.join.InputInit1Activity"
+            android:label="@string/input_init" />
+        <activity
+            android:name=".ui.join.InputInit2Activity"
             android:label="@string/input_init" />
         <activity
             android:name=".ui.mypage.MyHomeActivity"
-            android:label="@string/mypage" />
+            android:label="@string/mypage"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.group.create.GroupAddActivity"
             android:label="@string/group_add" />
@@ -124,6 +127,9 @@
             android:name=".ui.GetPlanetActivity"
             android:label="@string/title_activity_get_planet"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.navi.SessionDialogActivity"></activity>
+        <activity android:name=".ui.mypage.DetailInfo"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -6,8 +6,8 @@ package com.google.slashb410.exgroup.model.group.home;
 
 public class ResLogout
 {
-    String message;
-    int reusltCode;
+    private String message;
+    private int reusltCode;
 
     public String getMessage() {
         return message;

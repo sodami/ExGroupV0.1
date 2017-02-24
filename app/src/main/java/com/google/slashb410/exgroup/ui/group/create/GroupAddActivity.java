@@ -70,11 +70,11 @@ public class GroupAddActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                            case 0: {
-                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
-                                dialog.dismiss();
-                            }
-                            break;
+//                            case 0: {
+//                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
+//                                dialog.dismiss();
+//                            }
+//                            break;
                             case 1: {
                                 // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
