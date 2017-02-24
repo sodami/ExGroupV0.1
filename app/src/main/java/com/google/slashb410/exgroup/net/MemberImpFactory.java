@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.net;
 
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.model.group.home.ReqInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ReqJoin;
@@ -10,10 +11,11 @@ import com.google.slashb410.exgroup.model.group.home.ResJoin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
 import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
-import com.google.slashb410.exgroup.model.group.ResStandard;
+import com.google.slashb410.exgroup.model.group.home.ResSessionOut;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -56,6 +58,10 @@ public interface MemberImpFactory {
     //A_4. 로그아웃
     @GET("auth/local/logout")
     Call<ResLogout> logout();
+
+    //A_5. 회원 탈퇴하기
+    @DELETE("users")
+    Call<ResSessionOut> sessionout();
 
     //A_6. 최초 회원가입
     @POST("users")

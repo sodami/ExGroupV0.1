@@ -37,6 +37,7 @@ import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.model.group.home.ResSessionOut;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
@@ -75,14 +76,9 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
-<<<<<<< HEAD
-    GridView gridView;
-    GridAdapter gridAdapter;
-=======
     GridAdapter gridAdapter;
     GridView gridView;
 
->>>>>>> e786f379452fbed8c716a1a3cb00e0852baab484
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home2_menu, menu);
@@ -112,7 +108,7 @@ public class Home2Activity extends AppCompatActivity
         //출석체크
         //checkAttend();
         //프로필박스 세팅
-        setProfileBox();
+//        setProfileBox();
         //그룹리스트 세팅
         setGroupList();
 
@@ -286,21 +282,30 @@ public class Home2Activity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // 누르면 로그아웃
-              onLogout();
-//            Intent intent = new Intent(this, EnterActivity.class);
-//            startActivity(intent);
+        if (id == R.id.nav_camera) { // 누르면 로그아웃
+             onLogout();
+            //Snackbar.make(getApplicationContext()., "정상적으로 로그아웃 되었습니다.", Snackbar.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
-            // 누르면 출석체크 푸쉬 on/off
+        } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
 
-        } else if (id == R.id.nav_slideshow) {
-            // 누르면 운동, 식당 인증 푸쉬 on/off
+        } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
 
-        } else if (id == R.id.nav_manage) {
-            // 누르면 개발자에게 문의하기
+        } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
+            //U.getInstance().popSimpleDialog(null, this, null, "친구랑 운동을 탈퇴하고 모든 정보를 삭제합니다.");
+            Context mContext = getApplicationContext();
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));
+            AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
+            aDialog.setView(layout);
+            aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    onSessionout();
+                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
+                }
+            });
+            AlertDialog ad = aDialog.create();
+            ad.show();
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
@@ -329,18 +334,10 @@ public class Home2Activity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "메일 발송이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
-//            aDialog.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.cancel();
-//                }
-//            });
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -348,7 +345,38 @@ public class Home2Activity extends AppCompatActivity
         return true;
     }
 
-    //로그아웃
+    // 탈퇴
+    private void onSessionout() {
+        Call<ResSessionOut> res =
+                NetSSL.getInstance().getMemberImpFactory().sessionout(); //전문에 있는 양식 순서대로
+        res.enqueue(new Callback<ResSessionOut>() { //enqueue가 callback오니까
+            @Override
+            public void onResponse(Call<ResSessionOut> call, Response<ResSessionOut> response) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body().getResultCode()==1) {
+                            Log.i("RF", "탈퇴 성공 " + response.body().getResult());
+                        }else{
+                            Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
+                        }
+                    }else{
+                        Log.i("RF", "2회원 탈퇴 실패" + response.code()); //통신은 들어갔는데 오류
+                    }
+                }else{
+                    Log.i("RF", "3응답 데이터 오류");
+                }
+                // Log.i("RF", "가입실패   //" + response);
+            }
+            @Override
+            public void onFailure(Call<ResSessionOut> call, Throwable t) { //통신 자체 실패
+                Log.i("RF", "ERR"+t.getMessage());
+            }
+        });
+        Intent intent = new Intent(this, EnterActivity.class);
+        startActivity(intent);
+    }
+
+    // 로그아웃
     public void onLogout(){
         Call<ResLogout> res =
                 NetSSL.getInstance().getMemberImpFactory().logout(); //전문에 있는 양식 순서대로
@@ -358,7 +386,7 @@ public class Home2Activity extends AppCompatActivity
                 if (response != null) {
                     if (response.body() != null) {
                         if (response.body().getReusltCode()==1) {
-                            Log.i("RF", "로그아웃성공" + response.body().getMessage());
+                            Log.i("RF", "로그아웃 성공 " + response.body().getMessage());
                         }else{
                             Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
                         }
@@ -375,6 +403,8 @@ public class Home2Activity extends AppCompatActivity
                 Log.i("RF", "ERR"+t.getMessage());
             }
         });
+        Intent intent = new Intent(this, EnterActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.profile_box)
