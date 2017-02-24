@@ -90,15 +90,16 @@ public class GridAdapter extends BaseAdapter {
             imageView.setVisibility(View.GONE);
             textView = (TextView) convertView.findViewById(R.id.group_addTxt);
             if (actGroup.size() == E.KEY.GROUP_MAX) {
-                //그룹은 5개까지 소속될 수 있습니다.
+                //1-1. 그룹은 5개까지 소속될 수 있습니다.
                 addCardView.setBackgroundResource(R.color.babyPink);
                 textView.setTextColor(Color.WHITE);
                 textView.setText(R.string.max_group);
             } else if (isManager()) {
-                //매니저 그룹이 있다면 add카드 닫기
+                //1-2. 매니저 그룹이 있다면 add카드 닫기
+                addCardView.setBackgroundResource(R.color.babyPink);
                 textView.setText(R.string.already_manager);
             } else {
-                //add카드 띄우기
+                //1-3. add카드 띄우기
                 imageView.setVisibility(View.VISIBLE);
                 addCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,16 +123,14 @@ public class GridAdapter extends BaseAdapter {
                         .fit()
                         .centerCrop()
                         .into(imageView);
-                if (actGroup.get(position).getWaitActRst() == 1) {
+                if (actGroup.get(position).getWaitActRst() == 0) {
                     //2-1. 활성화그룹
-                    textView2.setText(actGroup.get(position).getExPeriod());
+                    textView2.setText(String.valueOf(actGroup.get(position).getExPeriod()));
                     groupCardview.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
-                            intent.putExtra("groupId", actGroup.get(position).getGroup_id());
-                            intent.putExtra("title", actGroup.get(position).getGroupTitle());
-                            intent.putExtra("image", actGroup.get(position).getGroupPicUrl());
+                            intent.putExtra("groupData", actGroup.get(position));
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             v.getContext().startActivity(intent);
                         }
@@ -165,6 +164,12 @@ public class GridAdapter extends BaseAdapter {
                 }
             } else {
                 //2-3. 활동종료그룹
+                FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
+                waitingLayout.setVisibility(View.VISIBLE);
+                Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
+                waitingLockBtn.setBackgroundResource(R.drawable.close_white);
+                waitingLockBtn.setVisibility(View.VISIBLE);
+
                 int mPosition = position - (actGroup.size() + 1);
                 textView.setText(unActGroup.get(mPosition).getGroupTitle());
                 Picasso.with(context)

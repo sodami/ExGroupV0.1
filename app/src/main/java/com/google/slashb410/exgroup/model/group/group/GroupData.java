@@ -1,10 +1,12 @@
 package com.google.slashb410.exgroup.model.group.group;
 
+import java.io.Serializable;
+
 /**
  * Created by Tacademy on 2017-02-21.
  */
 
-public class GroupData{
+public class GroupData implements Serializable{
     private int id;
     private int user_id;
     private int group_id;

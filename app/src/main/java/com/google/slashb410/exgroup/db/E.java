@@ -1,6 +1,6 @@
 package com.google.slashb410.exgroup.db;
 
-import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.model.group.group.ShotData;
 import com.google.slashb410.exgroup.model.group.WriteData;
 
 /**

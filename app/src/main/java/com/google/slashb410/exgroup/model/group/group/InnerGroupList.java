@@ -1,12 +1,13 @@
 package com.google.slashb410.exgroup.model.group.group;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Tacademy on 2017-02-21.
  */
 
-public class InnerGroupList {
+public class InnerGroupList implements Serializable{
     ArrayList<GroupData> actRst = new ArrayList<>();
     ArrayList<GroupData> unActRst = new ArrayList<>();
 

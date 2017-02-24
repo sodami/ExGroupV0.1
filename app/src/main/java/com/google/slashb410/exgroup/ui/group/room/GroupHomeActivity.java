@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 
 public class GroupHomeActivity extends AppCompatActivity {
@@ -25,6 +26,10 @@ public class GroupHomeActivity extends AppCompatActivity {
     TextView groupTitleView;
     ImageView groupImg;
 
+    GroupData groupData;
+    public int groupId;
+    Uri picUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,19 +37,29 @@ public class GroupHomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.collapse_toolbar);
         setSupportActionBar(toolbar);
 
+        //기본정보 저장
+        groupData = new GroupData();
+        Intent intent = getIntent();
+        groupData = (GroupData) intent.getSerializableExtra("groupData");
+
+        //그룹아이디 세팅 for Fragment
+        groupId = groupData.getGroup_id();
+
         CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar_layout);
         groupTitleView = (TextView) findViewById(R.id.group_home_title);
         groupImg = (ImageView) findViewById(R.id.collapseImg);
 
-        Intent intent = getIntent();
-        String groupTitle = intent.getStringExtra("title");
-        String groupPicUrl = intent.getStringExtra("image");
-        Uri picUrl = Uri.parse(groupPicUrl);
 
-        if (groupTitle != null) {
-            groupTitleView.setText(groupTitle);
+
+        if(groupData.getGroupPicUrl()!=null) {
+            picUrl = Uri.parse(groupData.getGroupPicUrl());
+        }
+
+        if (groupData.getGroupTitle()!=null) {
+//            groupTitleView.setText(groupData.getGroupTitle());
             groupImg.setImageURI(picUrl);
         }
+
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.planet_white));

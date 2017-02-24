@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.InnerCommentData;
 import com.google.slashb410.exgroup.util.U;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -64,10 +63,11 @@ public class CommentsListAdapter extends BaseAdapter{
             commentHolder.delete = (ImageButton) view.findViewById(R.id.delete_comment);
         }
 
-        Picasso.with(view.getContext())
-                .load(commentDatas.get(position).getPicUrl())
-                .fit().centerCrop()
-                .into(commentHolder.profile);
+//
+//        Picasso.with(view.getContext())
+//                .load(commentDatas.get(position).getPicUrl())
+//                .fit().centerCrop()
+//                .into(commentHolder.profile);
         commentHolder.nickname.setText(commentDatas.get(position).getNickname());
         commentHolder.dateNTime.setText(commentDatas.get(position).getDate());
         commentHolder.content.setText(commentDatas.get(position).getContent());

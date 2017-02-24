@@ -2,6 +2,7 @@ package com.google.slashb410.exgroup.ui.group.room.tabs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.model.group.group.BoardData;
 import com.google.slashb410.exgroup.ui.group.room.tabs.comments.GroupShotsCommentsActivity;
-import com.google.slashb410.exgroup.util.U;
 
 /**
  * Created by Tacademy on 2017-02-03.
@@ -29,7 +29,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
     TextView content;
     TextView numLike;
     TextView numComments;
-        TextView todayWeight;
+    TextView todayWeight;
     ImageButton likeBtn;
     ImageButton commentBtn;
 
@@ -52,42 +52,45 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         todayWeight = (TextView) itemView.findViewById(R.id.weightTxt);
     }
 
-    public void bindOnCard(Context context, ShotData results) {
+    public void bindOnCard(Context context, BoardData datas) {
 
-        ShotData mResults = results;
-        switch (mResults.getBoardType()+"") {
-            case "0":
+        BoardData mDatas = datas;
+        switch (mDatas.getCategoryNum()) {
+            case 0:
                 menuImg.setImageResource(R.drawable.scale_white);
                 todayWeight.setVisibility(View.VISIBLE);
                 break;
-            case "1":
+            case 1:
                 menuImg.setImageResource(R.drawable.exercise_white);
                 break;
-            case "2":
+            case 2:
                 menuImg.setImageResource(R.drawable.meal_white);
                 break;
         }
 
 
-        //holder.profileImg.setImageDrawable(mResults.getPic());
-        nickname.setText(mResults.getNickname());
-        dateNtime.setText(mResults.getDateNtime());
-        summary.setText(mResults.getSummary());
-        content.setText(mResults.getContent());
+        //holder.profileImg.setImageDrawable(mDatas.getPic());
+        nickname.setText(mDatas.getNickname());
+
+        String customDateNTime = customDateNTime(mDatas.getWriteDate());
+
+        dateNtime.setText(customDateNTime);
+        summary.setText(mDatas.getSummary());
+        content.setText(mDatas.getContent());
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!results.isLike()){
+                if (datas.getFavoriteBool() == 0) {
                     likeBtn.setImageResource(R.drawable.like_pink);
                     //db 변경 islike->true
-                }else{
+                } else {
                     likeBtn.setImageResource(R.drawable.like_gray);
                     //db 변경 islike->false
                 }
             }
         });
-        numLike.setText(mResults.getNumLike()+"");
-        numComments.setText(mResults.getNumComment()+"");
+        numLike.setText(mDatas.getFavoriteNum() + "");
+        numComments.setText(mDatas.getCommentNum() + "");
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +101,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //해당 내용 삭제
-                                int idx = mResults.getIdx();
+                                int idx = mDatas.getBoard_id();
 
                             }
                         })
@@ -116,10 +119,22 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                U.getInstance().goNext(context, GroupShotsCommentsActivity.class, false, false);
+                Intent intent = new Intent(context, GroupShotsCommentsActivity.class);
+                intent.putExtra("boardDate", mDatas);
+
             }
         });
 
+    }
+
+    private String customDateNTime(String writeDate) {
+
+        String mWriteDate ="";
+
+        String year = String.valueOf(writeDate.indexOf(0,3));
+
+
+        return mWriteDate;
     }
 
 
