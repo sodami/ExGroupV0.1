@@ -11,76 +11,99 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.google.slashb410.exgroup.ui.group.create.GroupWaitingActivity">
 
+
+    <ImageButton
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/back_waiting"
+        android:layout_margin="@dimen/gmd_margin_default"
+        android:layout_width="@dimen/gmd_button_default"
+        android:layout_height="@dimen/gmd_button_default"
+        android:background="@drawable/back_pink"/>
+    <ImageButton
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/cancel_waiting"
+        android:layout_margin="@dimen/gmd_margin_default"
+        android:layout_width="@dimen/gmd_button_default"
+        android:layout_height="@dimen/gmd_button_default"
+        android:background="@drawable/cancel_pink"/>
     <LinearLayout
+        android:layout_marginTop="@dimen/gmd_bar_height"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
         <LinearLayout
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-            android:gravity="center"
-            android:text="GROUP TITLE"
-            android:id="@+id/title_waiting"
-            android:textStyle="bold"
-            android:layout_margin="4dp"
-            android:textSize="32sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <LinearLayout
-            android:layout_margin="@dimen/gmd_margin_default"
-            android:gravity="end"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="2017-02-22"
-                android:id="@+id/createDay_waiting"
-                android:textSize="@dimen/text_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/nowNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="32sp"
-                    android:gravity="center_horizontal"
-                    android:text="0" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="32sp"
-                    android:gravity="center_horizontal"
-                    android:text="/" />
-
-                <TextView
-                    android:id="@+id/maxNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="32sp"
-                    android:gravity="center_horizontal"
-                    android:text="0" />
-
-            </LinearLayout>
-        </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_margin="@dimen/gmd_button_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/info_3day_destroy"/>
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_waiting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="GROUP TITLE"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/createDay_waiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017-02-22"
+                    android:textSize="@dimen/text_default" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/nowNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="/"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:id="@+id/maxNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textSize="32sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gmd_button_margin"
+            android:text="@string/info_3day_destroy" />
 
 
         <TextView
@@ -101,7 +124,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/waiting_profile1"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
@@ -116,56 +139,111 @@
                     android:text="닉네임" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_margin="@dimen/gmd_margin_default"
-                app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_margin="@dimen/gmd_margin_default"
-                app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/waiting_profile2"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_margin="@dimen/gmd_margin_default"
-                app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                <TextView
+                    android:id="@+id/waiting_nickname2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="닉네임" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/waiting_profile3"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+
+                <TextView
+                    android:id="@+id/waiting_nickname3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="닉네임" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/waiting_profile4"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+
+                <TextView
+                    android:id="@+id/waiting_nickname4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="닉네임" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
+        <LinearLayout
+            android:background="@color/babyPink"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        <TextView
+            android:background="@color/babyPink"
+            android:textColor="#ffffff"
+            android:id="@+id/waiting_groupId"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/gmd_button_default"
+            android:layout_marginStart="@dimen/gmd_margin_default"
+            android:gravity="center"
+            android:text="그룹아이디" />
 
-
-    <TextView
-        android:gravity="center"
-        android:id="@+id/waiting_groupId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/gmd_margin_default"
-        android:text="그룹아이디" />
-
-    <Button
-        android:id="@+id/copyBtn_waiting"
-        android:layout_margin="@dimen/gmd_button_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/copy" />
+        <ImageButton
+            android:id="@+id/copyBtn_waiting"
+            android:background="@drawable/copy_white"
+            android:layout_width="@dimen/gmd_button_default"
+            android:layout_height="@dimen/gmd_button_default"
+            android:layout_marginEnd="@dimen/gmd_margin_default"
+            android:text="@string/copy" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/pushBtn"
-            android:layout_margin="@dimen/gmd_button_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="미인증자 재촉하기" />
+            android:layout_margin="@dimen/gmd_button_margin"
+            android:text="카카오톡 미인증자 재촉하기" />
 
-    <Button
-        android:layout_margin="@dimen/gmd_button_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:text="불참자 초대 메세지 재발송" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gmd_button_margin"
+            android:paddingBottom="16dp"
+            android:text="불참자 초대 카카오톡 재발송" />
 
     </LinearLayout>
 </RelativeLayout>

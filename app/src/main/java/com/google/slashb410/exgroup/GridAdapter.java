@@ -155,6 +155,7 @@ public class GridAdapter extends BaseAdapter {
                             intent.putExtra("title", actGroup.get(position).getGroupTitle());
                             intent.putExtra("nowNum", actGroup.get(position).getNowNum());
                             intent.putExtra("maxNum", actGroup.get(position).getMaxNum());
+                            intent.putExtra("date", actGroup.get(position).getGroupCreateDate());
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             v.getContext().startActivity(intent);
                         }
