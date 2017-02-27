@@ -1,6 +1,7 @@
 package com.google.slashb410.exgroup.net;
 
 import com.google.slashb410.exgroup.model.group.ResStandard;
+import com.google.slashb410.exgroup.model.group.group.ReqComment;
 import com.google.slashb410.exgroup.model.group.group.ResBoardList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -49,5 +51,9 @@ public interface GroupImpFactory {
     //F_3. 그룹 게시글 불러오기
     @GET("groups/{groupId}/boards")
     Call<ResBoardList> boardList(@Path("groupId") String groupId);
+
+    //F_4. 게시물에 댓글달기
+    @POST("comments")
+    Call<String> addComment(@Body ReqComment reqComment);
 
 }

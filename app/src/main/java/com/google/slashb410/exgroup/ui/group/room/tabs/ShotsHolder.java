@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.group.BoardData;
 import com.google.slashb410.exgroup.ui.group.room.tabs.comments.GroupShotsCommentsActivity;
+import com.google.slashb410.exgroup.util.U;
 
 /**
  * Created by Tacademy on 2017-02-03.
@@ -119,8 +120,12 @@ class ShotsHolder extends RecyclerView.ViewHolder {
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                U.getInstance().myLog("코맨트 온클릭");
                 Intent intent = new Intent(context, GroupShotsCommentsActivity.class);
-                intent.putExtra("boardDate", mDatas);
+                intent.putExtra("boardData", mDatas);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                context.startActivity(intent);
 
             }
         });

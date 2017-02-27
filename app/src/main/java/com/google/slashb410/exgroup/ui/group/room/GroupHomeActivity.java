@@ -46,10 +46,8 @@ public class GroupHomeActivity extends AppCompatActivity {
         groupId = groupData.getGroup_id();
 
         CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar_layout);
-        groupTitleView = (TextView) findViewById(R.id.group_home_title);
+      //  groupTitleView = (TextView) findViewById(R.id.group_home_title);
         groupImg = (ImageView) findViewById(R.id.collapseImg);
-
-
 
         if(groupData.getGroupPicUrl()!=null) {
             picUrl = Uri.parse(groupData.getGroupPicUrl());

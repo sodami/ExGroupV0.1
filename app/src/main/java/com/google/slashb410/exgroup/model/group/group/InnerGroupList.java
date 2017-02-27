@@ -8,8 +8,17 @@ import java.util.ArrayList;
  */
 
 public class InnerGroupList implements Serializable{
-    ArrayList<GroupData> actRst = new ArrayList<>();
-    ArrayList<GroupData> unActRst = new ArrayList<>();
+    private ArrayList<GroupData> actRst = new ArrayList<>();
+    private ArrayList<GroupData> waitRst = new ArrayList<>();
+    private ArrayList<GroupData> unActRst = new ArrayList<>();
+
+    public ArrayList<GroupData> getWaitRst() {
+        return waitRst;
+    }
+
+    public void setWaitRst(ArrayList<GroupData> waitRst) {
+        this.waitRst = waitRst;
+    }
 
     public ArrayList<GroupData> getActRst() {
         return actRst;

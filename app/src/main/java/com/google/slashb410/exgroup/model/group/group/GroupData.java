@@ -11,7 +11,6 @@ public class GroupData implements Serializable{
     private int user_id;
     private int group_id;
     private int manager;
-    private int waitActRst;
     private String ctime;
     private String utime;
     private String weight;
@@ -33,7 +32,6 @@ public class GroupData implements Serializable{
                 ", user_id=" + user_id +
                 ", group_id=" + group_id +
                 ", manager=" + manager +
-                ", waitActRst=" + waitActRst +
                 ", ctime='" + ctime + '\'' +
                 ", utime='" + utime + '\'' +
                 ", weight='" + weight + '\'' +
@@ -50,13 +48,6 @@ public class GroupData implements Serializable{
                 '}';
     }
 
-    public int getWaitActRst() {
-        return waitActRst;
-    }
-
-    public void setWaitActRst(int waitActRst) {
-        this.waitActRst = waitActRst;
-    }
 
     public int getId() {
         return id;

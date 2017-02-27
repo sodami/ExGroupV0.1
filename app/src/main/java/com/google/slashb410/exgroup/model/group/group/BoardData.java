@@ -1,13 +1,15 @@
 package com.google.slashb410.exgroup.model.group.group;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Tacademy on 2017-02-24.
  */
 
-public class BoardData implements Serializable {
+public class BoardData implements Parcelable{
 
     private int group_id;
     private int board_id;
@@ -20,10 +22,39 @@ public class BoardData implements Serializable {
     private String content;
     private String boardPicUrl;
     private String writeDate;
-    private ArrayList<CommentData> comment;
+    private ArrayList<CommentData> comment = new ArrayList<>();
     private int favoriteBool;
     private int commentNum;
     private int favoriteNum;
+
+    protected BoardData(Parcel in) {
+        group_id = in.readInt();
+        board_id = in.readInt();
+        user_id = in.readInt();
+        username = in.readString();
+        nickname = in.readString();
+        userPicUrl = in.readString();
+        categoryNum = in.readInt();
+        summary = in.readString();
+        content = in.readString();
+        boardPicUrl = in.readString();
+        writeDate = in.readString();
+        favoriteBool = in.readInt();
+        commentNum = in.readInt();
+        favoriteNum = in.readInt();
+    }
+
+    public static final Creator<BoardData> CREATOR = new Creator<BoardData>() {
+        @Override
+        public BoardData createFromParcel(Parcel in) {
+            return new BoardData(in);
+        }
+
+        @Override
+        public BoardData[] newArray(int size) {
+            return new BoardData[size];
+        }
+    };
 
     public int getFavoriteBool() {
         return favoriteBool;
@@ -143,5 +174,29 @@ public class BoardData implements Serializable {
 
     public void setComment(ArrayList<CommentData> comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(group_id);
+        dest.writeInt(board_id);
+        dest.writeInt(user_id);
+        dest.writeString(username);
+        dest.writeString(nickname);
+        dest.writeString(userPicUrl);
+        dest.writeInt(categoryNum);
+        dest.writeString(summary);
+        dest.writeString(content);
+        dest.writeString(boardPicUrl);
+        dest.writeString(writeDate);
+        dest.writeTypedList(comment);
+        dest.writeInt(favoriteBool);
+        dest.writeInt(commentNum);
+        dest.writeInt(favoriteNum);
     }
 }

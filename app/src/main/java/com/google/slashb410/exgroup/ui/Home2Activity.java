@@ -162,12 +162,14 @@ public class Home2Activity extends AppCompatActivity
 
                     resGroupList = response.body();
                     ArrayList<GroupData> actRst = resGroupList.getResult().getActRst();
+                    ArrayList<GroupData> waitRst = resGroupList.getResult().getWaitRst();
                     ArrayList<GroupData> unActRst = resGroupList.getResult().getUnActRst();
 
                     U.getInstance().myLog("actGroup size : " + actRst.size());
+                    U.getInstance().myLog("waitGroup size : "+waitRst.size());
                     U.getInstance().myLog("unActGroup size : " + unActRst.size());
 
-                    gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, unActRst);
+                    gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, waitRst, unActRst);
                     gridView = (GridView) findViewById(R.id.group_grid);
                     gridView.setAdapter(gridAdapter);
 
@@ -189,15 +191,13 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if (response.body() == null) {
+                if (response.body().getData() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
                 } else {
-                    U.getInstance().myLog(response.body().toString());
-                    if (response.body().getNickname() != null)
-                        nick_profile.setText(response.body().getNickname());
-                    if (response.body().getBMI() != null) bmi.setText(response.body().getBMI());
-                    if (response.body().getSeqAttendNum() != 0)
-                        seqAttendNum.setText(response.body().getSeqAttendNum());
+                    U.getInstance().myLog(response.body().getData().toString());
+                    if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
+                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI());
+                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum());
                 }
             }
 
@@ -342,10 +342,10 @@ public class Home2Activity extends AppCompatActivity
             AlertDialog ad = aDialog.create();
             ad.show();
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
+//        } else if (id == R.id.nav_send) {
+//
+//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -389,8 +389,6 @@ public class Home2Activity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            E.KEY.group_list.clear();
-//            E.KEY.new_group.deleteGroupInfo();
             E.KEY.new_write.deleteWriteData();
             E.KEY.shotData.deleteShotData();
             this.finish();

@@ -17,6 +17,10 @@ public class E {
 
         public static final String LASTDATE_KEY = "lastdate";
 
+        public static int USER_ID = 0;
+        public static String USER_NAME = "";
+        public static String USER_NICKNAME = "";
+
         //----fake data
         public static final WriteData new_write = new WriteData();
         public static ShotData shotData = new ShotData();
