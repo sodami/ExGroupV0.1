@@ -1,6 +1,9 @@
 package com.google.slashb410.exgroup.ui.mypage;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -8,14 +11,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -38,7 +42,7 @@ import rx.schedulers.Schedulers;
 public class MyHomeActivity extends Activity {
     ImageView profile_change;
     SweetAlertDialog alert;
-    EditText nickname;
+    TextView nickname;
     CalendarView cal;
     ImageView nicknameInfo;
 
@@ -47,7 +51,7 @@ public class MyHomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_home);
         profile_change = (ImageView) findViewById(R.id.profile_change);
-        nickname = (EditText) findViewById(R.id.nickname);
+        nickname = (TextView) findViewById(R.id.resultMyName);
         nicknameInfo = (ImageView) findViewById(R.id.nicknameInfo);
 
         // 2017. 02. 01
@@ -57,21 +61,24 @@ public class MyHomeActivity extends Activity {
         tabHost.setup();
         spec = tabHost.newTabSpec("tag1");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("",
+        spec.setIndicator("행성   ",
                 resource.getDrawable(R.drawable.planet_white));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("", resource.getDrawable(R.drawable.calendar_white));
+        spec.setIndicator("달    력", resource.getDrawable(R.drawable.calendar_white));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag3");
         spec.setContent(R.id.tab3);
         spec.setIndicator("", resource.getDrawable(R.drawable.chart_white));
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
-//        tabHost.getTabWidget().getChildAt(0).setLayoutParams(new LinearLayout.LayoutParams((width/2), 50));
-//        tabHost.getTabWidget().getChildAt(1).setLayoutParams(new LinearLayout.LayoutParams((width/2), 50));
-//        tabHost.getTabWidget().getChildAt(2 ).setLayoutParams(new LinearLayout.LayoutParams((width/2), 50));
+
+        for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++)
+        {
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 200;
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 150;
+        }
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
         ArrayList<Entry> entries = new ArrayList<Entry>();
@@ -106,11 +113,21 @@ public class MyHomeActivity extends Activity {
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(getBaseContext(), "Selected Date is\n\n"
-                                + dayOfMonth + " : " + month + " : " + year,
-                        Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(MyHomeActivity.this, Home2Activity.class);
-//                startActivity(intent);
+//                Toast.makeText(getBaseContext(), "Selected Date is\n\n"
+//                                + dayOfMonth + " : " + month + " : " + year,
+//                        Toast.LENGTH_LONG).show();
+                Context mContext = getApplicationContext();
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+                View layout = inflater.inflate(R.layout.activity_calendar_dialog, (ViewGroup) findViewById(R.id.activity_calendar_dialog));
+                AlertDialog.Builder aDialog = new AlertDialog.Builder(MyHomeActivity.this);
+                aDialog.setView(layout);
+                aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        onBackPressed();
+                    }
+                });
+                AlertDialog ad = aDialog.create();
+                ad.show();
             }
         });
         nicknameInfo.setOnClickListener(new View.OnClickListener() {

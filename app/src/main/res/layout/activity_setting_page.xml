@@ -39,9 +39,10 @@
                     android:gravity="left|center"
                     android:textStyle="bold"
                     android:textColor="@color/babyPink"
-                    android:background="#ffffff" />
+                    android:background="@null" />
 
                 <Button
+                    android:id="@+id/submitBtn"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="완료"
@@ -49,7 +50,7 @@
                     android:layout_gravity="right"
                     android:gravity="left|center"
                     android:textColor="@color/babyPink"
-                    android:background="#ffffff" />
+                    android:background="@null" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -60,20 +61,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="56dp">
-        <!--<EditText-->
-            <!--android:background="@null"-->
-            <!--android:hint="수정할 이름을 입력해 주세요"-->
-            <!--android:layout_margin="4dp"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent" />-->
-        <!--<Button-->
-            <!--android:padding="8dp"-->
-            <!--android:background="@color/babyPink"-->
-            <!--android:scaleType="centerInside"-->
-            <!--android:layout_width="48dp"-->
-            <!--android:layout_height="48dp" />-->
+        <EditText
+            android:id="@+id/myName"
+            android:background="@null"
+            android:hint="수정할 이름을 입력해 주세요"
+            android:layout_margin="4dp"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     </LinearLayout>
