@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.*;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -72,6 +74,9 @@ public class Home2Activity extends AppCompatActivity
     GridView gridView;
     GridAdapter gridAdapter;
     ResGroupList resGroupList;
+
+    int[] actGroups;
+    String[] actTitles;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,6 +174,10 @@ public class Home2Activity extends AppCompatActivity
                     U.getInstance().myLog("waitGroup size : "+waitRst.size());
                     U.getInstance().myLog("unActGroup size : " + unActRst.size());
 
+                    for(int i =0; i<actRst.size();++i){
+                        actGroups[i] = actRst.get(i).getGroup_id();
+                        actTitles[i] = actRst.get(i).getGroupTitle();
+                    }
                     gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, waitRst, unActRst);
                     gridView = (GridView) findViewById(R.id.group_grid);
                     gridView.setAdapter(gridAdapter);
@@ -212,6 +221,11 @@ public class Home2Activity extends AppCompatActivity
     private void goQuickMenu(int i) {
         Intent intent = new Intent(this, QuickWriteActivity.class);
         intent.putExtra("menu", i);
+
+        intent.putExtra("actGroups", actGroups);
+        intent.putExtra("actTitles", actTitles);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

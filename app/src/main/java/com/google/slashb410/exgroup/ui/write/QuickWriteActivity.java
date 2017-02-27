@@ -15,11 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.util.U;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.ScreenSize;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,9 +48,12 @@ public class QuickWriteActivity extends AppCompatActivity {
     @BindView(R.id.kgTxt)
     TextView kgTxt;
 
-    String[] groupNames;
     boolean[] checkGroups;
     String dateNTime;
+
+    int[] groupIds;
+    String[] groupTitles;
+    ArrayList choiceGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,37 +65,37 @@ public class QuickWriteActivity extends AppCompatActivity {
         // [ menu type ] 0:에러 1:체중 2:운동 3:식단
         Intent intent = getIntent();
         int menu = intent.getIntExtra("menu", 0);
+        groupIds = intent.getIntArrayExtra("actGroups");
+        groupTitles = intent.getStringArrayExtra("actTitles");
 
-        switch (menu){
-            case 0 :
+        int length = groupIds.length;
+        checkGroups = new boolean[length];
+
+        for (int i = 0; i < length; i++) {
+            checkGroups[i] = true;
+        }
+
+        switch (menu) {
+            case 0:
                 Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 break;
-            case 1 :
+            case 1:
                 menuIcon.setImageResource(R.drawable.scale_black);
                 summaryInput.setVisibility(View.GONE);
                 summaryInput_weight.setVisibility(View.VISIBLE);
                 break;
-            case 2 :
+            case 2:
                 menuIcon.setImageResource(R.drawable.exercise_black);
                 summaryTxt.setText("운동 한줄요약 : ");
                 kgTxt.setVisibility(View.GONE);
                 break;
-            case 3 :
+            case 3:
                 menuIcon.setImageResource(R.drawable.meal_black);
                 summaryTxt.setText("식단 한줄요약 : ");
                 kgTxt.setVisibility(View.GONE);
                 break;
         }
-//
-//        int length = E.KEY.group_list.size();
-//
-//        checkGroups = new boolean[length];
-//        groupNames = new String[length];
-//
-//        for (int i = 0; i < length; i++) {
-//            groupNames[i] = (E.KEY.group_list.get(i).getGroupName());
-//            checkGroups[i] = true;
-//        }
+
 
     }
 
@@ -179,36 +183,19 @@ public class QuickWriteActivity extends AppCompatActivity {
 
     }
 
-
     public void pickGroup() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("게시할 그룹을 선택하세요.");
-        alert.setMultiChoiceItems(groupNames, checkGroups, new DialogInterface.OnMultiChoiceClickListener() {
+        alert.setMultiChoiceItems(groupTitles, checkGroups, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checkGroups[which] = isChecked;
-
-
+                choiceGroup = new ArrayList();
+                choiceGroup.add(groupIds[which]);
             }
         }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                //======================FAKE DATA INPUT
-
-                String[] currentDate = U.getInstance().currentYYmmDD();
-                String[] currentTime = U.getInstance().currentTime();
-
-                dateNTime = currentDate[0]+"년 "+currentDate[1]+"월 "+currentDate[2]+"일 "+currentTime[0]+"시 "+currentTime[1]+"분";
-
-                E.KEY.new_write.setNickName("이슬비");
-                E.KEY.new_write.setBoardType(0);
-      //          E.KEY.new_write.setSummary(inputWeight.getText().toString()+"kg");
-                E.KEY.new_write.setContent(content.getText().toString());
-                E.KEY.new_write.setDateNTime(dateNTime);
-
-                //================================
-
 
                 Handler handler = new Handler() {
                     @Override
