@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/shot_title_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gmd_bar_height"
             android:background="@color/babyPink"

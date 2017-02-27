@@ -33,14 +33,14 @@
                 android:id="@+id/collapse_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/gmd_bar_height"
-                android:gravity="center">
+                android:gravity="center"/>
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/group_home_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="그룹명" />
-            </android.support.v7.widget.Toolbar>
+                    android:text="그룹명" />-->
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

@@ -6,6 +6,7 @@ import com.google.slashb410.exgroup.model.group.home.ReqInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ReqJoin;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
 import com.google.slashb410.exgroup.model.group.home.ReqUsers;
+import com.google.slashb410.exgroup.model.group.home.ResAttend;
 import com.google.slashb410.exgroup.model.group.home.ResInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ResJoin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
@@ -75,7 +76,9 @@ public interface MemberImpFactory {
     @GET("groups")
     Call<ResGroupData> groupData();
 
-
+    //D_3. 출석하기
+    @POST("users/me/attendance")
+    Call<ResAttend> attend (@Body String attendDate);
 
 }
 

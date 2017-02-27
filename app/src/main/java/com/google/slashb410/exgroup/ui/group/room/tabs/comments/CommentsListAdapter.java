@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.InnerCommentData;
+import com.google.slashb410.exgroup.model.group.group.CommentData;
 import com.google.slashb410.exgroup.util.U;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,18 +22,18 @@ import java.util.ArrayList;
 public class CommentsListAdapter extends BaseAdapter{
 
 
-    ArrayList<InnerCommentData> commentDatas;
+    ArrayList<CommentData> commentDatas;
     LayoutInflater inflater;
     CommentHolder commentHolder;
 
-    public CommentsListAdapter(Context context, ArrayList<InnerCommentData> commentDatas) {
+    public CommentsListAdapter(Context context, ArrayList<CommentData> commentDatas) {
         this.commentDatas = commentDatas;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        U.getInstance().myLog(commentDatas.size()+"");
+        U.getInstance().myLog("코멘트 count : "+commentDatas.size()+"");
         return commentDatas.size();
 
     }
@@ -64,13 +63,14 @@ public class CommentsListAdapter extends BaseAdapter{
             commentHolder.delete = (ImageButton) view.findViewById(R.id.delete_comment);
         }
 
-        Picasso.with(view.getContext())
-                .load(commentDatas.get(position).getPicUrl())
-                .fit().centerCrop()
-                .into(commentHolder.profile);
-        commentHolder.nickname.setText(commentDatas.get(position).getNickname());
-        commentHolder.dateNTime.setText(commentDatas.get(position).getDate());
-        commentHolder.content.setText(commentDatas.get(position).getContent());
+//
+//        Picasso.with(view.getContext())
+//                .load(commentDatas.get(position).getPicUrl())
+//                .fit().centerCrop()
+//                .into(commentHolder.profile);
+        if(commentDatas.get(position).getNickname()!=null) commentHolder.nickname.setText(commentDatas.get(position).getNickname());
+        if(commentDatas.get(position).getWriteDate()!=null) commentHolder.dateNTime.setText(commentDatas.get(position).getWriteDate());
+        if(commentDatas.get(position).getContent()!=null) commentHolder.content.setText(commentDatas.get(position).getContent());
 
         //user id와 작성자가 같다면 delete 띄우기
 

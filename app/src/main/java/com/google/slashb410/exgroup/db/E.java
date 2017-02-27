@@ -1,6 +1,6 @@
 package com.google.slashb410.exgroup.db;
 
-import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.model.group.group.ShotData;
 import com.google.slashb410.exgroup.model.group.WriteData;
 
 /**
@@ -16,6 +16,10 @@ public class E {
         public static final int GROUP_TERM_MAX = 30;
 
         public static final String LASTDATE_KEY = "lastdate";
+
+        public static int USER_ID = 0;
+        public static String USER_NAME = "";
+        public static String USER_NICKNAME = "";
 
         //----fake data
         public static final WriteData new_write = new WriteData();

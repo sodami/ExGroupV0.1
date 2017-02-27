@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.ShotData;
+import com.google.slashb410.exgroup.model.group.group.BoardData;
 
 import java.util.ArrayList;
 
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 public class ShotsAdapter extends RecyclerView.Adapter {
 
     Context context;
-    ArrayList<ShotData> results;
+    ArrayList<BoardData> datas;
 
 
-    public ShotsAdapter(Context context, ArrayList<ShotData> results) {
+    public ShotsAdapter(Context context, ArrayList<BoardData> datas) {
         this.context = context;
-        this.results = results;
+        this.datas = datas;
     }
 
     @Override
@@ -36,19 +36,19 @@ public class ShotsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ((ShotsHolder)holder).bindOnCard(context, results.get(position));
+        ((ShotsHolder)holder).bindOnCard(context, datas.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return this.results.size();
+        return this.datas.size();
     }
 
 
     public void deleteShot(int idx){
-        results.remove(idx);
-        results.notifyAll();
+        datas.remove(idx);
+        datas.notifyAll();
     }
 }
 

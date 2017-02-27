@@ -10,17 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.db.E;
-import com.google.slashb410.exgroup.model.group.ShotData;
-import com.google.slashb410.exgroup.ui.group.room.tabs.comments.GroupShotsCommentsActivity;
+import com.google.slashb410.exgroup.model.group.group.BoardData;
+import com.google.slashb410.exgroup.model.group.group.ResBoardList;
+import com.google.slashb410.exgroup.net.NetSSL;
+import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.google.slashb410.exgroup.util.U;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import static com.google.slashb410.exgroup.db.E.KEY.shotData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Tacademy on 2017-02-02.
@@ -30,7 +30,13 @@ public class GroupShotsFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
 
-    ArrayList<ShotData> results = new ArrayList<>();
+    ArrayList<BoardData> boardDatas;
+    RecyclerView recyclerView;
+    ShotsAdapter shotsAdapter;
+
+    ResBoardList boardList;
+    int groupId;
+    String groupId_str;
 
 
     @Nullable
@@ -39,32 +45,13 @@ public class GroupShotsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_group_shots, container, false);
 
+        groupId = ((GroupHomeActivity)getActivity()).groupId;
+        groupId_str = String.valueOf(groupId);
 
-        //==========FAKE DATA
+        //게시글 내용 불러오기
+        setBoardList(groupId_str);
 
-        shotData = new ShotData(0, 1, "ss", "슬비의닉네임", "2017년 2월 5일", "줄넘기 500번 30분", "오랜만에 운동했더니 좀만해도 피곤하다", "000", 100, 2, false);
-        results.add(0, shotData);
-
-        shotData = new ShotData(1, 2, "ss", "슬비의닉네임", "2017년 2월 5일", "사과 1개 시리얼 한사발", "아 벌써 배고프다", "000", 30, 5, false);
-        results.add(1, shotData);
-
-        if(E.KEY.new_write.getNickName()!=null){
-            shotData = new ShotData(2, E.KEY.new_write.getBoardType(), "123", E.KEY.new_write.getNickName(), E.KEY.new_write.getDateNTime(),
-                    E.KEY.new_write.getSummary(), E.KEY.new_write.getContent(), "pic", 0, 0, false);
-            results.add(2, shotData);
-        }
-        //====================
-
-
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.shot_recyclerview);
-        ShotsAdapter shotsAdapter = new ShotsAdapter(getContext(), results);
-        shotsAdapter.notifyDataSetChanged();
-
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(shotsAdapter);
+        recyclerView = (RecyclerView) view.findViewById(R.id.shot_recyclerview);
 
         return view;
     }
@@ -73,6 +60,42 @@ public class GroupShotsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+    }
+
+    private void setBoardList(String groupId) {
+        Call<ResBoardList> resBoardList = NetSSL.getInstance().getGroupImpFactory().boardList(groupId);
+        resBoardList.enqueue(new Callback<ResBoardList>() {
+            @Override
+            public void onResponse(Call<ResBoardList> call, Response<ResBoardList> response) {
+                if(response.body()==null) {
+                    U.getInstance().myLog("setGroupList body is NULL");
+                    return;
+                }
+                if(response.body().getBoardList().size()!=0) {
+                    boardList = response.body();
+                    U.getInstance().myLog("boardList Size : "+boardList.getBoardList().size());
+
+                    boardDatas = boardList.getBoardList();
+
+                    shotsAdapter = new ShotsAdapter(getContext(), boardDatas);
+                    shotsAdapter.notifyDataSetChanged();
+
+                    linearLayoutManager = new LinearLayoutManager(getContext());
+                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(shotsAdapter);
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResBoardList> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : "+t.toString());
+            }
+        });
     }
 
 }
