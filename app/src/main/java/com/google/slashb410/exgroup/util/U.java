@@ -221,5 +221,14 @@ public class U {
 
     }
 
+    public String customDateNTime(){
+
+
+        String date[] = U.getInstance().currentYYmmDD();
+        String time[] = U.getInstance().currentTime();
+
+        return date[0]+"년 "+date[1]+"월 "+date[2]+"일 "+time[0]+"시 "+time[1]+"분";
+
+    }
 
 }

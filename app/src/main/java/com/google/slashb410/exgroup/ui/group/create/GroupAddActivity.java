@@ -16,17 +16,16 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ReqMakeGroup;
-import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import okhttp3.RequestBody;
 
 public class GroupAddActivity extends AppCompatActivity {
 
@@ -71,11 +70,11 @@ public class GroupAddActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                            case 0: {
-                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
-                                dialog.dismiss();
-                            }
-                            break;
+//                            case 0: {
+//                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
+//                                dialog.dismiss();
+//                            }
+//                            break;
                             case 1: {
                                 // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
                                 dialog.dismiss();
@@ -121,6 +120,8 @@ public class GroupAddActivity extends AppCompatActivity {
 
     @OnClick(R.id.group_add)
     public void goAdd(View view) {
+        Map<String, RequestBody> bodyMap = new HashMap<>();
+//        bodyMap.put("groupTitle", RequestBody.create(groupTitle.getText().toString(), ))
         if(groupTitle.getText().equals("")||period.getText().equals("")){
             Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
             return;
@@ -134,22 +135,22 @@ public class GroupAddActivity extends AppCompatActivity {
 //        Requestb
 //        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), )
 
-        Call<ResStandard> resMakeGroup = NetSSL.getInstance().getGroupImpFactory().makeGroup(reqMakeGroup);
-        resMakeGroup.enqueue(new Callback<ResStandard>() {
-            @Override
-            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
-                if (response.body()==null) {
-                    U.getInstance().myLog("setProfileBox Body is NULL");
-                } else {
-                    U.getInstance().myLog(response.body().toString());
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResStandard> call, Throwable t) {
-                U.getInstance().myLog("접근실패 : " + t.toString());
-            }
-        });
+//        Call<ResStandard> resMakeGroup = NetSSL.getInstance().getGroupImpFactory().makeGroup(reqMakeGroup);
+//        resMakeGroup.enqueue(new Callback<ResStandard>() {
+//            @Override
+//            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+//                if (response.body()==null) {
+//                    U.getInstance().myLog("setProfileBox Body is NULL");
+//                } else {
+//                    U.getInstance().myLog(response.body().toString());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResStandard> call, Throwable t) {
+//                U.getInstance().myLog("접근실패 : " + t.toString());
+//            }
+//        });
     }
 }

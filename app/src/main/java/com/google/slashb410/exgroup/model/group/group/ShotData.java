@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup.model.group;
+package com.google.slashb410.exgroup.model.group.group;
 
 /**
  * Created by Tacademy on 2017-02-05.

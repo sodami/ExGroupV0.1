@@ -1,5 +1,7 @@
 package com.google.slashb410.exgroup.model.group;
 
+import com.google.slashb410.exgroup.model.group.group.ShotData;
+
 import java.util.ArrayList;
 
 /**

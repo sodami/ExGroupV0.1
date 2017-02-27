@@ -6,12 +6,12 @@ package com.google.slashb410.exgroup.model.group.home;
 
 public class ReqUsers {
 
-    String phone;
-    float height;
-    float weight;
-    String nickname;
-    String photo;
-    int age;
+    private String phone;
+    private float height;
+    private float weight;
+    private String nickname;
+    private String photo;
+    private int age;
 
     public String getPhone() {
         return phone;

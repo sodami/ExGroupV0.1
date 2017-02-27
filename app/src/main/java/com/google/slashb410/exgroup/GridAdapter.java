@@ -31,32 +31,42 @@ public class GridAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<GroupData> actGroup;
+    ArrayList<GroupData> waitGroup;
     ArrayList<GroupData> unActGroup;
+
     int layout;
     LayoutInflater inflater;
 
-    public GridAdapter(Context context, int layout, ArrayList<GroupData> actGroup, ArrayList<GroupData> unActGroup) {
+    public GridAdapter(Context context, int layout, ArrayList<GroupData> actGroup, ArrayList<GroupData> waitGroup, ArrayList<GroupData> unActGroup) {
         this.context = context;
         this.layout = layout;
         this.actGroup = actGroup;
+        this.waitGroup = waitGroup;
         this.unActGroup = unActGroup;
+
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        if(actGroup.size()==0&&unActGroup.size()==0) return 0;
-        return (actGroup.size() + unActGroup.size() + 1);
+        if(actGroup.size()==0&&unActGroup.size()==0&&waitGroup.size()==0) return 0;
+        return (actGroup.size() + waitGroup.size() + unActGroup.size() + 1);
     }
 
     @Override
     public Object getItem(int position) {
-        if (position < actGroup.size()) {
+        int startPosition= 0;
+        if(position<actGroup.size()){
+            startPosition+=actGroup.size();
             return actGroup.get(position);
-        } else if (position == (actGroup.size() + 1)) {
+        }else if(position>=startPosition&&position<actGroup.size()+waitGroup.size()){
+            startPosition+=waitGroup.size();
+            position = position-actGroup.size();
+            return waitGroup.get(position);
+        }else if(position==actGroup.size()+waitGroup.size()){
             return null;
-        } else {
-            position = position - (actGroup.size() + 1);
+        }else{
+            position = position - (actGroup.size()+waitGroup.size()+1);
             return unActGroup.get(position);
         }
     }
@@ -70,7 +80,7 @@ public class GridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
             convertView = inflater.inflate(layout, null);
-        //actGroup 크기가 GROUP_MAX와 같으면 안내카드
+        //actGroup+waitGroup 크기가 GROUP_MAX와 같으면 안내카드
         //방장이 있다면 라벨링, add카드 -> 안내카드
         //그외는 포지션에 따라 setText
 
@@ -80,7 +90,7 @@ public class GridAdapter extends BaseAdapter {
         CardView addCardView = (CardView) convertView.findViewById(R.id.group_add_cardview);
         CardView groupCardview = (CardView) convertView.findViewById(R.id.group_cardview);
 
-        if (position == actGroup.size()) {
+        if (position == actGroup.size()+waitGroup.size()) {
             U.getInstance().myLog("position: " +position+"  groupsize : "+actGroup.size());
             //1. 안내카드 세팅
             groupCardview.setVisibility(View.GONE);
@@ -89,16 +99,17 @@ public class GridAdapter extends BaseAdapter {
             imageView = (ImageView) convertView.findViewById(R.id.group_add_img);
             imageView.setVisibility(View.GONE);
             textView = (TextView) convertView.findViewById(R.id.group_addTxt);
-            if (actGroup.size() == E.KEY.GROUP_MAX) {
-                //그룹은 5개까지 소속될 수 있습니다.
+            if (actGroup.size()+waitGroup.size() == E.KEY.GROUP_MAX) {
+                //1-1. 그룹은 5개까지 소속될 수 있습니다.
                 addCardView.setBackgroundResource(R.color.babyPink);
                 textView.setTextColor(Color.WHITE);
                 textView.setText(R.string.max_group);
             } else if (isManager()) {
-                //매니저 그룹이 있다면 add카드 닫기
+                //1-2. 매니저 그룹이 있다면 add카드 닫기
+                addCardView.setBackgroundResource(R.color.babyPink);
                 textView.setText(R.string.already_manager);
             } else {
-                //add카드 띄우기
+                //1-3. add카드 띄우기
                 imageView.setVisibility(View.VISIBLE);
                 addCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,49 +133,57 @@ public class GridAdapter extends BaseAdapter {
                         .fit()
                         .centerCrop()
                         .into(imageView);
-                if (actGroup.get(position).getWaitActRst() == 1) {
-                    //2-1. 활성화그룹
-                    textView2.setText(actGroup.get(position).getExPeriod());
-                    groupCardview.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
-                            intent.putExtra("groupId", actGroup.get(position).getGroup_id());
-                            intent.putExtra("title", actGroup.get(position).getGroupTitle());
-                            intent.putExtra("image", actGroup.get(position).getGroupPicUrl());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            v.getContext().startActivity(intent);
-                        }
-                    });
+                //2-1. 활성화그룹
+                textView2.setText(String.valueOf(actGroup.get(position).getExPeriod()));
+                groupCardview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
+                        intent.putExtra("groupData", actGroup.get(position));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+            } else if(position >= actGroup.size()&& position<actGroup.size()+waitGroup.size()){
 
-                } else {
-                    //2-2. 활동대기 그룹
-                    FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
-                    waitingLayout.setVisibility(View.VISIBLE);
-                    Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
-                    waitingLockBtn.setVisibility(View.VISIBLE);
+                //2-2. 활동대기 그룹
+                int mPosition = position - actGroup.size();
 
-                    textView2.setVisibility(View.GONE);
-                    TextView textView3 = (TextView) convertView.findViewById(R.id.d_day);
-                    textView3.setVisibility(View.GONE);
-                    waitingLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(v.getContext(), GroupWaitingActivity.class);
-                            intent.putExtra("groupId", actGroup.get(position).getGroup_id());
-                            intent.putExtra("title", actGroup.get(position).getGroupTitle());
-                            intent.putExtra("nowNum", actGroup.get(position).getNowNum());
-                            intent.putExtra("maxNum", actGroup.get(position).getMaxNum());
-                            intent.putExtra("date", actGroup.get(position).getGroupCreateDate());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            v.getContext().startActivity(intent);
-                        }
-                    });
+                FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
+                waitingLayout.setVisibility(View.VISIBLE);
+                Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
+                waitingLockBtn.setVisibility(View.VISIBLE);
 
+                textView.setText(waitGroup.get(mPosition).getGroupTitle());
+                textView.setTextColor(Color.WHITE);
 
-                }
-            } else {
+                textView2.setVisibility(View.GONE);
+                TextView textView3 = (TextView) convertView.findViewById(R.id.d_day);
+                textView3.setVisibility(View.GONE);
+                waitingLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(v.getContext(), GroupWaitingActivity.class);
+                        intent.putExtra("groupId", waitGroup.get(mPosition).getGroup_id());
+                        intent.putExtra("title", waitGroup.get(mPosition).getGroupTitle());
+                        intent.putExtra("nowNum", waitGroup.get(mPosition).getNowNum());
+                        intent.putExtra("maxNum", waitGroup.get(mPosition).getMaxNum());
+                        intent.putExtra("date", waitGroup.get(mPosition).getGroupCreateDate());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+
+            }
+             else {
                 //2-3. 활동종료그룹
+                FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
+                waitingLayout.setVisibility(View.VISIBLE);
+                Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
+                waitingLockBtn.setBackgroundResource(R.drawable.close_white);
+                waitingLockBtn.setVisibility(View.VISIBLE);
+
                 int mPosition = position - (actGroup.size() + 1);
                 textView.setText(unActGroup.get(mPosition).getGroupTitle());
                 Picasso.with(context)

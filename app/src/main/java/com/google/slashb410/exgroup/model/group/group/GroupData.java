@@ -1,15 +1,16 @@
 package com.google.slashb410.exgroup.model.group.group;
 
+import java.io.Serializable;
+
 /**
  * Created by Tacademy on 2017-02-21.
  */
 
-public class GroupData{
+public class GroupData implements Serializable{
     private int id;
     private int user_id;
     private int group_id;
     private int manager;
-    private int waitActRst;
     private String ctime;
     private String utime;
     private String weight;
@@ -31,7 +32,6 @@ public class GroupData{
                 ", user_id=" + user_id +
                 ", group_id=" + group_id +
                 ", manager=" + manager +
-                ", waitActRst=" + waitActRst +
                 ", ctime='" + ctime + '\'' +
                 ", utime='" + utime + '\'' +
                 ", weight='" + weight + '\'' +
@@ -48,13 +48,6 @@ public class GroupData{
                 '}';
     }
 
-    public int getWaitActRst() {
-        return waitActRst;
-    }
-
-    public void setWaitActRst(int waitActRst) {
-        this.waitActRst = waitActRst;
-    }
 
     public int getId() {
         return id;

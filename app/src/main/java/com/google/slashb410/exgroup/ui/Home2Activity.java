@@ -1,17 +1,15 @@
 package com.google.slashb410.exgroup.ui;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,24 +27,24 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
+import com.google.slashb410.exgroup.model.group.home.ResAttend;
 import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.model.group.home.Ticket;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,8 +55,6 @@ import retrofit2.Response;
 
 public class Home2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
 
     @BindView(R.id.fab)
     FloatingActionMenu floatingActionMenu;
@@ -75,14 +71,13 @@ public class Home2Activity extends AppCompatActivity
     @BindView(R.id.bmi)
     TextView bmi;
 
-<<<<<<< HEAD
     GridView gridView;
     GridAdapter gridAdapter;
-=======
-    GridAdapter gridAdapter;
-    GridView gridView;
+    ResGroupList resGroupList;
 
->>>>>>> e786f379452fbed8c716a1a3cb00e0852baab484
+    int[] actGroups;
+    String[] actTitles;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home2_menu, menu);
@@ -109,8 +104,14 @@ public class Home2Activity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        //출석체크
-        //checkAttend();
+        String[] todays = U.getInstance().currentYYmmDD();
+        String today = todays[0] + "-" + todays[1] + "0" + todays[2];
+
+        //유효한 티켓이 없다면 출석체크
+        if (!hasValidTicket(today)) {
+            checkAttend(today);
+        }
+
         //프로필박스 세팅
         setProfileBox();
         //그룹리스트 세팅
@@ -144,7 +145,7 @@ public class Home2Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-                //this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -153,36 +154,42 @@ public class Home2Activity extends AppCompatActivity
 
     }
 
-
-
     private void setGroupList() {
         Call<ResGroupList> resMe = NetSSL.getInstance().getGroupImpFactory().groupList();
         resMe.enqueue(new Callback<ResGroupList>() {
             @Override
             public void onResponse(Call<ResGroupList> call, Response<ResGroupList> response) {
-                if(response.body()==null) {
+                if (response.body() == null) {
                     U.getInstance().myLog("setGroupList body is NULL");
                     return;
                 }
-                if(response.body().getResultCode()==1) {
-                    ArrayList<GroupData> actRst = response.body().getResult().getActRst();
-                    ArrayList<GroupData> unActRst = response.body().getResult().getUnActRst();
+                if (response.body().getResultCode() == 1) {
 
-                    U.getInstance().myLog(response.body().getResult().getActRst().get(0).toString()+"");
-                    U.getInstance().myLog(response.body().getResult().getUnActRst().size()+"");
+                    resGroupList = response.body();
+                    ArrayList<GroupData> actRst = resGroupList.getResult().getActRst();
+                    ArrayList<GroupData> waitRst = resGroupList.getResult().getWaitRst();
+                    ArrayList<GroupData> unActRst = resGroupList.getResult().getUnActRst();
 
-                    gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, unActRst);
+                    U.getInstance().myLog("actGroup size : " + actRst.size());
+                    U.getInstance().myLog("waitGroup size : "+waitRst.size());
+                    U.getInstance().myLog("unActGroup size : " + unActRst.size());
+
+                    for(int i =0; i<actRst.size();++i){
+                        actGroups[i] = actRst.get(i).getGroup_id();
+                        actTitles[i] = actRst.get(i).getGroupTitle();
+                    }
+                    gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, waitRst, unActRst);
                     gridView = (GridView) findViewById(R.id.group_grid);
                     gridView.setAdapter(gridAdapter);
 
-                }else{
-                    U.getInstance().myLog("setGroupList resultCode : "+response.body().getResultCode());
+                } else {
+                    U.getInstance().myLog("setGroupList resultCode : " + response.body().getResultCode());
                 }
             }
 
             @Override
             public void onFailure(Call<ResGroupList> call, Throwable t) {
-                U.getInstance().myLog("접근실패 : "+t.toString());
+                U.getInstance().myLog("접근실패 : " + t.toString());
             }
         });
 
@@ -193,13 +200,13 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if (response.body()==null) {
+                if (response.body().getData() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
                 } else {
-                    U.getInstance().myLog(response.body().toString());
-                    if(response.body().getNickname()!=null) nick_profile.setText(response.body().getNickname());
-                    if(response.body().getBMI()!=null) bmi.setText(response.body().getBMI());
-                    if(response.body().getSeqAttendNum()!=0) seqAttendNum.setText(response.body().getSeqAttendNum());
+                    U.getInstance().myLog(response.body().getData().toString());
+                    if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
+                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI());
+                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum());
                 }
             }
 
@@ -214,54 +221,64 @@ public class Home2Activity extends AppCompatActivity
     private void goQuickMenu(int i) {
         Intent intent = new Intent(this, QuickWriteActivity.class);
         intent.putExtra("menu", i);
+
+        intent.putExtra("actGroups", actGroups);
+        intent.putExtra("actTitles", actTitles);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void checkAttend() {
-        //1. 마지막 접속일자 가져오기
-        String lastdate = getLastDate(this);
+    private void checkAttend(String today) {
 
-        //2. 오늘날짜 가져오기
-        String[] todays = U.getInstance().currentYYmmDD();
-        String today = todays[0] + "-" + todays[1] + "-" + todays[2];
+        U.getInstance().myLog("출석 요청을 시작합니다");
 
-        //#. 최초 접속 예외 처리
-        if (lastdate == null) {
-            U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
-            setLastDate(this, today);
-        } else {
-            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
-            Date today_date = null;
-            Date lastdate_date = null;
-            try {
-                today_date = format.parse(today);
-                lastdate_date = format.parse(lastdate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            //3. 마지막 접속일자와 오늘날짜가 다르다면 출석체크
-            if (today_date != null && lastdate_date != null) {
-                int compare = today_date.compareTo(lastdate_date);
-                if (compare != 0) {
-                    //마지막 접속일자가 오늘이 아니라면 출석체크
-                    U.getInstance().popSimpleDialog(null, this, null, "출석체크를 완료했습니다.");
+        Call<ResAttend> resAttend = NetSSL.getInstance().getMemberImpFactory().attend(today);
+        resAttend.enqueue(new Callback<ResAttend>() {
+            @Override
+            public void onResponse(Call<ResAttend> call, Response<ResAttend> response) {
+                if (response.body() != null) {
+                    if(response.body().getResultCode()==1){
+                        Gson gson = new Gson();
+                        String ticket_json = gson.toJson(response.body().getTicket());
+                        StorageHelper.getInstance().setString(getApplicationContext(), "ticket", ticket_json);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                        builder.setMessage("출석 체크 완료!")
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                } else {
+                    U.getInstance().myLog("ResAttend Body is NULL");
                 }
             }
+
+            @Override
+            public void onFailure(Call<ResAttend> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : " + t.toString());
+            }
+        });
+    }
+
+
+    private boolean hasValidTicket(String today) {
+
+        //티켓이 존재하지 않는다. > false
+        if(StorageHelper.getInstance().getString(getApplicationContext(), "ticket")==null) {
+            U.getInstance().myLog("티켓이 없네요");
+            return false;
         }
 
-        //4. 지금 날짜를 마지막 접속일자로 입력
-        setLastDate(this, today);
+        String ticket_str = StorageHelper.getInstance().getString(getApplicationContext(), "ticket");
+        Gson gson = new Gson();
+        Ticket ticket = gson.fromJson(ticket_str, Ticket.class);
 
-    }
-
-    private String getLastDate(Context context) {
-        return StorageHelper.getInstance().getString(context, E.KEY.LASTDATE_KEY);
-    }
-
-    private void setLastDate(Context context, String today) {
-
-        StorageHelper.getInstance().setString(context, E.KEY.LASTDATE_KEY, today);
+        //티켓이 존재하지만 오늘과 같으면 true 다르면 false
+        return (ticket.getTicketPeriod().equals(today));
 
     }
 
@@ -289,7 +306,7 @@ public class Home2Activity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // 누르면 로그아웃
-              onLogout();
+            onLogout();
 //            Intent intent = new Intent(this, EnterActivity.class);
 //            startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -299,14 +316,32 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             // 누르면 운동, 식당 인증 푸쉬 on/off
 
+<<<<<<< HEAD
+        } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
+            Context mContext = getApplicationContext();
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));
+            AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
+            aDialog.setView(layout);
+            aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    onSessionout();
+                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
+                }
+            });
+            AlertDialog ad = aDialog.create();
+            ad.show();
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
+=======
         } else if (id == R.id.nav_manage) {
             // 누르면 개발자에게 문의하기
+>>>>>>> f5f720a1da9da97656fb16da16473152dbec82ab
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
-            final EditText title    =    (EditText)layout.findViewById(R.id.editText1);
-            final EditText sendto   =    (EditText)layout.findViewById(R.id.editText2);
-            final EditText content  =    (EditText)layout.findViewById(R.id.editText3);
+            final EditText title = (EditText) layout.findViewById(R.id.editText1);
+            final EditText sendto = (EditText) layout.findViewById(R.id.editText2);
+            final EditText content = (EditText) layout.findViewById(R.id.editText3);
             // 알람창 띄우기
             AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
             // dialog.xml 파일을 뷰로 셋팅
@@ -314,11 +349,11 @@ public class Home2Activity extends AppCompatActivity
             // send 버튼 클릭 시 이벤트
             aDialog.setNegativeButton("send", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    String to       =   title.getText().toString();
-                    String subject  =   sendto.getText().toString();
-                    String message  =   content.getText().toString();
-                    Intent email    =   new Intent(Intent.ACTION_SEND);
-                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
+                    String to = title.getText().toString();
+                    String subject = sendto.getText().toString();
+                    String message = content.getText().toString();
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
                     email.putExtra(Intent.EXTRA_SUBJECT, subject);
                     email.putExtra(Intent.EXTRA_TEXT, message);
 
@@ -339,17 +374,17 @@ public class Home2Activity extends AppCompatActivity
             AlertDialog ad = aDialog.create();
             ad.show();
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
+//        } else if (id == R.id.nav_send) {
+//
+//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     //로그아웃
-    public void onLogout(){
+    public void onLogout() {
         Call<ResLogout> res =
                 NetSSL.getInstance().getMemberImpFactory().logout(); //전문에 있는 양식 순서대로
         res.enqueue(new Callback<ResLogout>() { //enqueue가 callback오니까
@@ -357,22 +392,23 @@ public class Home2Activity extends AppCompatActivity
             public void onResponse(Call<ResLogout> call, Response<ResLogout> response) {
                 if (response != null) {
                     if (response.body() != null) {
-                        if (response.body().getReusltCode()==1) {
+                        if (response.body().getReusltCode() == 1) {
                             Log.i("RF", "로그아웃성공" + response.body().getMessage());
-                        }else{
+                        } else {
                             Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
                         }
-                    }else{
+                    } else {
                         Log.i("RF", "2로그아웃실패" + response.code()); //통신은 들어갔는데 오류
                     }
-                }else{
+                } else {
                     Log.i("RF", "3응답 데이터 오류");
                 }
                 // Log.i("RF", "가입실패   //" + response);
             }
+
             @Override
             public void onFailure(Call<ResLogout> call, Throwable t) { //통신 자체 실패
-                Log.i("RF", "ERR"+t.getMessage());
+                Log.i("RF", "ERR" + t.getMessage());
             }
         });
     }
@@ -385,8 +421,6 @@ public class Home2Activity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            E.KEY.group_list.clear();
-//            E.KEY.new_group.deleteGroupInfo();
             E.KEY.new_write.deleteWriteData();
             E.KEY.shotData.deleteShotData();
             this.finish();

@@ -5,120 +5,172 @@ package com.google.slashb410.exgroup.model.group.home;
  */
 
 public class ResMe {
-    private int id;
-    private String username;
-    private String weight;
-    private String height;
-    private String age;
-    private String BMI;
-    private int seqAttendNum;
-    private String nickname;
-    private String picUrl;
-    private int point;
-    private int activation;
 
-    @Override
-    public String toString() {
-        return "ResMe{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", weight='" + weight + '\'' +
-                ", height='" + height + '\'' +
-                ", age='" + age + '\'' +
-                ", BMI='" + BMI + '\'' +
-                ", seqAttendNum=" + seqAttendNum +
-                ", nickname='" + nickname + '\'' +
-                ", picUrl='" + picUrl + '\'' +
-                ", point=" + point +
-                ", activation=" + activation +
-                '}';
+    private String message;
+    private MyData data;
+
+    public String getMessage() {
+        return message;
     }
 
-    public String getNickname() {
-        return nickname;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public MyData getData() {
+        return data;
     }
 
-    public String getPicUrl() {
-        return picUrl;
+    public void setData(MyData data) {
+        this.data = data;
     }
 
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
+    public class MyData {
+        private int id;
+        private String username;
+        private String password;
+        private String nickname;
+        private String picUrl;
+        private String weight;
+        private String height;
+        private String BMI;
+        private int seqAttendNum;
+        private String age;
+        private String facebookId;
+        private int activation;
+        private String utime;
+        private String ctime;
 
-    public int getPoint() {
-        return point;
-    }
+        @Override
+        public String toString() {
+            return "MyData{" +
+                    "id=" + id +
+                    ", username='" + username + '\'' +
+                    ", password='" + password + '\'' +
+                    ", nickname='" + nickname + '\'' +
+                    ", picUrl='" + picUrl + '\'' +
+                    ", weight='" + weight + '\'' +
+                    ", height='" + height + '\'' +
+                    ", BMI='" + BMI + '\'' +
+                    ", seqAttendNum=" + seqAttendNum +
+                    ", age='" + age + '\'' +
+                    ", facebookId='" + facebookId + '\'' +
+                    ", activation=" + activation +
+                    ", utime='" + utime + '\'' +
+                    ", ctime='" + ctime + '\'' +
+                    '}';
+        }
 
-    public void setPoint(int point) {
-        this.point = point;
-    }
+        public String getPassword() {
+            return password;
+        }
 
-    public int getActivation() {
-        return activation;
-    }
+        public void setPassword(String password) {
+            this.password = password;
+        }
 
-    public void setActivation(int activation) {
-        this.activation = activation;
-    }
+        public String getFacebookId() {
+            return facebookId;
+        }
 
-    public int getId() {
-        return id;
-    }
+        public void setFacebookId(String facebookId) {
+            this.facebookId = facebookId;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public String getUtime() {
+            return utime;
+        }
 
-    public String getUsername() {
-        return username;
-    }
+        public void setUtime(String utime) {
+            this.utime = utime;
+        }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        public String getCtime() {
+            return ctime;
+        }
 
-    public String getWeight() {
-        return weight;
-    }
+        public void setCtime(String ctime) {
+            this.ctime = ctime;
+        }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
+        public String getNickname() {
+            return nickname;
+        }
 
-    public String getHeight() {
-        return height;
-    }
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
 
-    public void setHeight(String height) {
-        this.height = height;
-    }
+        public String getPicUrl() {
+            return picUrl;
+        }
 
-    public String getAge() {
-        return age;
-    }
+        public void setPicUrl(String picUrl) {
+            this.picUrl = picUrl;
+        }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
+        public int getActivation() {
+            return activation;
+        }
 
-    public String getBMI() {
-        return BMI;
-    }
+        public void setActivation(int activation) {
+            this.activation = activation;
+        }
 
-    public void setBMI(String BMI) {
-        this.BMI = BMI;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public int getSeqAttendNum() {
-        return seqAttendNum;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public void setSeqAttendNum(int seqAttendNum) {
-        this.seqAttendNum = seqAttendNum;
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public String getHeight() {
+            return height;
+        }
+
+        public void setHeight(String height) {
+            this.height = height;
+        }
+
+        public String getAge() {
+            return age;
+        }
+
+        public void setAge(String age) {
+            this.age = age;
+        }
+
+        public String getBMI() {
+            return BMI;
+        }
+
+        public void setBMI(String BMI) {
+            this.BMI = BMI;
+        }
+
+        public int getSeqAttendNum() {
+            return seqAttendNum;
+        }
+
+        public void setSeqAttendNum(int seqAttendNum) {
+            this.seqAttendNum = seqAttendNum;
+        }
     }
 }
