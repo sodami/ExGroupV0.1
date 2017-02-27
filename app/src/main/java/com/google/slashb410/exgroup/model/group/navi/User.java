@@ -1,4 +1,4 @@
-package com.google.slashb410.exgroup;
+package com.google.slashb410.exgroup.model.group.navi;
 
 /**
  * Created by Tacademy on 2017-02-03.

@@ -32,6 +32,7 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <ImageView
+                    android:id="@+id/backBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/back_pink" />
@@ -88,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
                         android:text="몽총이"
                         android:hint="이름"
                         android:paddingTop="15dp"
@@ -98,17 +99,18 @@
                         android:textColor="@color/babyPink"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/nickname"
+                        android:id="@+id/resultMyName"
                         android:layout_gravity="center"
                         android:focusable="true"
                         android:cursorVisible="true" />
+
 
                     <ImageView
                         android:layout_width="10.5dp"
                         android:layout_height="18dp"
                         android:background="@drawable/by_ea"
                         android:id="@+id/nicknameInfo"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:onClick="onClick" />
 
                     </LinearLayout>

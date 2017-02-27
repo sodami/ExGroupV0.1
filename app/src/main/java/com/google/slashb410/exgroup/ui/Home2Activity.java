@@ -291,7 +291,6 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
 
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
-            //U.getInstance().popSimpleDialog(null, this, null, "친구랑 운동을 탈퇴하고 모든 정보를 삭제합니다.");
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));

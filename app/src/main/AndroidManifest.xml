@@ -80,8 +80,9 @@
             android:name=".ui.group.room.GroupHomeActivity"
             android:label="@string/group_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.group.create.GroupWaitingActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.group.create.GroupWaitingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.EnterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -127,9 +128,11 @@
             android:name=".ui.GetPlanetActivity"
             android:label="@string/title_activity_get_planet"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.navi.SessionDialogActivity"></activity>
-        <activity android:name=".ui.mypage.DetailInfo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.navi.SessionDialogActivity" />
+        <activity
+            android:name=".ui.mypage.DetailInfo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.mypage.Calendar.CalendarDialogActivity"></activity>
     </application>
 
 </manifest>
