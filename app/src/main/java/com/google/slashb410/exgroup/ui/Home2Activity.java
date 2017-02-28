@@ -37,6 +37,7 @@ import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.home.ResAttend;
 import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.model.group.home.ResSessionOut;
 import com.google.slashb410.exgroup.model.group.home.Ticket;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
@@ -75,8 +76,8 @@ public class Home2Activity extends AppCompatActivity
     GridAdapter gridAdapter;
     ResGroupList resGroupList;
 
-    int[] actGroups;
-    String[] actTitles;
+    ArrayList actGroups;
+    ArrayList actTitles;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,6 +107,9 @@ public class Home2Activity extends AppCompatActivity
 
         String[] todays = U.getInstance().currentYYmmDD();
         String today = todays[0] + "-" + todays[1] + "0" + todays[2];
+
+        actGroups = new ArrayList();
+        actTitles = new ArrayList();
 
         //유효한 티켓이 없다면 출석체크
         if (!hasValidTicket(today)) {
@@ -175,8 +179,8 @@ public class Home2Activity extends AppCompatActivity
                     U.getInstance().myLog("unActGroup size : " + unActRst.size());
 
                     for(int i =0; i<actRst.size();++i){
-                        actGroups[i] = actRst.get(i).getGroup_id();
-                        actTitles[i] = actRst.get(i).getGroupTitle();
+                        actGroups.add(actRst.get(i).getGroup_id());
+                        actTitles.add(actRst.get(i).getGroupTitle());
                     }
                     gridAdapter = new GridAdapter(Home2Activity.this, R.layout.group_card_view, actRst, waitRst, unActRst);
                     gridView = (GridView) findViewById(R.id.group_grid);
@@ -223,7 +227,11 @@ public class Home2Activity extends AppCompatActivity
         intent.putExtra("menu", i);
 
         intent.putExtra("actGroups", actGroups);
-        intent.putExtra("actTitles", actTitles);
+        String[] actTitles_str = new String[actTitles.size()];
+        for(int j=0; j<actTitles.size();++j){
+            actTitles_str[j]= (String) actTitles.get(j);
+        }
+        intent.putExtra("actTitles", actTitles_str);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -316,7 +324,6 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             // 누르면 운동, 식당 인증 푸쉬 on/off
 
-<<<<<<< HEAD
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -332,10 +339,10 @@ public class Home2Activity extends AppCompatActivity
             AlertDialog ad = aDialog.create();
             ad.show();
         } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
-=======
+
         } else if (id == R.id.nav_manage) {
             // 누르면 개발자에게 문의하기
->>>>>>> f5f720a1da9da97656fb16da16473152dbec82ab
+
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
@@ -427,5 +434,35 @@ public class Home2Activity extends AppCompatActivity
 
         }
         return true;
+    }
+
+    private void onSessionout()
+    {
+        Call<ResSessionOut> res =
+                NetSSL.getInstance().getMemberImpFactory().sessionout(); //전문에 있는 양식 순서대로
+        res.enqueue(new Callback<ResSessionOut>() { //enqueue가 callback오니까
+            @Override
+            public void onResponse(Call<ResSessionOut> call, Response<ResSessionOut> response) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body().getResultCode() == 1) {
+                            Log.i("RF", "회원 탈퇴 성공" + response.body().getResultCode());
+                        } else {
+                            Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
+                        }
+                    } else {
+                        Log.i("RF", "2로그아웃실패" + response.code()); //통신은 들어갔는데 오류
+                    }
+                } else {
+                    Log.i("RF", "3응답 데이터 오류");
+                }
+                // Log.i("RF", "가입실패   //" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ResSessionOut> call, Throwable t) {
+                Log.i("RF", "ERR" + t.getMessage());
+            }
+        });
     }
 }
