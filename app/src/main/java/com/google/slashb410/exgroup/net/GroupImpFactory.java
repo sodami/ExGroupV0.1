@@ -6,6 +6,7 @@ import com.google.slashb410.exgroup.model.group.group.ResBoardList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
 import com.google.slashb410.exgroup.model.group.group.ResUncertifiedMem;
+import com.google.slashb410.exgroup.model.group.group.ResUpload;
 
 import java.util.Map;
 
@@ -47,6 +48,11 @@ public interface GroupImpFactory {
     //D_2. 가입 그룹 리스트 불러오기
     @GET("groups")
     Call<ResGroupList> groupList();
+
+    //F_1. 그룹 게시글 등록하기
+    @Multipart
+    @POST("boards")
+    Call<ResUpload> upload(@PartMap Map<String, RequestBody> params);
 
     //F_3. 그룹 게시글 불러오기
     @GET("groups/{groupId}/boards")

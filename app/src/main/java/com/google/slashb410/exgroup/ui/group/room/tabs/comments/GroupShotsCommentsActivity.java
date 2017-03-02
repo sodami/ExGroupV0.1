@@ -78,7 +78,7 @@ public class GroupShotsCommentsActivity extends AppCompatActivity {
 //                    reCallComment(); //차후 개발
                     //단순 리스트 추가
                     int count = adapter.getCount();
-                    String customDateNTime = customDateNTime();
+                    String customDateNTime = U.getInstance().customDateNTime();
                     addComment = new CommentData(0, boardId, E.KEY.USER_ID, E.KEY.USER_NAME, E.KEY.USER_NICKNAME, "", commentEdit.getText().toString(), customDateNTime);
                     boardData.getComment().add(count + 1, addComment);
 
@@ -102,11 +102,5 @@ public class GroupShotsCommentsActivity extends AppCompatActivity {
 //        Call<ResBoardList>
 //    }
 
-    public String customDateNTime(){
 
-        String date[] = U.getInstance().currentYYmmDD();
-        String time[] = U.getInstance().currentTime();
-
-        return date[0]+"년 "+date[1]+"월 "+date[2]+"일 "+time[0]+"시 "+time[1]+"분";
-    }
 }
