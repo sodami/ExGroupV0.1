@@ -59,15 +59,15 @@ public class MyHomeActivity extends Activity {
         nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
         nicknameInfo    = (ImageView) findViewById(R.id.nicknameInfo); // 수정 버튼
 
-        nickname.setText(student.getName());
-        nicknameInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                onBackPressed();
-                Intent intent = new Intent(getApplicationContext(), DetailInfo.class);
-                startActivity(intent);
-            }
-        });
+//        nickname.setText(student.getName());
+//        nicknameInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                onBackPressed();
+//                Intent intent = new Intent(getApplicationContext(), DetailInfo.class);
+//                startActivity(intent);
+//            }
+//        });
 
         // 2017. 02. 01
         Resources resource = getResources();
