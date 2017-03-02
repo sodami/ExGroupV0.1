@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.*;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -35,6 +37,7 @@ import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.home.ResAttend;
 import com.google.slashb410.exgroup.model.group.home.ResLogout;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.model.group.home.ResSessionOut;
 import com.google.slashb410.exgroup.model.group.home.Ticket;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
@@ -293,8 +296,8 @@ public class Home2Activity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // 누르면 로그아웃
             onLogout();
-//            Intent intent = new Intent(this, EnterActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, EnterActivity.class);
+            startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
             // 누르면 출석체크 푸쉬 on/off
@@ -302,7 +305,6 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             // 누르면 운동, 식당 인증 푸쉬 on/off
 
-<<<<<<< HEAD
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -317,11 +319,8 @@ public class Home2Activity extends AppCompatActivity
             });
             AlertDialog ad = aDialog.create();
             ad.show();
-        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
-=======
         } else if (id == R.id.nav_manage) {
             // 누르면 개발자에게 문의하기
->>>>>>> f5f720a1da9da97656fb16da16473152dbec82ab
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
@@ -360,13 +359,42 @@ public class Home2Activity extends AppCompatActivity
             AlertDialog ad = aDialog.create();
             ad.show();
         } else if (id == R.id.nav_share) {
+            // 친구에게 공유하기
         }
-//        } else if (id == R.id.nav_send) {
-//
-//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // 회원 탈퇴
+    private void onSessionout()
+    {
+        Call<ResSessionOut> res =
+                NetSSL.getInstance().getMemberImpFactory().sessionout(); //전문에 있는 양식 순서대로
+        res.enqueue(new Callback<ResSessionOut>() { //enqueue가 callback오니까
+            @Override
+            public void onResponse(Call<ResSessionOut> call, Response<ResSessionOut> response) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body().getResultCode() == 1) {
+                            Log.i("RF", "회원 탈퇴 성공" + response.body().getResultCode());
+                        } else {
+                            Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
+                        }
+                    } else {
+                        Log.i("RF", "2로그아웃실패" + response.code()); //통신은 들어갔는데 오류
+                    }
+                } else {
+                    Log.i("RF", "3응답 데이터 오류");
+                }
+                // Log.i("RF", "가입실패   //" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ResSessionOut> call, Throwable t) {
+                Log.i("RF", "ERR" + t.getMessage());
+            }
+        });
     }
 
     //로그아웃

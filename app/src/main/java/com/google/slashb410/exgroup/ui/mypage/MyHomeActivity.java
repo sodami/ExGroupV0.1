@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,17 +43,31 @@ import rx.schedulers.Schedulers;
 public class MyHomeActivity extends Activity {
     ImageView profile_change;
     SweetAlertDialog alert;
-    TextView nickname;
+    TextView nickname;      // 닉네임 보여짐
     CalendarView cal;
-    ImageView nicknameInfo;
+    ImageView nicknameInfo; // 수정버튼
+    Bundle bundle;
+    Student student;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_home);
-        profile_change = (ImageView) findViewById(R.id.profile_change);
-        nickname = (TextView) findViewById(R.id.resultMyName);
-        nicknameInfo = (ImageView) findViewById(R.id.nicknameInfo);
+
+
+        profile_change  = (ImageView) findViewById(R.id.profile_change);
+        nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
+        nicknameInfo    = (ImageView) findViewById(R.id.nicknameInfo); // 수정 버튼
+
+        nickname.setText(student.getName());
+        nicknameInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                onBackPressed();
+                Intent intent = new Intent(getApplicationContext(), DetailInfo.class);
+                startActivity(intent);
+            }
+        });
 
         // 2017. 02. 01
         Resources resource = getResources();
@@ -61,12 +76,11 @@ public class MyHomeActivity extends Activity {
         tabHost.setup();
         spec = tabHost.newTabSpec("tag1");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("행성   ",
-                resource.getDrawable(R.drawable.planet_white));
+        spec.setIndicator("", resource.getDrawable(R.drawable.planet_white));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("달    력", resource.getDrawable(R.drawable.calendar_white));
+        spec.setIndicator("", resource.getDrawable(R.drawable.calendar_white));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag3");
         spec.setContent(R.id.tab3);
@@ -76,8 +90,8 @@ public class MyHomeActivity extends Activity {
 
         for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++)
         {
-            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 200;
-            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 150;
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 180;
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 100;
         }
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
@@ -128,13 +142,6 @@ public class MyHomeActivity extends Activity {
                 });
                 AlertDialog ad = aDialog.create();
                 ad.show();
-            }
-        });
-        nicknameInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DetailInfo.class);
-                startActivity(intent);
             }
         });
     }
