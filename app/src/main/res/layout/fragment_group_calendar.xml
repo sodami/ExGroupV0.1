@@ -13,10 +13,9 @@
         android:layout_height="wrap_content"
         android:groupIndicator="@null"/>
 
-    <com.andexert.calendarlistview.library.DayPickerView
-        android:id="@+id/pickerView"
+    <com.squareup.timessquare.CalendarPickerView
+        android:id="@+id/group_calendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        calendar:drawRoundRect="true" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
