@@ -10,21 +10,31 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ReqMakeGroup;
+import com.google.slashb410.exgroup.net.NetSSL;
+import com.google.slashb410.exgroup.util.U;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GroupAddActivity extends AppCompatActivity {
 
@@ -34,16 +44,21 @@ public class GroupAddActivity extends AppCompatActivity {
     ImageView groupProfileImg;
     @BindView(R.id.group_name_add)
     EditText groupTitle;
-    @BindView(R.id.mem_numpicker)
-    NumberPicker memPicker;
+//    @BindView(R.id.mem_numpicker)
+//    NumberPicker memPicker;
+
+    @BindView(R.id.memberSpinner)
+    Spinner memSpinner;
 
     @Nullable
     @BindView(R.id.period_picker)
     NumberPicker periodPicker;
     @BindView(R.id.period)
-    Button period;
+    Button periodBtn;
 
     String profilePath;
+    String numMem;
+    String period;
     ReqMakeGroup reqMakeGroup;
     View peroidPickerView;
 
@@ -53,8 +68,13 @@ public class GroupAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_add);
         ButterKnife.bind(this);
 
-        memPicker.setMinValue(2);
-        memPicker.setMaxValue(5);
+        memSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                numMem = parent.getItemAtPosition(position).toString();
+            }
+        });
+
 
     }
 
@@ -68,13 +88,13 @@ public class GroupAddActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-//                            case 0: {
-//                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, "/group", groupProfileImg);
-//                                dialog.dismiss();
-//                            }
-//                            break;
+                            case 0: {
+                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, groupProfileImg);
+                                dialog.dismiss();
+                            }
+                            break;
                             case 1: {
-                                // U.getInstance().onGallery(GroupAddActivity.this, "/group", groupProfileImg);
+                                U.getInstance().onGallery(GroupAddActivity.this, groupProfileImg);
                                 dialog.dismiss();
                             }
                             break;
@@ -91,8 +111,6 @@ public class GroupAddActivity extends AppCompatActivity {
 
     @OnClick(R.id.period)
     public void setPeriod(){
-        periodPicker = new NumberPicker(this);
-
         periodPicker.setMinValue(7);
         periodPicker.setMaxValue(30);
 
@@ -106,7 +124,7 @@ public class GroupAddActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         reqMakeGroup.setExPeriod(which);
-                        period.setText(which+"일");
+                        periodBtn.setText(which+"일");
                         dialog.dismiss();
                     }
                 })
@@ -122,35 +140,40 @@ public class GroupAddActivity extends AppCompatActivity {
     public void goAdd(View view) {
         Map<String, RequestBody> bodyMap = new HashMap<>();
 //        bodyMap.put("groupTitle", RequestBody.create(groupTitle.getText().toString(), ))
-        if(groupTitle.getText().equals("")||period.getText().equals("")){
+        if(groupTitle.getText().equals("")||periodBtn.getText().equals("")){
             Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
             return;
         }
-        reqMakeGroup = new ReqMakeGroup();
-        reqMakeGroup.setGroupTitle(groupTitle.getText().toString());
-        reqMakeGroup.setMaxNum(memPicker.getValue());
-        reqMakeGroup.setPhoto(profilePath);
-//
-//        File file = FileUtils.getPath(this, profilePath);
-//        Requestb
-//        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), )
 
-//        Call<ResStandard> resMakeGroup = NetSSL.getInstance().getGroupImpFactory().makeGroup(reqMakeGroup);
-//        resMakeGroup.enqueue(new Callback<ResStandard>() {
-//            @Override
-//            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
-//                if (response.body()==null) {
-//                    U.getInstance().myLog("setProfileBox Body is NULL");
-//                } else {
-//                    U.getInstance().myLog(response.body().toString());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResStandard> call, Throwable t) {
-//                U.getInstance().myLog("접근실패 : " + t.toString());
-//            }
-//        });
+        Map<String, RequestBody> map = new HashMap<String, RequestBody>();
+        map.put("groupTitle", RequestBody.create(MediaType.parse("multipart/form-data"), groupTitle.getText().toString()));
+        map.put("maxNum", RequestBody.create(MediaType.parse("multipart/form-data"), numMem));
+        map.put("exPeriod", RequestBody.create(MediaType.parse("multipart/form-data"), profilePath));
+
+        File file = new File(profilePath);
+        U.getInstance().myLog(file.getAbsolutePath()+"++"+file.canRead());
+
+        RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        map.put("photo", fileBody);
+
+
+
+        Call<ResStandard> resMakeGroup = NetSSL.getInstance().getGroupImpFactory().makeGroup(map);
+        resMakeGroup.enqueue(new Callback<ResStandard>() {
+            @Override
+            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+                if (response.body()==null) {
+                    U.getInstance().myLog("setProfileBox Body is NULL");
+                } else {
+                    U.getInstance().myLog(response.body().getResult());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResStandard> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : " + t.toString());
+            }
+        });
     }
 }

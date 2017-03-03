@@ -16,6 +16,8 @@ public class E {
         public static final int GROUP_TERM_MAX = 30;
 
         public static final String LASTDATE_KEY = "lastdate";
+        public static final String SERVER_KEY = "SERVER_ADDRESS";
+        public static final String PEM_KEY = "PEM_ADDRESS";
 
         public static int USER_ID = 0;
         public static String USER_NAME = "";

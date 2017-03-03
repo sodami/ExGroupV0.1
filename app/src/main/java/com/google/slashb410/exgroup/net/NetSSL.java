@@ -54,6 +54,7 @@ public class NetSSL {
     // Context 때문에 생성 방식을 변경함.
     public void launch(Context context)
     {
+
         if(sslSocketFactory==null && x509TrustManager==null && hostnameVerifier==null){
             try {
                 sslSocketFactory = getSslSocketFactory(context);
@@ -114,9 +115,7 @@ public class NetSSL {
         // 1 단계 인증 X.509를 사용하는 인증서 팩토리 객체 생성
         CertificateFactory cf   = CertificateFactory.getInstance("X.509");
         // 2. pem 을 읽어서 인증서 생성
-        // https://firebasestorage.googleapis.com/v0/b/databasetest-c1b72.appspot.com/o/bowlingk.cert.pem?alt=media&token=5d824ab0-0407-4bc4-97c2-54c63a9c3fd8
-        // https://firebasestorage.googleapis.com/v0/b/exgroup-1faeb.appspot.com/o/mysite.cert.pem?alt=media&token=348a2633-73cf-4a14-b2de-ee6dc99c7d96
-        Certificate ca          = null;
+       Certificate ca          = null;
         try {
             Log.i("FT", "START");
             String url              = "https://firebasestorage.googleapis.com/v0/b/exgroup-1faeb.appspot.com/o/mysite.cert.pem?alt=media&token=348a2633-73cf-4a14-b2de-ee6dc99c7d96";
@@ -145,6 +144,7 @@ public class NetSSL {
         KeyStore keyStore       = KeyStore.getInstance("BKS");
         keyStore.load(null, null);
         keyStore.setCertificateEntry("ca", ca);
+
         // 4.신뢰매니저생성후 키스토어 설정
         String tmAlgorithm      = TrustManagerFactory.getDefaultAlgorithm();
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmAlgorithm);

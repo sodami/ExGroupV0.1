@@ -19,6 +19,8 @@ import com.google.slashb410.exgroup.model.group.group.ReqUpload;
 import com.google.slashb410.exgroup.model.group.group.ResUpload;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
+import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
+import com.miguelbcr.ui.rx_paparazzo.entities.size.ScreenSize;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -34,6 +36,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class QuickWriteActivity extends AppCompatActivity {
     @BindView(R.id.cameraView)
@@ -77,6 +81,7 @@ public class QuickWriteActivity extends AppCompatActivity {
         category = intent.getIntExtra("menu", 0);
         groupIds = intent.getIntegerArrayListExtra("actGroups");
         groupTitles = intent.getStringArrayExtra("actTitles");
+        picPath = intent.getStringExtra("picPath");
 
         int length = groupIds.size();
         checkGroups = new boolean[length];
@@ -111,21 +116,19 @@ public class QuickWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.cameraBtn)
     public void onCamera() {
-        picPath = U.getInstance().onCamera(this, pictureThumbnail);
+        final String[] path = new String[1];
+        RxPaparazzo.takeImage(this)
+                .size(new ScreenSize())
+                .usingCamera()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {// See response.resultCode() doc
+                    if (response.resultCode() != RESULT_OK) {
+                        picPath = "file://" + response.data();
+                        goUpload(picPath);
+                    }
+                });
 
-//        RxPaparazzo.takeImage(this)
-//                .size(new ScreenSize())
-//                .usingCamera()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(response -> {// See response.resultCode() doc
-//                    if (response.resultCode() != RESULT_OK) {
-//                        //  response.targetUI().showUserCanceled();
-//                        return;
-//                    }
-//                    popUpProgress(response.data());
-//
-//                });
     }
 
     private void popUpProgress(String path) {
@@ -145,12 +148,10 @@ public class QuickWriteActivity extends AppCompatActivity {
     public void goUpload(String path) {
         cameraView.setVisibility(View.GONE);
 
-        String url = "file://" + path;
-
         Picasso.with(this).setLoggingEnabled(true);
-        Picasso.with(this).invalidate(url);
+        Picasso.with(this).invalidate(path);
 
-        Picasso.with(this).load(url).into(pictureThumbnail);
+        Picasso.with(this).load(path).into(pictureThumbnail);
 
         String pictureRename = renamePicture("weight");
         pictureTitle.setText(pictureRename);
@@ -219,9 +220,6 @@ public class QuickWriteActivity extends AppCompatActivity {
 
                 RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 map.put("photo", fileBody);
-
-//                map.put()
-                //reqUpload = new ReqUpload(final_groupIds, category, content.getText().toString(), getSummary());
 
                 //2. 서버 요청
                 Call<ResUpload> resUpload = NetSSL.getInstance().getGroupImpFactory().upload(map);

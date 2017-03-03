@@ -1,10 +1,8 @@
 package com.google.slashb410.exgroup.net;
 
-import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.model.group.home.ReqJoin;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
-import com.google.slashb410.exgroup.model.group.home.ReqUsers;
 import com.google.slashb410.exgroup.model.group.home.ResAttend;
 import com.google.slashb410.exgroup.model.group.home.ResInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ResJoin;
@@ -24,6 +22,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 
 
 /**
@@ -48,9 +47,9 @@ import retrofit2.http.PartMap;
 
 public interface MemberImpFactory {
 
-    // 2. 로컬 회원 최초 가입
-    @POST("users")
-    Call<ResStandard> userInfo(@Body ReqUsers reqUsers);
+    //A_1. 페이스북 로그인 및 최초 사용자 등록
+    @POST("facebook/token/{access_token}")
+    Call facebookLogin(@Path("access_token") String token);
 
     //A_2. 기초 정보 등록
     @Multipart

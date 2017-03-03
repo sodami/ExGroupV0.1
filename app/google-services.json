@@ -19,7 +19,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.google.slashb410.exgroup",
-            "certificate_hash": "77D1CB1D208D91196D500D7617139C59DCBE1E0E"
+            "certificate_hash": "77d1cb1d208d91196d500d7617139c59dcbe1e0e"
           }
         },
         {
@@ -30,6 +30,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyBknHEH5HBe1IenFSWUwdI8STYcj7yT4lU"
+        },
+        {
+          "current_key": "AIzaSyC92h-hm7EXlNiU4_vTElrsa2ZPunA_3qk"
         }
       ],
       "services": {
@@ -63,7 +66,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.tacademy.fcm_test",
-            "certificate_hash": "77D1CB1D208D91196D500D7617139C59DCBE1E0E"
+            "certificate_hash": "77d1cb1d208d91196d500d7617139c59dcbe1e0e"
           }
         },
         {
@@ -74,6 +77,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyBknHEH5HBe1IenFSWUwdI8STYcj7yT4lU"
+        },
+        {
+          "current_key": "AIzaSyC92h-hm7EXlNiU4_vTElrsa2ZPunA_3qk"
         }
       ],
       "services": {

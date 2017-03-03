@@ -61,6 +61,7 @@ public class EnterActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Log.v("result", object.toString());
+                        callFacebookLogin(loginResult.getAccessToken().toString());
                     }
                 });
 
@@ -78,6 +79,30 @@ public class EnterActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.e("LoginErr", error.toString());
+            }
+        });
+    }
+
+    private void callFacebookLogin(String token) {
+        Call resFacebookLogin = NetSSL.getInstance().getMemberImpFactory().facebookLogin(token);
+        resFacebookLogin.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.body()==null) U.getInstance().myLog("resFacebookLogin body is null");
+                String resultCode = response.body().toString();
+                switch (resultCode){
+                    case "0" : U.getInstance().myLog("처음 등록한 사용자");
+                        break;
+                    case "1" : U.getInstance().myLog("등록된 사용자");
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                U.getInstance().myLog("페이스북 로그인 접근실패 : "+t);
             }
         });
     }
