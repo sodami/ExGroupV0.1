@@ -27,10 +27,12 @@
                 android:visibility="gone" />
 
             <FrameLayout
+                android:layout_alignParentTop="true"
                 android:id="@+id/waiting_layout"
+                android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#cc888888"
+                android:background="#ddcccccc"
                 android:orientation="vertical"
                 android:visibility="gone" />
 

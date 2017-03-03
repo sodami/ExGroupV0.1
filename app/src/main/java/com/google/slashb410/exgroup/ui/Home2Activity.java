@@ -207,7 +207,7 @@ public class Home2Activity extends AppCompatActivity
                 if (response.body().getData() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
                 } else {
-                    U.getInstance().myLog(response.body().getData().toString());
+                    U.getInstance().myLog("ResMe : "+response.body().getData().toString());
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
                     if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI());
                     if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum());

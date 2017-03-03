@@ -17,7 +17,6 @@ import android.widget.NumberPicker;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.group.ReqMakeGroup;
-import com.google.slashb410.exgroup.util.U;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +29,6 @@ import okhttp3.RequestBody;
 public class GroupAddActivity extends AppCompatActivity {
 
     final int DIALOG_DATE = 1;
-    String[] currentYYmmDD = U.getInstance().currentYYmmDD();
 
     @BindView(R.id.group_profileImg)
     ImageView groupProfileImg;
@@ -93,6 +91,8 @@ public class GroupAddActivity extends AppCompatActivity {
 
     @OnClick(R.id.period)
     public void setPeriod(){
+        periodPicker = new NumberPicker(this);
+
         periodPicker.setMinValue(7);
         periodPicker.setMaxValue(30);
 
