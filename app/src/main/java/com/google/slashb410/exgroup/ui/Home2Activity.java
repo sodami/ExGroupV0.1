@@ -312,17 +312,14 @@ public class Home2Activity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // 누르면 로그아웃
+        if (id == R.id.nav_camera) { // 누르면 로그아웃
             onLogout();
             Intent intent = new Intent(this, EnterActivity.class);
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
-            // 누르면 출석체크 푸쉬 on/off
+        } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
 
-        } else if (id == R.id.nav_slideshow) {
-            // 누르면 운동, 식당 인증 푸쉬 on/off
+        } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
 
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
@@ -338,16 +335,8 @@ public class Home2Activity extends AppCompatActivity
             });
             AlertDialog ad = aDialog.create();
             ad.show();
-<<<<<<< HEAD
         } else if (id == R.id.nav_manage) {
             // 누르면 개발자에게 문의하기
-=======
-        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
-
-        } else if (id == R.id.nav_manage) {
-            // 누르면 개발자에게 문의하기
-
->>>>>>> b7dc5d9fc522bb6b3df8e1c9a6555d782b414660
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
@@ -376,12 +365,6 @@ public class Home2Activity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "메일 발송이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
-//            aDialog.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.cancel();
-//                }
-//            });
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
@@ -470,33 +453,4 @@ public class Home2Activity extends AppCompatActivity
         return true;
     }
 
-    private void onSessionout()
-    {
-        Call<ResSessionOut> res =
-                NetSSL.getInstance().getMemberImpFactory().sessionout(); //전문에 있는 양식 순서대로
-        res.enqueue(new Callback<ResSessionOut>() { //enqueue가 callback오니까
-            @Override
-            public void onResponse(Call<ResSessionOut> call, Response<ResSessionOut> response) {
-                if (response != null) {
-                    if (response.body() != null) {
-                        if (response.body().getResultCode() == 1) {
-                            Log.i("RF", "회원 탈퇴 성공" + response.body().getResultCode());
-                        } else {
-                            Log.i("RF", "1응답 데이터 구조 오류 구조값이 달라서 JSON 자동 파싱 처리가 않됨");
-                        }
-                    } else {
-                        Log.i("RF", "2로그아웃실패" + response.code()); //통신은 들어갔는데 오류
-                    }
-                } else {
-                    Log.i("RF", "3응답 데이터 오류");
-                }
-                // Log.i("RF", "가입실패   //" + response);
-            }
-
-            @Override
-            public void onFailure(Call<ResSessionOut> call, Throwable t) {
-                Log.i("RF", "ERR" + t.getMessage());
-            }
-        });
-    }
 }

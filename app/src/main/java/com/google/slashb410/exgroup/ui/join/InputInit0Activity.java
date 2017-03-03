@@ -65,10 +65,10 @@ public class InputInit0Activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
-                                picUrl = U.getInstance().onCamera(InputInit0Activity.this, profile);
+                                picUrl = U.getInstance().onCamera(InputInit0Activity.this, null, profile);
                                 break;
                             case 1:
-                                picUrl = U.getInstance().onGallery(InputInit0Activity.this, profile);
+                                U.getInstance().onGallery(InputInit0Activity.this, null, profile);
                                 break;
                         }
                     }

@@ -111,7 +111,7 @@ public class QuickWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.cameraBtn)
     public void onCamera() {
-        picPath = U.getInstance().onCamera(this, pictureThumbnail);
+        picPath = U.getInstance().onCamera(this, null, pictureThumbnail);
 
 //        RxPaparazzo.takeImage(this)
 //                .size(new ScreenSize())

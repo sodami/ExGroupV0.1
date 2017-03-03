@@ -179,7 +179,7 @@ public class U {
     }
 
 
-    public String onCamera(Activity activity, ImageView imageView){
+    public String onCamera(Activity activity, String folder, ImageView imageView){
 
         final String[] path = new String[1];
         RxPaparazzo.takeImage(activity)
@@ -197,20 +197,19 @@ public class U {
         return path[0];
     }
 
-    public String onGallery(Activity activity, ImageView imageView){
-        final String[] path = new String[1];
+    public void onGallery(Activity activity, String folder, ImageView imageView){
         RxPaparazzo.takeImage(activity)
                 .usingGallery()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {// See response.resultCode() doc
                     if (response.resultCode() != RESULT_OK) {
-                        path[0] = "file://" + response.data();
+                        //  response.targetUI().showUserCanceled();
+                        return;
                     }
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
-//                    uploadFireBase(activity, folder, response.data());
+                    uploadFireBase(activity, folder, response.data());
                 });
-        return path[0];
     }
 
     public void loadImage(Activity activity, String path, ImageView imageView) {
@@ -221,7 +220,6 @@ public class U {
         Picasso.with(activity).load(url).into(imageView);
 
     }
-
     public String customDateNTime(){
 
 
@@ -232,4 +230,8 @@ public class U {
 
     }
 
+
+//    public String customDateNTime() {
+//
+//    }
 }

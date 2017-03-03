@@ -49,11 +49,6 @@ public interface GroupImpFactory {
     @GET("groups")
     Call<ResGroupList> groupList();
 
-    //F_1. 그룹 게시글 등록하기
-    @Multipart
-    @POST("boards")
-    Call<ResUpload> upload(@PartMap Map<String, RequestBody> params);
-
     //F_3. 그룹 게시글 불러오기
     @GET("groups/{groupId}/boards")
     Call<ResBoardList> boardList(@Path("groupId") String groupId);
@@ -62,4 +57,6 @@ public interface GroupImpFactory {
     @POST("comments")
     Call<String> addComment(@Body ReqComment reqComment);
 
+
+    Call<ResUpload> upload(Map<String, RequestBody> map);
 }
