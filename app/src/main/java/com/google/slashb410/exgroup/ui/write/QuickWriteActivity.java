@@ -129,6 +129,21 @@ public class QuickWriteActivity extends AppCompatActivity {
                     }
                 });
 
+        picPath = U.getInstance().onCamera(this, null, pictureThumbnail);
+
+//        RxPaparazzo.takeImage(this)
+//                .size(new ScreenSize())
+//                .usingCamera()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(response -> {// See response.resultCode() doc
+//                    if (response.resultCode() != RESULT_OK) {
+//                        //  response.targetUI().showUserCanceled();
+//                        return;
+//                    }
+//                    popUpProgress(response.data());
+//
+//                });
     }
 
     private void popUpProgress(String path) {

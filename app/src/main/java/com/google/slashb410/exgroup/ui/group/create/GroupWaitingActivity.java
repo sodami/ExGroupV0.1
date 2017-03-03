@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.google.slashb410.exgroup.util.U;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +38,10 @@ public class GroupWaitingActivity extends AppCompatActivity {
     TextView groupId;
     @BindView(R.id.createDay_waiting)
     TextView createDay;
+    @BindView(R.id.back_waiting)
+    ImageButton backwaiting;
+    @BindView(R.id.cancel_waiting)
+    ImageButton canclewaiting;
 
     String groupId_str;
 
@@ -60,9 +66,18 @@ public class GroupWaitingActivity extends AppCompatActivity {
 
         //3. 상태에 맞는 뷰 세팅
         setViewByState(groupState);
-
-
     }
+//    @OnClick(R.id.back_waiting)
+//    public void onBack() {
+//        onBack();
+//    }
+
+    @OnClick(R.id.cancel_waiting)
+    public void onCancel() {
+        finish();
+    }
+
+
 
     private void setViewByState(int groupState) {
 

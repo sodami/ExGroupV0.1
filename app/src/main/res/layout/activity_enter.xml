@@ -72,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_big" />
 
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -105,9 +106,9 @@
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/gmd_bar_height"
+                android:layout_height="58dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true" />

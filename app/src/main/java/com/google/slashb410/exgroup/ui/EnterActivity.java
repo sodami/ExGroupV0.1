@@ -43,6 +43,7 @@ public class EnterActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,7 @@ public class EnterActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -114,11 +116,13 @@ public class EnterActivity extends AppCompatActivity {
     }
 
 
+    // 회원가입 이동
     @OnClick(R.id.joinBtn)
     public void onJoin() {
         U.getInstance().goNext(this, JoinActivity.class, false, false);
     }
 
+    // 로그인 처리
     @OnClick(R.id.loginBtn)
     public void onLogin(View view) {
         //최초 로그인 시 튜토리얼 진행
@@ -168,13 +172,14 @@ public class EnterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ResLogin> call, Throwable t) {
-                        U.getInstance().myLog("접근실패 : "+t.toString());
+                        U.getInstance().myLog("접근실패 : " + t.toString());
                     }
                 });
             }
         }
 
     }
+
 
     public boolean isFirstLogin() {
         return false;
