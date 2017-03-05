@@ -129,6 +129,10 @@ public class GridAdapter extends BaseAdapter {
 
             if (position < actGroup.size()) {
                 //2-1. 활성화그룹
+                if(actGroup.get(position).getManager()==1){
+                    ImageView managerImg = (ImageView) convertView.findViewById(R.id.manager);
+                    managerImg.setVisibility(View.VISIBLE);
+                }
                 U.getInstance().myLog(actGroup.get(position).toString());
                 textView.setText(actGroup.get(position).getGroupTitle());
                 Picasso.with(context)

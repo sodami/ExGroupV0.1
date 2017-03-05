@@ -460,8 +460,6 @@ public class Home2Activity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            E.KEY.new_write.deleteWriteData();
-            E.KEY.shotData.deleteShotData();
             this.finish();
 
         }

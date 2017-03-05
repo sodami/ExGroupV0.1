@@ -10,24 +10,19 @@ public class ReqUpload {
     private int categoryNum;
     private String content;
     private String summary;
-    private String photo;
 
     public ReqUpload(int groupId, int categoryNum, String content, String summary, String photo) {
         this.groupId = groupId;
         this.categoryNum = categoryNum;
         this.content = content;
         this.summary = summary;
-        this.photo = photo;
     }
 
     public int getGroupId() {
-    }
-
-    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
