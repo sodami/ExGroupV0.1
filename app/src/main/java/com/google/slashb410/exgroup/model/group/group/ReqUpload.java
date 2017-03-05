@@ -12,6 +12,14 @@ public class ReqUpload {
     private String summary;
     private String photo;
 
+    public ReqUpload(int groupId, int categoryNum, String content, String summary, String photo) {
+        this.groupId = groupId;
+        this.categoryNum = categoryNum;
+        this.content = content;
+        this.summary = summary;
+        this.photo = photo;
+    }
+
     public int getGroupId() {
         return groupId;
     }
