@@ -15,16 +15,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.group.ReqUpload;
+import com.google.slashb410.exgroup.model.group.group.ResUpload;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.ScreenSize;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -51,9 +62,12 @@ public class QuickWriteActivity extends AppCompatActivity {
     boolean[] checkGroups;
     String dateNTime;
 
-    int[] groupIds;
+    int category;
+    ArrayList groupIds;
     String[] groupTitles;
-    ArrayList choiceGroup;
+
+    ReqUpload reqUpload;
+    String picPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,20 +76,21 @@ public class QuickWriteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // # 메뉴에 따라 레이아웃 구성
-        // [ menu type ] 0:에러 1:체중 2:운동 3:식단
+        // [categorytype ] 0:에러 1:체중 2:운동 3:식단
         Intent intent = getIntent();
-        int menu = intent.getIntExtra("menu", 0);
-        groupIds = intent.getIntArrayExtra("actGroups");
+        category = intent.getIntExtra("menu", 0);
+        groupIds = intent.getIntegerArrayListExtra("actGroups");
         groupTitles = intent.getStringArrayExtra("actTitles");
+        picPath = intent.getStringExtra("picPath");
 
-        int length = groupIds.length;
+        int length = groupIds.size();
         checkGroups = new boolean[length];
 
         for (int i = 0; i < length; i++) {
             checkGroups[i] = true;
         }
 
-        switch (menu) {
+        switch (category) {
             case 0:
                 Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 break;
@@ -101,6 +116,7 @@ public class QuickWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.cameraBtn)
     public void onCamera() {
+        final String[] path = new String[1];
         RxPaparazzo.takeImage(this)
                 .size(new ScreenSize())
                 .usingCamera()
@@ -108,12 +124,26 @@ public class QuickWriteActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {// See response.resultCode() doc
                     if (response.resultCode() != RESULT_OK) {
-                        //  response.targetUI().showUserCanceled();
-                        return;
+                        picPath = "file://" + response.data();
+                        goUpload(picPath);
                     }
-                    popUpProgress(response.data());
-
                 });
+
+        picPath = U.getInstance().onCamera(this, null, pictureThumbnail);
+
+//        RxPaparazzo.takeImage(this)
+//                .size(new ScreenSize())
+//                .usingCamera()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(response -> {// See response.resultCode() doc
+//                    if (response.resultCode() != RESULT_OK) {
+//                        //  response.targetUI().showUserCanceled();
+//                        return;
+//                    }
+//                    popUpProgress(response.data());
+//
+//                });
     }
 
     private void popUpProgress(String path) {
@@ -133,12 +163,10 @@ public class QuickWriteActivity extends AppCompatActivity {
     public void goUpload(String path) {
         cameraView.setVisibility(View.GONE);
 
-        String url = "file://" + path;
-
         Picasso.with(this).setLoggingEnabled(true);
-        Picasso.with(this).invalidate(url);
+        Picasso.with(this).invalidate(path);
 
-        Picasso.with(this).load(url).into(pictureThumbnail);
+        Picasso.with(this).load(path).into(pictureThumbnail);
 
         String pictureRename = renamePicture("weight");
         pictureTitle.setText(pictureRename);
@@ -151,7 +179,7 @@ public class QuickWriteActivity extends AppCompatActivity {
         String[] currentYYmmDD = U.getInstance().currentYYmmDD();
         String[] hhMMss = U.getInstance().currentTime();
 
-        String fullname = menu + "_" + currentYYmmDD[0] + currentYYmmDD[1] + currentYYmmDD[2] + hhMMss[0] + hhMMss[1] + hhMMss[2];
+        String fullname = category + "_" + currentYYmmDD[0] + currentYYmmDD[1] + currentYYmmDD[2] + hhMMss[0] + hhMMss[1] + hhMMss[2];
 
         return fullname;
     }
@@ -190,39 +218,82 @@ public class QuickWriteActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checkGroups[which] = isChecked;
-                choiceGroup = new ArrayList();
-                choiceGroup.add(groupIds[which]);
             }
         }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //1. reqUpload 세팅
+                String final_groupIds = getGroupIds();
+                Map<String, RequestBody> map = new HashMap<String, RequestBody>();
+                map.put("groupId", RequestBody.create(MediaType.parse("multipart/form-data"), final_groupIds));
+                map.put("categoryNum", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(category)));
+                map.put("content", RequestBody.create(MediaType.parse("multipart/form-data"), content.getText().toString()));
+                map.put("summary", RequestBody.create(MediaType.parse("multipart/form-data"), getSummary()));
 
-                Handler handler = new Handler() {
+                File file = new File(picPath);
+                U.getInstance().myLog(file.getAbsolutePath()+"++"+file.canRead());
+
+                RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                map.put("photo", fileBody);
+
+                //2. 서버 요청
+                Call<ResUpload> resUpload = NetSSL.getInstance().getGroupImpFactory().upload(map);
+                resUpload.enqueue(new Callback<ResUpload>() {
                     @Override
-                    public void handleMessage(Message msg) {
-                        if (msg.what == 0) {
+                    public void onResponse(Call<ResUpload> call, Response<ResUpload> response) {
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(QuickWriteActivity.this);
-                            builder.setTitle("업로드를 완료하였습니다!")
-                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            QuickWriteActivity.this.finish();
-                                        }
-                                    }).show();
-                        }
+                        //3. 글쓰기 액티비티 종료
+                        Handler handler = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                if (msg.what == 0) {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(QuickWriteActivity.this);
+                                    builder.setTitle("업로드를 완료하였습니다!")
+                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    QuickWriteActivity.this.finish();
+                                                }
+                                            }).show();
+                                }
+
+                            }
+                        };
+                        U.getInstance().onProgress(handler, QuickWriteActivity.this, "게시하는 중입니다.");
                     }
-                };
 
-                U.getInstance().onProgress(handler, QuickWriteActivity.this, "게시하는 중입니다.");
+                    @Override
+                    public void onFailure(Call<ResUpload> call, Throwable t) {
+                        U.getInstance().myLog("ResUpload 접근실패 : "+t);
+                    }
 
+                });
             }
+
+
         }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         }).show();
+    }
+
+    private String getSummary() {
+        if (category == 1) return summaryInput_weight.getText().toString();
+        else return summaryInput.getText().toString();
+    }
+
+    private String getGroupIds() {
+        String checkGroupIds = "";
+        for (int i = 0; i < groupIds.size(); ++i) {
+            if (checkGroups[i]) {
+                checkGroupIds += groupIds.get(i) + ",";
+            }
+        }
+        return checkGroupIds.substring(1, checkGroupIds.length() - 1);
+
     }
 
     @OnClick(R.id.cancelBtn)

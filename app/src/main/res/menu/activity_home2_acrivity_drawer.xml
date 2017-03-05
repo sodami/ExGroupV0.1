@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="인증샷 알림" />
         <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_send"
+            android:title="개발자에게 문의하기" />
+        <item
             android:id="@+id/nav_session"
             android:title="친구랑 연결 끊기"
             android:icon="@drawable/ic_menu_manage" />
@@ -29,10 +33,7 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="친구한테 공유하기" />
-            <item
-                android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_send"
-                android:title="개발자에게 문의하기" />
+
         </menu>
     </item>
 

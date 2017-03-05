@@ -3,6 +3,7 @@ package com.google.slashb410.exgroup;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,13 +128,14 @@ public class GridAdapter extends BaseAdapter {
             textView2 = (TextView) convertView.findViewById(R.id.group_term);
 
             if (position < actGroup.size()) {
+                //2-1. 활성화그룹
+                U.getInstance().myLog(actGroup.get(position).toString());
                 textView.setText(actGroup.get(position).getGroupTitle());
                 Picasso.with(context)
                         .load(actGroup.get(position).getGroupPicUrl())
                         .fit()
                         .centerCrop()
                         .into(imageView);
-                //2-1. 활성화그룹
                 textView2.setText(String.valueOf(actGroup.get(position).getExPeriod()));
                 groupCardview.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -148,15 +150,25 @@ public class GridAdapter extends BaseAdapter {
 
                 //2-2. 활동대기 그룹
                 int mPosition = position - actGroup.size();
+                U.getInstance().myLog(waitGroup.get(mPosition).toString());
 
                 FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
                 waitingLayout.setVisibility(View.VISIBLE);
+                waitingLayout.bringToFront();
                 Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
                 waitingLockBtn.setVisibility(View.VISIBLE);
 
-                textView.setText(waitGroup.get(mPosition).getGroupTitle());
-                textView.setTextColor(Color.WHITE);
+                Picasso.with(context)
+                        .load(waitGroup.get(mPosition).getGroupPicUrl())
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+//
+//                Uri picUrl = Uri.parse(waitGroup.get(mPosition).getGroupPicUrl());
+//                imageView.setImageURI(picUrl);
 
+                textView.setText(waitGroup.get(mPosition).getGroupTitle());
+//                textView.setTextColor(Color.WHITE);
                 textView2.setVisibility(View.GONE);
                 TextView textView3 = (TextView) convertView.findViewById(R.id.d_day);
                 textView3.setVisibility(View.GONE);
@@ -179,25 +191,25 @@ public class GridAdapter extends BaseAdapter {
              else {
                 //2-3. 활동종료그룹
                 FrameLayout waitingLayout = (FrameLayout) convertView.findViewById(R.id.waiting_layout);
+                waitingLayout.bringToFront();
                 waitingLayout.setVisibility(View.VISIBLE);
                 Button waitingLockBtn = (Button) convertView.findViewById(R.id.waiting_lock);
                 waitingLockBtn.setBackgroundResource(R.drawable.close_white);
                 waitingLockBtn.setVisibility(View.VISIBLE);
 
-                int mPosition = position - (actGroup.size() + 1);
+                int mPosition = position - (actGroup.size()+waitGroup.size() + 1);
                 textView.setText(unActGroup.get(mPosition).getGroupTitle());
-                Picasso.with(context)
-                        .load(unActGroup.get(mPosition).getGroupPicUrl())
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
-                textView2.setText(unActGroup.get(mPosition).getExPeriod());
+                textView.setTextColor(Color.WHITE);
+                Uri picUrl = Uri.parse(unActGroup.get(mPosition).getGroupPicUrl());
+                imageView.setImageURI(picUrl);
+                TextView textView3 = (TextView) convertView.findViewById(R.id.d_day);
+                textView3.setVisibility(View.GONE);
+                textView2.setVisibility(View.GONE);
                 groupCardview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), GroupHomeActivity.class);
-                        intent.putExtra("title", unActGroup.get(mPosition).getGroupTitle());
-                        intent.putExtra("image", unActGroup.get(mPosition).getGroupPicUrl());
+                        intent.putExtra("groupData", unActGroup.get(mPosition));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         v.getContext().startActivity(intent);
                     }

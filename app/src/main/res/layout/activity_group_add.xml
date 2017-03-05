@@ -76,13 +76,11 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <NumberPicker
-                        android:id="@+id/mem_numpicker"
+                    <Spinner
+                        android:id="@+id/memberSpinner"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/gmd_button_height"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="8dp"
-                        android:entries="@array/member" />
+                        android:layout_height="wrap_content"
+                        android:entries="@array/member"/>
                     <TextView
                         android:text="명"
                         android:layout_width="wrap_content"

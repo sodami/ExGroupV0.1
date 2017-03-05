@@ -2,7 +2,6 @@ package com.google.slashb410.exgroup.net;
 
 import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ReqComment;
-import com.google.slashb410.exgroup.model.group.group.ReqUpload;
 import com.google.slashb410.exgroup.model.group.group.ResBoardList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
@@ -50,10 +49,6 @@ public interface GroupImpFactory {
     @GET("groups")
     Call<ResGroupList> groupList();
 
-    //F_1. 그룹 게시글 등록하기
-    @POST("boards")
-    Call<ResUpload> upload(@Body ReqUpload reqUpload);
-
     //F_3. 그룹 게시글 불러오기
     @GET("groups/{groupId}/boards")
     Call<ResBoardList> boardList(@Path("groupId") String groupId);
@@ -62,4 +57,6 @@ public interface GroupImpFactory {
     @POST("comments")
     Call<String> addComment(@Body ReqComment reqComment);
 
+
+    Call<ResUpload> upload(Map<String, RequestBody> map);
 }

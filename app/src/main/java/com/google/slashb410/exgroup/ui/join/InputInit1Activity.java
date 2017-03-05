@@ -10,15 +10,20 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.home.ReqInitInfo;
 import com.google.slashb410.exgroup.model.group.home.ResInitInfo;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.Home2Activity;
 import com.google.slashb410.exgroup.util.U;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,8 +40,6 @@ public class InputInit1Activity extends AppCompatActivity {
     String nickname;
     String phone;
     String picUrl;
-
-    ReqInitInfo reqInitInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +60,21 @@ public class InputInit1Activity extends AppCompatActivity {
         if (age.getText().toString().equals("") || height.getText().toString().equals("") || weight.getText().toString().equals("")) {
             Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
         } else {
-            reqInitInfo = new ReqInitInfo();
-            reqInitInfo.setNickname(nickname);
-            reqInitInfo.setPhone(phone);
-            reqInitInfo.setPhoto(picUrl);
-            reqInitInfo.setAge(age.getText().toString());
-            reqInitInfo.setHeight(height.getText().toString());
-            reqInitInfo.setWeight(weight.getText().toString());
+            Map<String, RequestBody> map = new HashMap<>();
+            map.put("nickname", RequestBody.create(MediaType.parse("multipart/form-data"), nickname));
+            map.put("phone", RequestBody.create(MediaType.parse("multipart/form-data"), phone));
+            map.put("height", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(height.getText())));
+            map.put("weight", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(weight.getText())));
+            map.put("age", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(age.getText())));
 
-            Call<ResInitInfo> resInitInfoCall = NetSSL.getInstance().getMemberImpFactory().initInfo(reqInitInfo);
+            String picPath = picUrl;
+            File file = new File(picPath);
+
+            RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+            map.put("photo", fileBody);
+
+            Call<ResInitInfo> resInitInfoCall = NetSSL.getInstance().getMemberImpFactory().initInfo(map);
             resInitInfoCall.enqueue(new Callback<ResInitInfo>() {
                 @Override
                 public void onResponse(Call<ResInitInfo> call, Response<ResInitInfo> response) {

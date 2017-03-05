@@ -21,10 +21,13 @@ public class ReqUpload {
     }
 
     public int getGroupId() {
+    }
+
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
@@ -52,11 +55,4 @@ public class ReqUpload {
         this.summary = summary;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 }

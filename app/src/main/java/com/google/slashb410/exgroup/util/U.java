@@ -220,7 +220,6 @@ public class U {
         Picasso.with(activity).load(url).into(imageView);
 
     }
-
     public String customDateNTime(){
 
 
@@ -231,4 +230,8 @@ public class U {
 
     }
 
+
+//    public String customDateNTime() {
+//
+//    }
 }
