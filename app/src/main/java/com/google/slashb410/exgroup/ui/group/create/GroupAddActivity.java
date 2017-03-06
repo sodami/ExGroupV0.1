@@ -83,29 +83,29 @@ public class GroupAddActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String[] items = {"카메라", "갤러리"};
 
-        builder.setTitle("그룹 대표이미지 선택")
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: {
-                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, groupProfileImg);
-                                dialog.dismiss();
-                            }
-                            break;
-                            case 1: {
-                                U.getInstance().onGallery(GroupAddActivity.this, groupProfileImg);
-                                dialog.dismiss();
-                            }
-                            break;
-                        }
-                    }
-                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).show();
+//        builder.setTitle("그룹 대표이미지 선택")
+//                .setItems(items, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which) {
+//                            case 0: {
+//                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, groupProfileImg);
+//                                dialog.dismiss();
+//                            }
+//                            break;
+//                            case 1: {
+//                                profilePath = U.getInstance().onGallery(GroupAddActivity.this, groupProfileImg);
+//                                dialog.dismiss();
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        }).show();
 
     }
 
