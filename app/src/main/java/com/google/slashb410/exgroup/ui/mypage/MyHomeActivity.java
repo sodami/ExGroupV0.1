@@ -58,15 +58,6 @@ public class MyHomeActivity extends Activity {
         nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
         nicknameInfo    = (ImageView) findViewById(R.id.nicknameInfo); // 수정 버튼
 
-//        nickname.setText(student.getName());
-//        nicknameInfo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                onBackPressed();
-//                Intent intent = new Intent(getApplicationContext(), DetailInfo.class);
-//                startActivity(intent);
-//            }
-//        });
 
         // 2017. 02. 01
         Resources resource = getResources();
@@ -75,15 +66,15 @@ public class MyHomeActivity extends Activity {
         tabHost.setup();
         spec = tabHost.newTabSpec("tag1");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("", resource.getDrawable(R.drawable.planet_white));
+        spec.setIndicator("", resource.getDrawable(R.drawable.planet_white_resized));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("", resource.getDrawable(R.drawable.calendar_white));
+        spec.setIndicator("", resource.getDrawable(R.drawable.calendar_white_resized));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag3");
         spec.setContent(R.id.tab3);
-        spec.setIndicator("", resource.getDrawable(R.drawable.chart_white));
+        spec.setIndicator("", resource.getDrawable(R.drawable.chart_white_resized));
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
 
@@ -124,11 +115,9 @@ public class MyHomeActivity extends Activity {
         // individual Calendar 2017. 02. 17
         cal = (CalendarView) findViewById(R.id.calendarView1);
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            // 캘린더 클릭 시 플로팅
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-//                Toast.makeText(getBaseContext(), "Selected Date is\n\n"
-//                                + dayOfMonth + " : " + month + " : " + year,
-//                        Toast.LENGTH_LONG).show();
                 Context mContext = getApplicationContext();
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.activity_calendar_dialog, (ViewGroup) findViewById(R.id.activity_calendar_dialog));
@@ -136,7 +125,7 @@ public class MyHomeActivity extends Activity {
                 aDialog.setView(layout);
                 aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
+                        onStart();
                     }
                 });
                 AlertDialog ad = aDialog.create();
@@ -249,6 +238,11 @@ public class MyHomeActivity extends Activity {
                     }
                 }
         }
+    }
+
+    public void onClick() {
+        Intent intent = new Intent(MyHomeActivity.this, DetailInfo.class);
+        startActivity(intent);
     }
 
 

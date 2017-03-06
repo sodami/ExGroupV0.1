@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.net;
 
+import com.google.slashb410.exgroup.model.group.group.InnerCalendar;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.model.group.home.ReqJoin;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
@@ -76,7 +77,11 @@ public interface MemberImpFactory {
     @POST("auth/local/login")
     Call<ResLogin> login(@Body ReqLogin reqLogin);
 
-    //D_2. 가입 그룹 리스트 불러오기
+    //A_8. 마이페이지 캘린더에서 해당 날짜 게시글 보이기
+    @GET("date")
+    Call<InnerCalendar> myCalendar();
+
+   //D_2. 가입 그룹 리스트 불러오기
     @GET("groups")
     Call<ResGroupData> groupData();
 
