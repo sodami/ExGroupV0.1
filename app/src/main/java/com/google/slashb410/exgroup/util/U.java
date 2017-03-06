@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.slashb410.exgroup.db.E;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.ScreenSize;
 import com.squareup.picasso.Picasso;
@@ -179,36 +180,45 @@ public class U {
     }
 
 
-    public String onCamera(Activity activity, String folder, ImageView imageView){
 
-        final String[] path = new String[1];
+    public void onCamera(Activity activity, ImageView imageView){
+
         RxPaparazzo.takeImage(activity)
                 .size(new ScreenSize())
                 .usingCamera()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {// See response.resultCode() doc
+
                     if (response.resultCode() != RESULT_OK) {
-                        path[0] = "file://" + response.data();
+                        return;
                     }
+
+                    Log.i("CAM", "들어옴");
+                    U.getInstance().myLog("onCamera response : "+response.data());
+                    String path  =  "file://" + response.data();
+                    U.getInstance().myLog("path : "+path);
+
+                    E.KEY.TEMP_PIC_URI = path;
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
                 });
 
-        return path[0];
     }
 
-    public void onGallery(Activity activity, String folder, ImageView imageView){
+    public void onGallery(Activity activity, ImageView imageView){
         RxPaparazzo.takeImage(activity)
                 .usingGallery()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {// See response.resultCode() doc
                     if (response.resultCode() != RESULT_OK) {
-                        //  response.targetUI().showUserCanceled();
-                        return;
+                       return;
                     }
+                    String path  =  "file://" + response.data();
+                    U.getInstance().myLog("path : "+path);
+
+                    E.KEY.TEMP_PIC_URI = path;
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
-                    uploadFireBase(activity, folder, response.data());
                 });
     }
 

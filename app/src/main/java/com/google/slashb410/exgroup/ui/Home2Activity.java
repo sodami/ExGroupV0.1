@@ -321,6 +321,21 @@ public class Home2Activity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
 
+//        } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
+//            Context mContext = getApplicationContext();
+//            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+//            View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));
+//            AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
+//            aDialog.setView(layout);
+//            aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    onSessionout();
+//                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            AlertDialog ad = aDialog.create();
+//            ad.show();
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -445,8 +460,6 @@ public class Home2Activity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            E.KEY.new_write.deleteWriteData();
-            E.KEY.shotData.deleteShotData();
             this.finish();
 
         }

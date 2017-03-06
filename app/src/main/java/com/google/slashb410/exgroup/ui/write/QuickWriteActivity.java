@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.group.ReqUpload;
 import com.google.slashb410.exgroup.model.group.group.ResUpload;
 import com.google.slashb410.exgroup.net.NetSSL;
@@ -128,9 +129,9 @@ public class QuickWriteActivity extends AppCompatActivity {
                         goUpload(picPath);
                     }
                 });
+            U.getInstance().onCamera(this, pictureThumbnail);
 
-        picPath = U.getInstance().onCamera(this, null, pictureThumbnail);
-
+        picPath = E.KEY.TEMP_PIC_URI;
 //        RxPaparazzo.takeImage(this)
 //                .size(new ScreenSize())
 //                .usingCamera()
@@ -161,6 +162,7 @@ public class QuickWriteActivity extends AppCompatActivity {
     }
 
     public void goUpload(String path) {
+
         cameraView.setVisibility(View.GONE);
 
         Picasso.with(this).setLoggingEnabled(true);
