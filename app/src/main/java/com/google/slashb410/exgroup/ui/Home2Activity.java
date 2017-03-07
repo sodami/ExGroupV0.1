@@ -30,7 +30,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
@@ -112,12 +111,12 @@ public class Home2Activity extends AppCompatActivity
         actTitles = new ArrayList();
 
         //유효한 티켓이 없다면 출석체크
-        if (!hasValidTicket(today)) {
-            checkAttend(today);
-        }
+//        if (!hasValidTicket(today)) {
+//            checkAttend(today);
+//        }
 
         //프로필박스 세팅
-        setProfileBox();
+        //setProfileBox();
         //그룹리스트 세팅
         setGroupList();
 
@@ -345,7 +344,7 @@ public class Home2Activity extends AppCompatActivity
             aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     onSessionout();
-                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "정상적으로 탈퇴되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
             AlertDialog ad = aDialog.create();
@@ -412,6 +411,8 @@ public class Home2Activity extends AppCompatActivity
                 } else {
                     Log.i("RF", "3응답 데이터 오류");
                 }
+                Intent intent = new Intent(Home2Activity.this, EnterActivity.class);
+                startActivity(intent);
                 // Log.i("RF", "가입실패   //" + response);
             }
 

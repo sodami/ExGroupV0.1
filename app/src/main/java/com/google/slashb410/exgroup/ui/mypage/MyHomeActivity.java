@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.net.NetSSL;
+import com.google.slashb410.exgroup.util.U;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.SmallSize;
 import com.squareup.picasso.Picasso;
@@ -36,6 +40,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -58,6 +65,7 @@ public class MyHomeActivity extends Activity {
         nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
         nicknameInfo    = (ImageView) findViewById(R.id.nicknameInfo); // 수정 버튼
 
+        setProfile();
 
         // 2017. 02. 01
         Resources resource = getResources();
@@ -132,6 +140,8 @@ public class MyHomeActivity extends Activity {
                 ad.show();
             }
         });
+
+
     }
 
     @Override
@@ -245,6 +255,24 @@ public class MyHomeActivity extends Activity {
         startActivity(intent);
     }
 
+    private void setProfile() {
+        Log.i("setProfile", "setProfile 진입");
+        Call<ResMe> resMe = NetSSL.getInstance().getMemberImpFactory().userMe();
+        resMe.enqueue(new Callback<ResMe>() {
+            @Override
+            public void onResponse(Call<ResMe> call, Response<ResMe> response) {
+                if (response.body().getData() == null) {
+                    U.getInstance().myLog("1)))))))))))))))))setProfile : Body is NULL");
+                } else {
+                    U.getInstance().myLog("2)))))))))))))))))setProfile : "+response.body().getData().toString());
+                    if (response.body().getData().getNickname() != null) nickname.setText(response.body().getData().getNickname());
+                }
+            }
 
-
+            @Override
+            public void onFailure(Call<ResMe> call, Throwable t) {
+                U.getInstance().myLog("3)))))))))))))))))setProfile : " + t.toString());
+            }
+        });
+    }
 }
