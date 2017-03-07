@@ -56,7 +56,7 @@ public interface MemberImpFactory {
     //A_2. 기초 정보 등록
     @Multipart
     @PUT("users")
-    Call<ResInitInfo> initInfo(@PartMap Map<String, RequestBody> params);
+    Call<ResInitInfo> initInfo(@PartMap() Map<String, RequestBody> params);
 
     //A_3. 자신의 정보 보기
     @GET("users/me")

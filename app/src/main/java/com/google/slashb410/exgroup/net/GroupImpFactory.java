@@ -32,7 +32,7 @@ public interface GroupImpFactory {
     //B_1. 그룹 생성하기
     @Multipart
     @POST("groups")
-    Call<ResStandard> makeGroup (@PartMap Map<String, RequestBody> requestBodyMap);
+    Call<ResStandard> makeGroup (@PartMap() Map<String, RequestBody> requestBodyMap);
 
     //B_2. 그룹 검색하기
     @GET("groups/{searchId}")

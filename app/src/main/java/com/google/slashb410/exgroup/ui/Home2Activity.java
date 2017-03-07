@@ -204,7 +204,7 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if (response.body().getData() == null) {
+                if (response.body() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
                 } else {
                     U.getInstance().myLog("ResMe : "+response.body().getData().toString());
