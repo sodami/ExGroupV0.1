@@ -4,8 +4,10 @@ package com.google.slashb410.exgroup.ui.group.create;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +39,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.android.volley.Request.Method.HEAD;
 
 public class GroupAddActivity extends AppCompatActivity {
 
@@ -80,6 +84,30 @@ public class GroupAddActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String[] items = {"카메라", "갤러리"};
 
+//        builder.setTitle("그룹 대표이미지 선택")
+//                .setItems(items, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which) {
+//                            case 0: {
+//                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, groupProfileImg);
+//                                dialog.dismiss();
+//                            }
+//                            break;
+//                            case 1: {
+//                                profilePath = U.getInstance().onGallery(GroupAddActivity.this, groupProfileImg);
+//                                dialog.dismiss();
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        }).show();
+
         builder.setTitle("그룹 대표이미지 선택")
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -107,6 +135,7 @@ public class GroupAddActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @OnClick(R.id.period)
     public void setPeriod(View view) {
 
@@ -125,6 +154,7 @@ public class GroupAddActivity extends AppCompatActivity {
                 .setMessage("최소 7일, 최대 30일")
                 .setView(peroidPickerView)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 pickPeriod = periodPicker.getValue();

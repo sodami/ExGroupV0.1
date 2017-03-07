@@ -15,10 +15,12 @@
         android:background="@color/calendar_bg"
         android:id="@+id/linearLayout">
 
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
+
 
             <android.support.v7.widget.Toolbar
                 android:padding="0dp"
@@ -31,11 +33,7 @@
                 android:theme="@style/ToolbarColoredBackArrow"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
-                <ImageView
-                    android:id="@+id/backBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/back_pink" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,15 +44,12 @@
                     android:textColor="@color/babyPink"
                     android:gravity="center" />
 
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:src="@drawable/back_pink"/>-->
 
             </android.support.v7.widget.Toolbar>
 
 
         </android.support.design.widget.AppBarLayout>
+
 
     <!-- 프로필 영역 -->
         <LinearLayout

@@ -81,6 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gmd_button_margin"
             android:paddingBottom="16dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_pink"
+            android:padding="3dp"
             android:text="불참자 초대 카카오톡 재발송" />
 
     </LinearLayout>
@@ -175,9 +178,10 @@
                 android:layout_height="@dimen/gmd_button_default" />
             <TextView
                 android:id="@+id/input_firstweightTxt"
+                android:layout_gravity="center"
                 android:text="그룹 활동 시작 체중을 입력하세요."
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <TextView
