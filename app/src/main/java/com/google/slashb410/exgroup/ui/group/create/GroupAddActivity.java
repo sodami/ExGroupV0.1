@@ -160,7 +160,6 @@ public class GroupAddActivity extends AppCompatActivity {
         map.put("maxNum", RequestBody.create(MediaType.parse("multipart/form-data"), numMem));
         map.put("exPeriod", RequestBody.create(MediaType.parse("multipart/form-data"), pickPeriod+""));
 
-        E.KEY.TEMP_PIC_URI = "";
 
         File file = new File(profilePath);
         U.getInstance().myLog(file.getAbsolutePath() + "+" + file.canRead());
@@ -174,8 +173,10 @@ public class GroupAddActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
                 if (response.body() == null) {
-                    U.getInstance().myLog("setProfileBox Body is NULL");
+                    U.getInstance().myLog("resMakeGroup Body is NULL");
                 } else {
+                    U.getInstance().myLog("그룹만들기 성공");
+                    E.KEY.TEMP_PIC_URI = "";
                     U.getInstance().myLog(response.body().getResult());
 
                 }

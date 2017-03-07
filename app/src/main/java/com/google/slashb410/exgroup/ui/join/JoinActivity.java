@@ -73,7 +73,7 @@ public class JoinActivity extends AppCompatActivity {
                                     }
                                 }).show();
 
-                    } else {
+                    } else if(response.body().getResultCode() ==0){
                         //resultCode == 0
                         builder.setTitle("회원가입 에러")
                                 .setMessage("이미 존재하는 이메일 주소입니다.")

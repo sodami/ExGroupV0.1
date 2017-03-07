@@ -196,7 +196,7 @@ public class U {
 
                     Log.i("CAM", "들어옴");
                     U.getInstance().myLog("onCamera response : "+response.data());
-                    String path  =  "file://" + response.data();
+                    String path  =  response.data();
                     U.getInstance().myLog("path : "+path);
 
                     E.KEY.TEMP_PIC_URI = path;

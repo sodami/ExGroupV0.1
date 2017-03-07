@@ -3,6 +3,7 @@ package com.google.slashb410.exgroup.ui.group.room.tabs;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,9 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.BoardData;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.room.tabs.comments.GroupShotsCommentsActivity;
 import com.google.slashb410.exgroup.util.U;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Tacademy on 2017-02-03.
@@ -33,6 +40,9 @@ class ShotsHolder extends RecyclerView.ViewHolder {
     TextView todayWeight;
     ImageButton likeBtn;
     ImageButton commentBtn;
+
+    BoardData mDatas;
+    int boardId;
 
 
     public ShotsHolder(View itemView) {
@@ -55,7 +65,9 @@ class ShotsHolder extends RecyclerView.ViewHolder {
 
     public void bindOnCard(Context context, BoardData datas) {
 
-        BoardData mDatas = datas;
+        mDatas = datas;
+        boardId = mDatas.getBoard_id();
+
         switch (mDatas.getCategoryNum()) {
             case 0:
                 menuImg.setImageResource(R.drawable.scale_white);
@@ -82,11 +94,9 @@ class ShotsHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if (datas.getFavoriteBool() == 0) {
-                    likeBtn.setImageResource(R.drawable.like_pink);
-                    //db 변경 islike->true
+                    callOnLike();
                 } else {
-                    likeBtn.setImageResource(R.drawable.like_gray);
-                    //db 변경 islike->false
+                    callOffLike();
                 }
             }
         });
@@ -130,6 +140,42 @@ class ShotsHolder extends RecyclerView.ViewHolder {
             }
         });
 
+    }
+
+    private void callOffLike() {
+        Call<ResStandard> resUnFavorite = NetSSL.getInstance().getGroupImpFactory().unFavorite(String.valueOf(boardId));
+        resUnFavorite.enqueue(new Callback<ResStandard>() {
+            @Override
+            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+                if(response.body()==null) {
+                    U.getInstance().myLog("ResUnFavorite body is null");
+                    return;
+                }
+                likeBtn.setImageResource(R.drawable.like_gray);
+            }
+
+            @Override
+            public void onFailure(Call<ResStandard> call, Throwable t) {
+                U.getInstance().myLog("ResUnFavorite 접근실패 : "+t.toString());
+            }
+        });
+    }
+
+    private void callOnLike() {
+        Call<ResStandard> resFavorite = NetSSL.getInstance().getGroupImpFactory().favorite(String.valueOf(boardId));
+        resFavorite.enqueue(new Callback<ResStandard>() {
+            @Override
+            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+                if(response.body()!=null) return;
+                U.getInstance().myLog(response.body().getResult());
+                likeBtn.setImageResource(R.drawable.like_pink);
+            }
+
+            @Override
+            public void onFailure(Call<ResStandard> call, Throwable t) {
+                U.getInstance().myLog("callOnLike 접근실패 : "+t.toString());
+            }
+        });
     }
 
     private String customDateNTime(String writeDate) {

@@ -26,7 +26,7 @@ public class GroupHomeActivity extends AppCompatActivity {
     TextView groupTitleView;
     ImageView groupImg;
 
-    GroupData groupData;
+    public GroupData groupData;
     public int groupId;
     Uri picUrl;
 

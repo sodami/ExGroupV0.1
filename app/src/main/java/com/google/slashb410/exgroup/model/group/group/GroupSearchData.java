@@ -5,19 +5,38 @@ package com.google.slashb410.exgroup.model.group.group;
  */
 
 public class GroupSearchData {
-    int id;
-    int nowNum;
-    int maxNum;
-    String groupTitle;
-    String groupPicUrl;
-    int exPeriod;
-    String startDate;
-    String goalDate;
-    String groupCreateDate;
-    int activation;
-    String ctime;
-    String utime;
-    int btnAppear;
+    private int id;
+    private int nowNum;
+    private int maxNum;
+    private String groupTitle;
+    private String groupPicUrl;
+    private int exPeriod;
+    private String startDate;
+    private String goalDate;
+    private String groupCreateDate;
+    private int activation;
+    private String ctime;
+    private String utime;
+    private int btnAppear;
+
+    @Override
+    public String toString() {
+        return "GroupSearchData{" +
+                "id=" + id +
+                ", nowNum=" + nowNum +
+                ", maxNum=" + maxNum +
+                ", groupTitle='" + groupTitle + '\'' +
+                ", groupPicUrl='" + groupPicUrl + '\'' +
+                ", exPeriod=" + exPeriod +
+                ", startDate='" + startDate + '\'' +
+                ", goalDate='" + goalDate + '\'' +
+                ", groupCreateDate='" + groupCreateDate + '\'' +
+                ", activation=" + activation +
+                ", ctime='" + ctime + '\'' +
+                ", utime='" + utime + '\'' +
+                ", btnAppear=" + btnAppear +
+                '}';
+    }
 
     public int getId() {
         return id;

@@ -16,9 +16,11 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
 import com.google.slashb410.exgroup.model.group.home.ResLogin;
 import com.google.slashb410.exgroup.net.NetSSL;
+import com.google.slashb410.exgroup.ui.join.InputInit0Activity;
 import com.google.slashb410.exgroup.ui.join.JoinActivity;
 import com.google.slashb410.exgroup.util.U;
 
@@ -85,25 +87,26 @@ public class EnterActivity extends AppCompatActivity {
     }
 
     private void callFacebookLogin(String token) {
-        Call resFacebookLogin = NetSSL.getInstance().getMemberImpFactory().facebookLogin(token);
-        resFacebookLogin.enqueue(new Callback() {
+        Call<ResStandard> resFacebookLogin = NetSSL.getInstance().getMemberImpFactory().facebookLogin(token);
+        resFacebookLogin.enqueue(new Callback<ResStandard>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
                 if(response.body()==null) U.getInstance().myLog("resFacebookLogin body is null");
-                String resultCode = response.body().toString();
+                int resultCode = response.body().getResultCode();
                 switch (resultCode){
-                    case "0" : U.getInstance().myLog("처음 등록한 사용자");
+                    case 0 : U.getInstance().myLog("처음 등록한 사용자");
+                        U.getInstance().goNext(getApplicationContext(), InputInit0Activity.class, false, false);
                         break;
-                    case "1" : U.getInstance().myLog("등록된 사용자");
+                    case 1 : U.getInstance().myLog("등록된 사용자");
+                        U.getInstance().goNext(getApplicationContext(), Home2Activity.class, false, false);
                         break;
 
                 }
-
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
-                U.getInstance().myLog("페이스북 로그인 접근실패 : "+t);
+            public void onFailure(Call<ResStandard> call, Throwable t) {
+                U.getInstance().myLog("facebook 접근실패 : "+t.toString());
             }
         });
     }

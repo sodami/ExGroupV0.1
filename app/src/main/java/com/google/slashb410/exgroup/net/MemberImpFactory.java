@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.net;
 
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.model.group.home.ReqJoin;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
@@ -49,7 +50,7 @@ public interface MemberImpFactory {
 
     //A_1. 페이스북 로그인 및 최초 사용자 등록
     @POST("facebook/token/{access_token}")
-    Call facebookLogin(@Path("access_token") String token);
+    Call<ResStandard> facebookLogin(@Path("access_token") String token);
 
     //A_2. 기초 정보 등록
     @Multipart

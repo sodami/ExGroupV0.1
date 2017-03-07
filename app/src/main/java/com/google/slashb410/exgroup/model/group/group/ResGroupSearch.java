@@ -1,15 +1,16 @@
 package com.google.slashb410.exgroup.model.group.group;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Tacademy on 2017-02-22.
  */
 
-public class ResGroupSearch {
+public class ResGroupSearch implements Serializable{
 
-    ArrayList<GroupSearchData> result;
-    int resultCode;
+    private ArrayList<GroupSearchData> result;
+    private int resultCode;
 
     public ArrayList<GroupSearchData> getResult() {
         return result;

@@ -15,6 +15,7 @@ import java.util.Map;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -32,9 +33,6 @@ public interface GroupImpFactory {
     @Multipart
     @POST("groups")
     Call<ResStandard> makeGroup (@PartMap Map<String, RequestBody> requestBodyMap);
-
-//    @POST("groups")
-//    Call<ResStandard> makeGroup (@Body ReqMakeGroup reqMakeGroup);
 
     //B_2. 그룹 검색하기
     @GET("groups/{searchId}")
@@ -75,7 +73,7 @@ public interface GroupImpFactory {
 
     //F_1. 그룹 게시글 등록하기
     @Multipart
-    @POST
+    @POST("boards")
     Call<ResUpload> upload(@PartMap Map<String, RequestBody> map);
 
     //F_3. 그룹 게시글 불러오기
@@ -86,5 +84,16 @@ public interface GroupImpFactory {
     @POST("comments")
     Call<String> addComment(@Body ReqComment reqComment);
 
+    //F_5. 게시물에 달린 댓글 모두 보기 -> F_3
+
+    //F_6. 게시물에 달린 댓글 삭제하기
+
+    //F_7. 좋아요 하기
+    @POST("favorites")
+    Call<ResStandard> favorite(@Body String boardId);
+
+    //F_8. 좋아요 취소하기
+    @DELETE("favorites/{favoriteId}")
+    Call<ResStandard> unFavorite(@Path("favoriteId") String favoriteId);
 
 }
