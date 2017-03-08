@@ -85,16 +85,22 @@ public class GroupSearchActivity extends AppCompatActivity {
         resSearchCall.enqueue(new Callback<ResGroupSearch>() {
             @Override
             public void onResponse(Call<ResGroupSearch> call, Response<ResGroupSearch> response) {
-                if (response.body() == null) {
-                    U.getInstance().myLog("body is null");
-                    return;
-                }
-                if (response.body().getResultCode() == 1) {
-                    U.getInstance().myLog(response.body().getResult().get(0).toString());
+                if(response.isSuccessful()) {
+                    if (response.body() == null) {
+                        U.getInstance().myLog("body is null");
+                        return;
+                    }
+                    if (response.body().getResultCode() == 1) {
+                        U.getInstance().myLog(response.body().getResult().get(0).toString());
 
-                } else {
-                    //resultCode == 0
-                    Snackbar.make(view, "죄송합니다. 다시 시도해 주세요.", Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        //resultCode == 0
+                        U.getInstance().myLog(response.body().toString());
+                        Snackbar.make(view, "죄송합니다. 다시 시도해 주세요.", Snackbar.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    U.getInstance().myLog("ResSearch : " +response.message());
                 }
             }
 
