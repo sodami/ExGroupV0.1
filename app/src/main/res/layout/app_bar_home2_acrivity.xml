@@ -27,7 +27,7 @@
                 android:layout_margin="@dimen/gmd_margin_default"
                 android:src="@drawable/title_logo"
                 android:scaleType="centerInside"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="match_parent" />
             
         </android.support.v7.widget.Toolbar>
