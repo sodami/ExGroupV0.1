@@ -2,10 +2,12 @@ package com.google.slashb410.exgroup.ui.group.create;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,13 +18,20 @@ import com.google.slashb410.exgroup.model.group.group.ResUncertifiedMem;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.google.slashb410.exgroup.util.U;
+import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
+import com.miguelbcr.ui.rx_paparazzo.entities.size.SmallSize;
+import com.squareup.picasso.Picasso;
+import com.yalantis.ucrop.UCrop;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class GroupWaitingActivity extends AppCompatActivity {
 
@@ -45,6 +54,8 @@ public class GroupWaitingActivity extends AppCompatActivity {
 
     String groupId_str;
 
+    SweetAlertDialog alert;
+
     @BindView(R.id.pushBtn)
     Button pushBtn;
     @BindView(R.id.group_id_box_waiting)
@@ -52,11 +63,13 @@ public class GroupWaitingActivity extends AppCompatActivity {
     @BindView(R.id.reinviteBtn)
     Button reInviteBtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_waiting);
         ButterKnife.bind(this);
+
 
         //1. 그룹정보 세팅, groupId_str 세팅
         setGroupInfo();
@@ -78,6 +91,40 @@ public class GroupWaitingActivity extends AppCompatActivity {
     }
 
 
+    @BindView(R.id.cameraBtn)
+    ImageView cameraBtn;
+    public void onCamera() {
+        // 크롬작업을 하기 위해 옵션 설정(편집)
+        UCrop.Options options = new UCrop.Options();
+        options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        options.setMaxBitmapSize(1024 * 1024 * 1); // 2MB 언더
+
+        RxPaparazzo.takeImage(this)
+                .size(new SmallSize())
+                .crop(options)
+                .useInternalStorage()
+                .usingCamera()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    // See response.resultCode() doc
+                    if (response.resultCode() != RESULT_OK) {
+                        // response.targetUI().showUserCanceled();
+                        return;
+                    }
+                    loadImage(response.data());
+                });
+    }
+
+    public void loadImage(String path) {
+        alert.dismissWithAnimation();
+        // 이미지 뷰에 이미지를 세팅
+        String url = "file://" + path;
+        Picasso.with(this).setLoggingEnabled(true);
+        Picasso.with(this).setIndicatorsEnabled(true);
+        Picasso.with(this).invalidate(url);
+        Picasso.with(this).load(url).into(cameraBtn);
+    }
 
     private void setViewByState(int groupState) {
 
@@ -102,9 +149,10 @@ public class GroupWaitingActivity extends AppCompatActivity {
 
     }
 
-    private void setNoMyWeight() {
 
-    }
+
+
+    private void setNoMyWeight() {   }
 
     private void setReInvite() {
         groupIdBox.setVisibility(View.VISIBLE);

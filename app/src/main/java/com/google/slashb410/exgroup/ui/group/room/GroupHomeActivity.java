@@ -1,10 +1,10 @@
 package com.google.slashb410.exgroup.ui.group.room;
 
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -18,14 +18,11 @@ import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
-import com.google.slashb410.exgroup.ui.Home2Activity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
-import com.google.slashb410.exgroup.util.U;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GroupHomeActivity extends AppCompatActivity {
 
