@@ -65,7 +65,7 @@ public class MyHomeActivity extends Activity {
         nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
         nicknameInfo    = (ImageView) findViewById(R.id.nicknameInfo); // 수정 버튼
 
-        setProfile();
+        //setProfile();
 
         // 2017. 02. 01
         Resources resource = getResources();
@@ -84,13 +84,8 @@ public class MyHomeActivity extends Activity {
         spec.setContent(R.id.tab3);
         spec.setIndicator("", resource.getDrawable(R.drawable.chart_white_resized));
         tabHost.addTab(spec);
-        tabHost.setCurrentTab(0);
+        tabHost.setCurrentTab(1);
 
-        for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++)
-        {
-            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 180;
-            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 100;
-        }
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
         ArrayList<Entry> entries = new ArrayList<Entry>();
