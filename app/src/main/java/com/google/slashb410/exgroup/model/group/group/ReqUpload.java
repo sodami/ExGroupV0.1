@@ -6,23 +6,23 @@ package com.google.slashb410.exgroup.model.group.group;
 
 public class ReqUpload {
 
-    private String groupId;
+    private int groupId;
     private int categoryNum;
     private String content;
     private String summary;
 
-    public ReqUpload(String groupId, int categoryNum, String content, String summary) {
+    public ReqUpload(int groupId, int categoryNum, String content, String summary, String photo) {
         this.groupId = groupId;
         this.categoryNum = categoryNum;
         this.content = content;
         this.summary = summary;
     }
 
-    public String getGroupId() {
+    public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 

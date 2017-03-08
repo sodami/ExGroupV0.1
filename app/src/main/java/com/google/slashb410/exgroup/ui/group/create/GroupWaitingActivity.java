@@ -67,10 +67,10 @@ public class GroupWaitingActivity extends AppCompatActivity {
         //3. 상태에 맞는 뷰 세팅
         setViewByState(groupState);
     }
-//    @OnClick(R.id.back_waiting)
-//    public void onBack() {
-//        onBack();
-//    }
+    @OnClick(R.id.back_waiting)
+    public void onBack() {
+        onBackPressed();
+    }
 
     @OnClick(R.id.cancel_waiting)
     public void onCancel() {
@@ -182,6 +182,7 @@ public class GroupWaitingActivity extends AppCompatActivity {
         //+미인증자 재촉하기 버튼세팅
         pushBtn.setVisibility(View.VISIBLE);
     }
+
 
     public void goNext(){
         U.getInstance().goNext(this, GroupHomeActivity.class, false, false);

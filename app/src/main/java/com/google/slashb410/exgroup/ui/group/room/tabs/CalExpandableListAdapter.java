@@ -91,7 +91,7 @@ public class CalExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         View view = convertView;
-
+//
 
         if (view == null) {
             view = inflater.inflate(R.layout.cell_calendar_list, null);

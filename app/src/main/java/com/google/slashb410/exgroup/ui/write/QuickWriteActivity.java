@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.group.ReqUpload;
 import com.google.slashb410.exgroup.model.group.group.ResUpload;
 import com.google.slashb410.exgroup.net.NetSSL;
@@ -114,9 +116,11 @@ public class QuickWriteActivity extends AppCompatActivity {
 
     }
 
+
     @OnClick(R.id.cameraBtn)
     public void onCamera() {
-        final String[] path = new String[1];
+
+        U.getInstance().myLog("onCamera 들어옴");
         RxPaparazzo.takeImage(this)
                 .size(new ScreenSize())
                 .usingCamera()
@@ -124,26 +128,11 @@ public class QuickWriteActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {// See response.resultCode() doc
                     if (response.resultCode() != RESULT_OK) {
-                        picPath = "file://" + response.data();
-                        goUpload(picPath);
+                        return;
                     }
+                    picPath = response.data();
+                    popUpProgress(response.data());
                 });
-
-        picPath = U.getInstance().onCamera(this, null, pictureThumbnail);
-
-//        RxPaparazzo.takeImage(this)
-//                .size(new ScreenSize())
-//                .usingCamera()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(response -> {// See response.resultCode() doc
-//                    if (response.resultCode() != RESULT_OK) {
-//                        //  response.targetUI().showUserCanceled();
-//                        return;
-//                    }
-//                    popUpProgress(response.data());
-//
-//                });
     }
 
     private void popUpProgress(String path) {
@@ -161,12 +150,14 @@ public class QuickWriteActivity extends AppCompatActivity {
     }
 
     public void goUpload(String path) {
+
+        U.getInstance().myLog("goUpload 들어옴");
         cameraView.setVisibility(View.GONE);
 
         Picasso.with(this).setLoggingEnabled(true);
         Picasso.with(this).invalidate(path);
 
-        Picasso.with(this).load(path).into(pictureThumbnail);
+        Picasso.with(this).load("file://" + path).into(pictureThumbnail);
 
         String pictureRename = renamePicture("weight");
         pictureTitle.setText(pictureRename);
@@ -206,12 +197,12 @@ public class QuickWriteActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.uploadBtn)
-    public void onUpload() {
-        pickGroup();
+    public void onUpload(View view) {
+        pickGroup(view);
 
     }
 
-    public void pickGroup() {
+    public void pickGroup(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("게시할 그룹을 선택하세요.");
         alert.setMultiChoiceItems(groupTitles, checkGroups, new DialogInterface.OnMultiChoiceClickListener() {
@@ -231,7 +222,7 @@ public class QuickWriteActivity extends AppCompatActivity {
                 map.put("summary", RequestBody.create(MediaType.parse("multipart/form-data"), getSummary()));
 
                 File file = new File(picPath);
-                U.getInstance().myLog(file.getAbsolutePath()+"++"+file.canRead());
+                U.getInstance().myLog(file.getAbsolutePath() + "++" + file.canRead());
 
                 RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 map.put("photo", fileBody);
@@ -242,30 +233,36 @@ public class QuickWriteActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResUpload> call, Response<ResUpload> response) {
 
+                        if(response.body()==null) {
+                            Snackbar.make(view, "죄송합니다. 다시 시도해 주세요.", Snackbar.LENGTH_SHORT).show();
+                            return;
+                        }
                         //3. 글쓰기 액티비티 종료
-                        Handler handler = new Handler() {
-                            @Override
-                            public void handleMessage(Message msg) {
-                                if (msg.what == 0) {
+                        if (response.body().getResultCode() == 1) {
+                            Handler handler = new Handler() {
+                                @Override
+                                public void handleMessage(Message msg) {
+                                    if (msg.what == 0) {
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(QuickWriteActivity.this);
-                                    builder.setTitle("업로드를 완료하였습니다!")
-                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    QuickWriteActivity.this.finish();
-                                                }
-                                            }).show();
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(QuickWriteActivity.this);
+                                        builder.setTitle("업로드를 완료하였습니다!")
+                                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        QuickWriteActivity.this.finish();
+                                                    }
+                                                }).show();
+                                    }
+
                                 }
-
-                            }
-                        };
-                        U.getInstance().onProgress(handler, QuickWriteActivity.this, "게시하는 중입니다.");
+                            };
+                            U.getInstance().onProgress(handler, QuickWriteActivity.this, "게시하는 중입니다.");
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<ResUpload> call, Throwable t) {
-                        U.getInstance().myLog("ResUpload 접근실패 : "+t);
+                        U.getInstance().myLog("ResUpload 접근실패 : " + t);
                     }
 
                 });

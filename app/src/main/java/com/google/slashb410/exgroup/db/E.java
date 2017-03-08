@@ -23,9 +23,7 @@ public class E {
         public static String USER_NAME = "";
         public static String USER_NICKNAME = "";
 
-        //----fake data
-        public static final WriteData new_write = new WriteData();
-        public static ShotData shotData = new ShotData();
+        public static String TEMP_PIC_URI="";
     }
 
     public static class NET {

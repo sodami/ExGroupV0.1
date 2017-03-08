@@ -9,6 +9,30 @@ public class ResUpload {
     private UploadData data;
     private int resultCode;
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public UploadData getData() {
+        return data;
+    }
+
+    public void setData(UploadData data) {
+        this.data = data;
+    }
+
+    public int getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(int resultCode) {
+        this.resultCode = resultCode;
+    }
+
     public class UploadData{
         private int user_id;
         private String group_id;

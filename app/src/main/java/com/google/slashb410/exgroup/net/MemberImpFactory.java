@@ -1,5 +1,7 @@
 package com.google.slashb410.exgroup.net;
 
+import com.google.slashb410.exgroup.model.group.ResStandard;
+import com.google.slashb410.exgroup.model.group.group.InnerCalendar;
 import com.google.slashb410.exgroup.model.group.group.ResGroupData;
 import com.google.slashb410.exgroup.model.group.home.ReqJoin;
 import com.google.slashb410.exgroup.model.group.home.ReqLogin;
@@ -49,12 +51,12 @@ public interface MemberImpFactory {
 
     //A_1. 페이스북 로그인 및 최초 사용자 등록
     @POST("facebook/token/{access_token}")
-    Call facebookLogin(@Path("access_token") String token);
+    Call<ResStandard> facebookLogin(@Path("access_token") String token);
 
     //A_2. 기초 정보 등록
     @Multipart
     @PUT("users")
-    Call<ResInitInfo> initInfo(@PartMap Map<String, RequestBody> params);
+    Call<ResInitInfo> initInfo(@PartMap() Map<String, RequestBody> params);
 
     //A_3. 자신의 정보 보기
     @GET("users/me")
@@ -76,7 +78,11 @@ public interface MemberImpFactory {
     @POST("auth/local/login")
     Call<ResLogin> login(@Body ReqLogin reqLogin);
 
-    //D_2. 가입 그룹 리스트 불러오기
+    //A_8. 마이페이지 캘린더에서 해당 날짜 게시글 보이기
+    @GET("date")
+    Call<InnerCalendar> myCalendar();
+
+   //D_2. 가입 그룹 리스트 불러오기
     @GET("groups")
     Call<ResGroupData> groupData();
 

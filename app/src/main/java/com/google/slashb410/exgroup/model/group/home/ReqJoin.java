@@ -1,10 +1,12 @@
 package com.google.slashb410.exgroup.model.group.home;
 
+import java.io.Serializable;
+
 /**
  * Created by Tacademy on 2017-02-21.
  */
 
-public class ReqJoin {
+public class ReqJoin implements Serializable {
     private String username;
     private String password;
 

@@ -18,23 +18,27 @@
             android:layout_height="match_parent">
 
             <!-- 비활성화 카드 -->
-            <Button
-                android:id="@+id/waiting_lock"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/lock_white"
-                android:visibility="gone" />
+
 
             <FrameLayout
-                android:layout_alignParentTop="true"
                 android:id="@+id/waiting_layout"
-                android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ddcccccc"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="40dp"
+                android:background="#ddaaaaaa"
                 android:orientation="vertical"
-                android:visibility="gone" />
+                android:visibility="gone">
+
+                <Button
+                    android:layout_gravity="center"
+                    android:id="@+id/waiting_lock"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/lock_white"
+                    android:visibility="gone" />
+
+            </FrameLayout>
 
             <!---->
 
@@ -43,17 +47,32 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:background="#ffffff"
-                    android:id="@+id/group_name_card"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="24dp"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:layout_weight="0"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="그룹명"
-                    android:textSize="@dimen/text_default"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:background="@drawable/owner"
+                        android:visibility="gone"
+                        android:id="@+id/manager"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp" />
+
+                    <TextView
+                        android:id="@+id/group_name_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_margin="@dimen/gmd_margin_default"
+                        android:layout_weight="0"
+                        android:background="#ffffff"
+                        android:gravity="center"
+                        android:text="그룹명"
+                        android:textSize="@dimen/text_default"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/group_cardImg"

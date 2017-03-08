@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.util.U;
 
 import butterknife.BindView;
@@ -65,10 +66,12 @@ public class InputInit0Activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
-                                picUrl = U.getInstance().onCamera(InputInit0Activity.this, null, profile);
+                                U.getInstance().onCamera(InputInit0Activity.this, profile);
+                                picUrl = E.KEY.TEMP_PIC_URI;
+
                                 break;
                             case 1:
-                                U.getInstance().onGallery(InputInit0Activity.this, null, profile);
+                                U.getInstance().onGallery(InputInit0Activity.this, profile);
                                 break;
                         }
                     }

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
     <uses-feature android:name="android.hardware.camera2" />
 
     <application
@@ -107,7 +108,7 @@
         <activity
             android:name=".ui.group.room.tabs.comments.GroupShotsCommentsActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.navi.DeveloperMessage"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -133,7 +134,8 @@
         <activity
             android:name=".ui.mypage.DetailInfo"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.mypage.Calendar.CalendarDialogActivity"></activity>
+        <activity android:name=".ui.mypage.Calendar.CalendarDialogActivity" />
+        <activity android:name=".net.RetroTestActivity" />
     </application>
 
 </manifest>

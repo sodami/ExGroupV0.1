@@ -55,37 +55,49 @@ public class JoinActivity extends AppCompatActivity {
             resJoinCall.enqueue(new Callback<ResJoin>() {
                 @Override
                 public void onResponse(Call<ResJoin> call, Response<ResJoin> response) {
-                    if (response.body() == null) {
-                        U.getInstance().myLog("body is null");
+                    if( response.isSuccessful()){
+                        if (response.body() != null) {
+                            if (response.body().getResultCode() == 1) {
+                                U.getInstance().myLog(response.body().toString());
+
+                                builder.setTitle("회원 가입 성공!")
+                                        .setMessage("친구랑운동 가입을 축하드립니다!")
+                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                                U.getInstance().goNext(JoinActivity.this, InputInit0Activity.class, false, false);
+                                                finish();
+                                            }
+                                        }).show();
+
+                            } else if(response.body().getResultCode() ==0){
+                                U.getInstance().myLog(response.body().toString());
+                                //resultCode == 0
+                                builder.setTitle("회원가입 에러")
+                                        .setMessage("이미 존재하는 이메일 주소입니다.")
+                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .show();
+
+                            }
+                        }else{
+                            U.getInstance().myLog("err 0"+response.message());
+                            return;
+                        }
+                    }else{
+                        U.getInstance().myLog("err 1"+response.message());
                         return;
                     }
-                    if (response.body().getResultCode() == 1) {
-                        U.getInstance().myLog(response.body().toString());
-
-                        builder.setTitle("회원 가입 성공!")
-                                .setMessage("친구랑운동 가입을 축하드립니다!")
-                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        U.getInstance().goNext(JoinActivity.this, InputInit0Activity.class, false, false);
-                                        finish();
-                                    }
-                                }).show();
-
-                    } else {
-                        //resultCode == 0
-                        builder.setTitle("회원가입 에러")
-                                .setMessage("이미 존재하는 이메일 주소입니다.")
-                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-
+                    if (response.body() == null) {
+                        U.getInstance().myLog("Join body is null");
+                        return;
                     }
+
                 }
 
                 @Override

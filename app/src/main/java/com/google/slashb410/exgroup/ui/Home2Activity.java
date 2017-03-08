@@ -30,7 +30,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
@@ -112,12 +111,12 @@ public class Home2Activity extends AppCompatActivity
         actTitles = new ArrayList();
 
         //유효한 티켓이 없다면 출석체크
-        if (!hasValidTicket(today)) {
-            checkAttend(today);
-        }
+//        if (!hasValidTicket(today)) {
+//            checkAttend(today);
+//        }
 
         //프로필박스 세팅
-        setProfileBox();
+        //setProfileBox();
         //그룹리스트 세팅
         setGroupList();
 
@@ -204,7 +203,7 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if (response.body().getData() == null) {
+                if (response.body() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
                 } else {
                     U.getInstance().myLog("ResMe : "+response.body().getData().toString());
@@ -321,6 +320,21 @@ public class Home2Activity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
 
+//        } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
+//            Context mContext = getApplicationContext();
+//            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+//            View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));
+//            AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
+//            aDialog.setView(layout);
+//            aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    onSessionout();
+//                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            AlertDialog ad = aDialog.create();
+//            ad.show();
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -330,7 +344,7 @@ public class Home2Activity extends AppCompatActivity
             aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     onSessionout();
-                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "정상적으로 탈퇴되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
             AlertDialog ad = aDialog.create();
@@ -397,6 +411,8 @@ public class Home2Activity extends AppCompatActivity
                 } else {
                     Log.i("RF", "3응답 데이터 오류");
                 }
+                Intent intent = new Intent(Home2Activity.this, EnterActivity.class);
+                startActivity(intent);
                 // Log.i("RF", "가입실패   //" + response);
             }
 
@@ -445,8 +461,6 @@ public class Home2Activity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            E.KEY.new_write.deleteWriteData();
-            E.KEY.shotData.deleteShotData();
             this.finish();
 
         }

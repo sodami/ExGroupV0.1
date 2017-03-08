@@ -50,7 +50,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         searchDatas = new ArrayList<>();
         searchList.findViewById(R.id.search_list);
 
-        InnerSearchData data1 = new InnerSearchData(1, "슬비네그룹", "2017년 2월 16일", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTljSpp2dT2sosNYj5qVV7UkgZP-S8mNRJ-kSyEWU_3IRa16PazCQGGKg", 3, 5);
+        InnerSearchData data1 = new InnerSearchData(1, "슬비네그룹", "2017년 2월 16일", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTljSpp2dT2sosNYj5qVV7UkgZP-S8mNRJ-kSyEWU_3IRa16PazCQGGKg", 5, 3);
         SearchData searchdata1 = new SearchData();
         searchdata1.setResult(data1);
 
@@ -77,6 +77,10 @@ public class GroupSearchActivity extends AppCompatActivity {
     public void goSearch(View view){
         U.getInstance().myLog("검색버튼 들어오긴함");
         String keyword = inputId.getText().toString();
+        if(keyword.equals("")){
+            Snackbar.make(view, "검색할 그룹 ID를 입력해 주세요.", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
         Call<ResGroupSearch> resSearchCall = NetSSL.getInstance().getGroupImpFactory().searchGroup(keyword);
         resSearchCall.enqueue(new Callback<ResGroupSearch>() {
             @Override
@@ -86,7 +90,7 @@ public class GroupSearchActivity extends AppCompatActivity {
                     return;
                 }
                 if (response.body().getResultCode() == 1) {
-                    U.getInstance().myLog(response.body().toString());
+                    U.getInstance().myLog(response.body().getResult().get(0).toString());
 
                 } else {
                     //resultCode == 0

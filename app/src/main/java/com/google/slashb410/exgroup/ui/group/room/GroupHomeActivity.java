@@ -13,11 +13,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
+import com.google.slashb410.exgroup.ui.Home2Activity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
+import com.google.slashb410.exgroup.util.U;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GroupHomeActivity extends AppCompatActivity {
 
@@ -26,37 +34,54 @@ public class GroupHomeActivity extends AppCompatActivity {
     TextView groupTitleView;
     ImageView groupImg;
 
-    GroupData groupData;
+    public GroupData groupData;
     public int groupId;
     Uri picUrl;
+
+    @BindView(R.id.group_title_toolbar)
+    TextView title;
+    @BindView(R.id.collapseImg)
+    ImageView groupPic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_home);
+
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.collapse_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
 
         //기본정보 저장
         groupData = new GroupData();
         Intent intent = getIntent();
         groupData = (GroupData) intent.getSerializableExtra("groupData");
 
+        //툴바 세팅
+        title.setText(groupData.getGroupTitle());
+        Picasso.with(this).load(groupData.getGroupPicUrl())
+                .fit().centerCrop()
+                .into(groupPic);
+
+        //랭크 세팅
+        setRankList();
+
         //그룹아이디 세팅 for Fragment
         groupId = groupData.getGroup_id();
 
-        CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar_layout);
+//        CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar_layout);
       //  groupTitleView = (TextView) findViewById(R.id.group_home_title);
-        groupImg = (ImageView) findViewById(R.id.collapseImg);
+//        groupImg = (ImageView) findViewById(R.id.collapseImg);
 
-        if(groupData.getGroupPicUrl()!=null) {
-            picUrl = Uri.parse(groupData.getGroupPicUrl());
-        }
-
-        if (groupData.getGroupTitle()!=null) {
-//            groupTitleView.setText(groupData.getGroupTitle());
-            groupImg.setImageURI(picUrl);
-        }
+//        if (groupData.getGroupTitle()!=null) {
+////            groupTitleView.setText(groupData.getGroupTitle());
+//            groupImg.setImageURI(picUrl);
+//        }
 
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -91,6 +116,24 @@ public class GroupHomeActivity extends AppCompatActivity {
         });
     }
 
+    @BindView(R.id.rank1)
+    LinearLayout rank1;
+    @BindView(R.id.rank2)
+    LinearLayout rank2;
+    @BindView(R.id.rank3)
+    LinearLayout rank3;
+    @BindView(R.id.rank4)
+    LinearLayout rank4;
+    @BindView(R.id.rank5)
+    LinearLayout rank5;
+
+
+    private void setRankList() {
+        int numMem = groupData.getMaxNum();
+        String layoutName = "rank";
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.group_home_menu, menu);
@@ -123,6 +166,8 @@ public class GroupHomeActivity extends AppCompatActivity {
                         }
                     }).show();
             return true;
+        }else if(id == R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

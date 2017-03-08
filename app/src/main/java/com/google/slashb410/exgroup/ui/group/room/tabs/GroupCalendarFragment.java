@@ -13,8 +13,11 @@ import com.andexert.calendarlistview.library.DayPickerView;
 import com.andexert.calendarlistview.library.SimpleMonthAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.CalendarListData;
+import com.google.slashb410.exgroup.model.group.group.GroupData;
+import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.squareup.timessquare.CalendarPickerView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,13 +31,30 @@ public class GroupCalendarFragment extends Fragment implements com.andexert.cale
 
     ExpandableListView listView;
     CalExpandableListAdapter adapter;
+    GroupData groupData;
     ArrayList<String> theDay;
     ArrayList<ArrayList<CalendarListData>> theDayActList;
     DayPickerView dayPickerView;
+    Date startDate;
+    Date goalDate;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        groupData = ((GroupHomeActivity)getActivity()).groupData;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            startDate = format.parse(groupData.getStartDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            goalDate = format.parse(groupData.getGoalDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.MONTH, 1);
 
@@ -58,7 +78,7 @@ public class GroupCalendarFragment extends Fragment implements com.andexert.cale
 
         CalendarPickerView calendar = (CalendarPickerView) view.findViewById(R.id.group_calendar);
         Date today = new Date();
-        calendar.init(today, nextYear.getTime())
+        calendar.init(startDate, goalDate)
                 .withSelectedDate(today);
 
         calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {

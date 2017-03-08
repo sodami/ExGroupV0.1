@@ -1,22 +1,21 @@
 package com.google.slashb410.exgroup.model.group.group;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Tacademy on 2017-02-22.
+ * Created by drizzle on 2017-03-05.
  */
 
-public class ResGroupSearch implements Serializable{
+public class ResGroupCalendar {
 
-    private ArrayList<GroupSearchData> result;
-    private int resultCode;
+    ArrayList<InnerCalendar> result = new ArrayList<>();
+    int resultCode;
 
-    public ArrayList<GroupSearchData> getResult() {
+    public ArrayList<InnerCalendar> getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<GroupSearchData> result) {
+    public void setResult(ArrayList<InnerCalendar> result) {
         this.result = result;
     }
 
@@ -28,5 +27,3 @@ public class ResGroupSearch implements Serializable{
         this.resultCode = resultCode;
     }
 }
-
-
