@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.group.ReqUpload;
 import com.google.slashb410.exgroup.model.group.group.ResUpload;
 import com.google.slashb410.exgroup.net.NetSSL;

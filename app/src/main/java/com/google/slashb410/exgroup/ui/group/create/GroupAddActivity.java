@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -23,7 +22,6 @@ import android.widget.Spinner;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.model.group.ResStandard;
-import com.google.slashb410.exgroup.model.group.group.ReqMakeGroup;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
 
@@ -39,8 +37,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.android.volley.Request.Method.HEAD;
 
 public class GroupAddActivity extends AppCompatActivity {
 
