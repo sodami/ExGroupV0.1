@@ -73,7 +73,6 @@
             android:label="@string/input_init" />
         <activity
             android:name=".ui.mypage.MyHomeActivity"
-            android:label="@string/mypage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.group.create.GroupAddActivity"
