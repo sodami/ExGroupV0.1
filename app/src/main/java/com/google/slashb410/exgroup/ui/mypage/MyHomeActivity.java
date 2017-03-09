@@ -10,7 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +31,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
+import com.google.slashb410.exgroup.ui.Home2Activity;
 import com.google.slashb410.exgroup.util.U;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.SmallSize;
@@ -47,11 +50,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MyHomeActivity extends Activity {
+    TabLayout tabLayout;
+    ViewPager viewPager;
     ImageView profile_change;
     SweetAlertDialog alert;
     TextView nickname;      // 닉네임 보여짐
     CalendarView cal;
-    ImageView nicknameInfo; // 수정버튼
     Bundle bundle;
     Student student;
 
@@ -62,10 +66,11 @@ public class MyHomeActivity extends Activity {
 
 
         profile_change  = (ImageView) findViewById(R.id.profile_change);
+        // profile_change.bringToFront();
         nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
-        nicknameInfo    = (ImageView) findViewById(R.id.nicknameInfo); // 수정 버튼
 
-        //setProfile();
+        setProfile();
+
 
         // 2017. 02. 01
         Resources resource = getResources();
@@ -74,17 +79,13 @@ public class MyHomeActivity extends Activity {
         tabHost.setup();
         spec = tabHost.newTabSpec("tag1");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("", resource.getDrawable(R.drawable.planet_white_resized));
+        spec.setIndicator("", resource.getDrawable(R.drawable.calendar_white_resized));
         tabHost.addTab(spec);
         spec = tabHost.newTabSpec("tag2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("", resource.getDrawable(R.drawable.calendar_white_resized));
-        tabHost.addTab(spec);
-        spec = tabHost.newTabSpec("tag3");
-        spec.setContent(R.id.tab3);
         spec.setIndicator("", resource.getDrawable(R.drawable.chart_white_resized));
         tabHost.addTab(spec);
-        tabHost.setCurrentTab(1);
+        tabHost.setCurrentTab(0);
 
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
@@ -152,6 +153,15 @@ public class MyHomeActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onMyBack() {
+        onBackPressed();
+    }
+
+    public void onMySubmit() {
+        Intent intent = new Intent(MyHomeActivity.this, Home2Activity.class);
+        startActivity(intent);
     }
 
     // profile  2017. 02. 01
@@ -257,16 +267,17 @@ public class MyHomeActivity extends Activity {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
                 if (response.body().getData() == null) {
-                    U.getInstance().myLog("1)))))))))))))))))setProfile : Body is NULL");
+                    U.getInstance().myLog("setProfile : Body is NULL");
+                    return;
                 } else {
-                    U.getInstance().myLog("2)))))))))))))))))setProfile : "+response.body().getData().toString());
+                    U.getInstance().myLog("setProfile : "+response.body().getData().toString());
                     if (response.body().getData().getNickname() != null) nickname.setText(response.body().getData().getNickname());
                 }
             }
 
             @Override
             public void onFailure(Call<ResMe> call, Throwable t) {
-                U.getInstance().myLog("3)))))))))))))))))setProfile : " + t.toString());
+                U.getInstance().myLog("setProfile : " + t.toString());
             }
         });
     }

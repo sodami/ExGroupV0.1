@@ -45,12 +45,12 @@
                     android:id="@+id/submitBtn"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:text="완료"
                     android:onClick="onClick"
                     android:textStyle="bold"
                     android:layout_gravity="right"
                     android:gravity="left|center"
                     android:textColor="@color/babyPink"
+                    android:text="완료"
                     android:background="@null" />
 
             </android.support.v7.widget.Toolbar>
