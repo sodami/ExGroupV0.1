@@ -9,14 +9,15 @@ import java.util.ArrayList;
 
 public class ResGroupSearch implements Serializable{
 
-    private ArrayList<GroupSearchData> result;
+    private GroupSearchData result;
     private int resultCode;
 
-    public ArrayList<GroupSearchData> getResult() {
+
+    public GroupSearchData getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<GroupSearchData> result) {
+    public void setResult(GroupSearchData result) {
         this.result = result;
     }
 

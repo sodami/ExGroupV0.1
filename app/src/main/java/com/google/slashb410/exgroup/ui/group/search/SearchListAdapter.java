@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.ResStandard;
-import com.google.slashb410.exgroup.model.group.SearchData;
+import com.google.slashb410.exgroup.model.group.group.GroupSearchData;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
 import com.squareup.picasso.Picasso;
@@ -31,11 +31,11 @@ import retrofit2.Response;
 public class SearchListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<SearchData> searchData;
+    ArrayList<GroupSearchData> searchData;
     LayoutInflater inflater;
     View view;
 
-    public SearchListAdapter(Context context, ArrayList<SearchData> searchData) {
+    public SearchListAdapter(Context context, ArrayList<GroupSearchData> searchData) {
         this.context = context;
         this.searchData = searchData;
         this.inflater = LayoutInflater.from(context);
@@ -69,11 +69,11 @@ public class SearchListAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
-                builder.setMessage(searchData.get(position).getResult().getGroupTitle()+"에 가입하시겠습니까?")
+                builder.setMessage(searchData.get(position).getGroupTitle()+"에 가입하시겠습니까?")
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                joinGroup(searchData.get(position).getResult().getGroupId());
+                                joinGroup(searchData.get(position).getId());
                             }
                         }).show();
 
@@ -86,13 +86,15 @@ public class SearchListAdapter extends BaseAdapter {
         viewHolder.maxMem = (TextView) view.findViewById(R.id.maxMem);
         viewHolder.groupProfile = (CircleImageView) view.findViewById(R.id.group_profileImg_search);
 
-
-        Picasso.with(context).load(searchData.get(position).getResult().getPicUrl())
+        Picasso.with(context).load(searchData.get(position).getGroupPicUrl())
                 .fit().centerCrop().into(viewHolder.groupProfile);
-        viewHolder.groupTitle.setText(searchData.get(position).getResult().getGroupTitle());
-        viewHolder.gourpStartday.setText(searchData.get(position).getResult().getStartDate());
-        viewHolder.countMem.setText(searchData.get(position).getResult().getCountNum()+"");
-        viewHolder.maxMem.setText(searchData.get(position).getResult().getMaxNum()+"");
+        viewHolder.groupTitle.setText(searchData.get(position).getGroupTitle());
+
+        String customDate = U.getInstance().customDate(searchData.get(position).getGroupCreateDate());
+
+        viewHolder.gourpStartday.setText(customDate);
+        viewHolder.countMem.setText(searchData.get(position).getNowNum()+"");
+        viewHolder.maxMem.setText(searchData.get(position).getMaxNum()+"");
 
         return view;
     }

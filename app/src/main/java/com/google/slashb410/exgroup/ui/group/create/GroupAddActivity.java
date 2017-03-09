@@ -10,6 +10,8 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
@@ -46,7 +49,8 @@ public class GroupAddActivity extends AppCompatActivity {
     EditText groupTitle;
     @BindView(R.id.memberSpinner)
     Spinner memSpinner;
-
+    @BindView(R.id.title_length)
+    TextView titleLenght;
     @BindView(R.id.period)
     Button periodBtn;
 
@@ -61,6 +65,28 @@ public class GroupAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_add);
         ButterKnife.bind(this);
 
+
+        //1. 타이틀 입력
+        // 1-1.길이 출력
+        groupTitle.addTextChangedListener(new TextWatcher() {
+//            String curString;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                curString = s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                titleLenght.setText(String.valueOf(s.length()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        //2. 멤버수 입력
         memSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -73,6 +99,7 @@ public class GroupAddActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     @OnClick(R.id.group_profileImg)
@@ -80,29 +107,6 @@ public class GroupAddActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String[] items = {"카메라", "갤러리"};
 
-//        builder.setTitle("그룹 대표이미지 선택")
-//                .setItems(items, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which) {
-//                            case 0: {
-//                                profilePath = U.getInstance().onCamera(GroupAddActivity.this, groupProfileImg);
-//                                dialog.dismiss();
-//                            }
-//                            break;
-//                            case 1: {
-//                                profilePath = U.getInstance().onGallery(GroupAddActivity.this, groupProfileImg);
-//                                dialog.dismiss();
-//                            }
-//                            break;
-//                        }
-//                    }
-//                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        }).show();
 
         builder.setTitle("그룹 대표이미지 선택")
                 .setItems(items, new DialogInterface.OnClickListener() {
@@ -143,7 +147,7 @@ public class GroupAddActivity extends AppCompatActivity {
         periodPicker.setMinValue(7);
         periodPicker.setMaxValue(30);
         periodPicker.setWrapSelectorWheel(false);
-        periodPicker.setBackgroundColor(Color.BLACK);
+        periodPicker.setBackgroundColor(getResources().getColor(R.color.babyPink));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("활동기간 선택")

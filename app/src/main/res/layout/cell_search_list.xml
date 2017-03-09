@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="#ffffff"
+    android:layout_margin="@dimen/gmd_margin_default">
 <LinearLayout
     android:layout_centerVertical="true"
     android:orientation="horizontal"

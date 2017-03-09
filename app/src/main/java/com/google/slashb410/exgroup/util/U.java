@@ -240,6 +240,17 @@ public class U {
 
     }
 
+    public String customDate(String date){
+
+        String[] splitDate = date.split("-");
+        String year = splitDate[0];
+        String month = splitDate[1];
+        String day = splitDate[2].substring(0,2);
+
+        return year+"년 "+month+"월 "+day+"일";
+
+    }
+
 
 //    public String customDateNTime() {
 //

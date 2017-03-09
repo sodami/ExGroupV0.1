@@ -30,6 +30,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
@@ -102,6 +103,8 @@ public class Home2Activity extends AppCompatActivity
         setContentView(R.layout.activity_home2_acrivity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         ButterKnife.bind(this);
 
         String[] todays = U.getInstance().currentYYmmDD();
@@ -116,7 +119,7 @@ public class Home2Activity extends AppCompatActivity
 //        }
 
         //프로필박스 세팅
-        //setProfileBox();
+        setProfileBox();
         //그룹리스트 세팅
         setGroupList();
 
@@ -205,11 +208,16 @@ public class Home2Activity extends AppCompatActivity
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
                 if (response.body() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
+                    return;
                 } else {
                     U.getInstance().myLog("ResMe : "+response.body().getData().toString());
+                    E.KEY.USER_ID = response.body().getData().getId();
+                    E.KEY.USER_NAME = response.body().getData().getUsername();
+                    E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
-                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI());
-                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum());
+                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
+                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum()+"");
                 }
             }
 
