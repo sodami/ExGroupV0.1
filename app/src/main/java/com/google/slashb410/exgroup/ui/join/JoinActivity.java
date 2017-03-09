@@ -86,15 +86,11 @@ public class JoinActivity extends AppCompatActivity {
 
                             }
                         }else{
-                            U.getInstance().myLog("err 0"+response.message());
+                            U.getInstance().myLog("err 0 : "+response.message());
                             return;
                         }
                     }else{
-                        U.getInstance().myLog("err 1"+response.message());
-                        return;
-                    }
-                    if (response.body() == null) {
-                        U.getInstance().myLog("Join body is null");
+                        U.getInstance().myLog("err 1 : "+response.message());
                         return;
                     }
 

@@ -35,7 +35,7 @@
     </LinearLayout>
 
 
-    <Button
+    <Button          style="?android:attr/borderlessButtonStyle"
         android:background="@drawable/button_white"
         android:text="다음으로"
         android:layout_alignParentBottom="true"

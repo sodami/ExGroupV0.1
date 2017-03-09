@@ -30,7 +30,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <Button
+                <Button          style="?android:attr/borderlessButtonStyle"
                     android:layout_gravity="center"
                     android:id="@+id/waiting_lock"
                     android:layout_width="30dp"

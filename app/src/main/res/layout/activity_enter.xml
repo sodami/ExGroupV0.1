@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_enter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/babyPink"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.google.slashb410.exgroup.ui.EnterActivity">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginBottom="@dimen/gmd_margin_default"
+        android:scaleType="fitXY"
+        android:src="@drawable/enter" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="2">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.slashb410.exgroup.util.ClearEditText
+            android:maxLines="1"
+            android:lines = "1"
+            android:id="@+id/email_login"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/text_big"
+            android:background="#ffffff"
+            android:hint="@string/email"
+            android:inputType="textWebEmailAddress"
+            android:padding="@dimen/gmd_margin_default"
+            android:textCursorDrawable="@null" />
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="32dp"
@@ -51,43 +65,51 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/loginBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_pink"
-                    android:text="@string/login"
-                    android:textColor="@android:color/white" />
+        <com.google.slashb410.exgroup.util.ClearEditText
+            android:maxLines="1"
+            android:lines = "1"
+            android:id="@+id/password_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_big"
+            android:background="#ffffff"
+            android:colorControlActivated="@color/colorAccent"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="@dimen/gmd_margin_default"
+            android:textCursorDrawable="@null" />
 
 
-                <Button
-                    android:id="@+id/joinBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/gmd_big_button"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_pink"
-                    android:text="@string/join"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+    <Button
+        android:layout_marginTop="@dimen/gmd_margin_default"
+        android:layout_marginBottom="@dimen/gmd_margin_default"
+        android:id="@+id/loginBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/button_white"
+        android:text="@string/login"
+        android:textColor="#333333"/>
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
-                android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_horizontal"
-                android:textSize="16sp" />
+    <Button
+        android:layout_marginTop="@dimen/gmd_margin_default"
+        android:layout_marginBottom="@dimen/gmd_margin_default"
+        android:id="@+id/joinBtn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gmd_big_button"
+        android:background="@drawable/button_pink"
+        android:text="@string/join"
+        android:textColor="#ffffff"/>
 
-        </LinearLayout>
 
+    <com.facebook.login.widget.LoginButton
+        android:background="@drawable/button_pink"
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gmd_bar_height"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
+

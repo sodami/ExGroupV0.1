@@ -31,6 +31,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
@@ -106,6 +107,8 @@ public class Home2Activity extends AppCompatActivity
         setContentView(R.layout.activity_home2_acrivity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         ButterKnife.bind(this);
 
         String[] todays = U.getInstance().currentYYmmDD();
@@ -212,6 +215,10 @@ public class Home2Activity extends AppCompatActivity
                     return;
                 } else {
                     U.getInstance().myLog("ResMe : "+response.body().getData().toString());
+                    E.KEY.USER_ID = response.body().getData().getId();
+                    E.KEY.USER_NAME = response.body().getData().getUsername();
+                    E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+
                     //if (response.body().getData().getPicUrl() != null) Picasso.load(url).into(group_card);
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
                     if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
