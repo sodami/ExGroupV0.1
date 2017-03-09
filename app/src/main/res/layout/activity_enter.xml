@@ -33,6 +33,37 @@
             android:inputType="textWebEmailAddress"
             android:padding="@dimen/gmd_margin_default"
             android:textCursorDrawable="@null" />
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="32dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.google.slashb410.exgroup.util.ClearEditText
+                android:id="@+id/email_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_big"
+                android:background="#ffffff"
+                android:hint="@string/email"
+                android:inputType="textWebEmailAddress"
+                android:padding="@dimen/gmd_margin_default"
+                android:textCursorDrawable="@null" />
+
+            <com.google.slashb410.exgroup.util.ClearEditText
+                android:id="@+id/password_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_big"
+                android:background="#ffffff"
+                android:colorControlActivated="@color/colorAccent"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="@dimen/gmd_margin_default"
+                android:textCursorDrawable="@null" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
         <com.google.slashb410.exgroup.util.ClearEditText
             android:maxLines="1"

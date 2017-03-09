@@ -7,6 +7,6 @@
     <!--컨셉 컬러-->
     <color name="universeBlack">#05212c</color>
     <color name="nightSky">#283b42</color>
-    <color name="babyPink">#FF80AB</color>
+    <color name="babyPink">#ff80ab</color>
     <color name="shadowPink">#FF4081</color>
 </resources>
