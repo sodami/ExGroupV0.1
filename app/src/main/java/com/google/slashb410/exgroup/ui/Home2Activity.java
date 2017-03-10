@@ -33,6 +33,7 @@ import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
+import com.google.slashb410.exgroup.model.group.MyData;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.home.ResAttend;
@@ -42,6 +43,8 @@ import com.google.slashb410.exgroup.model.group.home.ResSessionOut;
 import com.google.slashb410.exgroup.model.group.home.Ticket;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
+import com.google.slashb410.exgroup.ui.join.InputInit0Activity;
+import com.google.slashb410.exgroup.ui.join.InputInit1Activity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
@@ -84,6 +87,8 @@ public class Home2Activity extends AppCompatActivity
 
     ArrayList actGroups;
     ArrayList actTitles;
+
+    MyData myData;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -213,6 +218,48 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
+                if(response.isSuccessful()) {
+                    if (response.body() == null) {
+                        U.getInstance().myLog("setProfileBox Body is NULL : "+response.message());
+                        return;
+                    } else {
+                        U.getInstance().myLog("ResMe : " + response.body().getData().toString());
+                        E.KEY.USER_ID = response.body().getData().getId();
+                        E.KEY.USER_NAME = response.body().getData().getUsername();
+                        E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+
+                        myData = new MyData(
+                                response.body().getData().getId(),
+                                response.body().getData().getUsername(),
+                                response.body().getData().getPassword(),
+                                response.body().getData().getNickname(),
+                                response.body().getData().getPicUrl(),
+                                response.body().getData().getWeight(),
+                                response.body().getData().getHeight(),
+                                response.body().getData().getBMI(),
+                                response.body().getData().getSeqAttendNum(),
+                                response.body().getData().getAge(),
+                                response.body().getData().getFacebookId(),
+                                response.body().getData().getActivation(),
+                                response.body().getData().getUtime(),
+                                response.body().getData().getCtime()
+
+                        );
+                        if (response.body().getData().getPicUrl() != null)
+                            Picasso.with(Home2Activity.this)
+                                    .load(response.body().getData().getPicUrl())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(group_card);
+                        if (response.body().getData().getNickname() != null)
+                            nick_profile.setText(response.body().getData().getNickname());
+                        if (response.body().getData().getBMI() != null)
+                            bmi.setText(response.body().getData().getBMI() + "");
+                        if (response.body().getData().getSeqAttendNum() != 0)
+                            seqAttendNum.setText(response.body().getData().getSeqAttendNum() + "");
+                    }
+                }else{
+                    U.getInstance().myLog("setprofile is not successful : "+response.message());
                 if (response.body() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
                     return;
@@ -225,7 +272,7 @@ public class Home2Activity extends AppCompatActivity
                     if (response.body().getData().getPicUrl() != null)
                         Picasso.with(Home2Activity.this)
                                 .load(response.body().getData().getPicUrl())
-                                .resize(50, 50)
+                                .fit()
                                 .centerCrop()
                                 .into(group_card);
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
@@ -338,9 +385,8 @@ public class Home2Activity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
-
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
-        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
+//        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -355,8 +401,7 @@ public class Home2Activity extends AppCompatActivity
             });
             AlertDialog ad = aDialog.create();
             ad.show();
-        } else if (id == R.id.nav_manage) {
-            // 누르면 개발자에게 문의하기
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
@@ -461,7 +506,10 @@ public class Home2Activity extends AppCompatActivity
 
     @OnClick(R.id.profile_box)
     public void goMyPage() {
-        U.getInstance().goNext(this, MyHomeActivity.class, false, false);
+        Intent intent = new Intent(this, MyHomeActivity.class);
+        intent.putExtra("myData", myData);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

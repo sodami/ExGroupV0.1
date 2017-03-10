@@ -115,7 +115,8 @@
         <activity android:name=".ExActivity" />
         <activity
             android:name=".ui.group.search.GroupSearchActivity"
-            android:label="@string/group_search">
+            android:label="@string/group_search"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.Home2Activity" />

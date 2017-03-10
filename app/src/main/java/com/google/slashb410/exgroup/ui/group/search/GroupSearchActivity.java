@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.GroupSearchData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
 import com.google.slashb410.exgroup.net.NetSSL;
@@ -23,6 +24,7 @@ import com.google.slashb410.exgroup.util.U;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +78,7 @@ public class GroupSearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    goSearch();
+                    goSearch(inputId);
                     return true;
                 } else {
                     return false;
@@ -98,13 +100,19 @@ public class GroupSearchActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchBtn)
-    public void goSearch() {
+    public void goSearch(View view) {
 
-        View view = getWindow().getDecorView().getRootView();
+
+//        View view = this.getWindow().getDecorView().getRootView();
         String keyword = inputId.getText().toString();
 
         if (keyword.equals("")) {
             Snackbar.make(view, "검색할 그룹 ID를 입력해 주세요.", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        if(!Pattern.matches("^[0-9]+$", keyword)){
+            U.getInstance().myLog("숫자아님");
+            Snackbar.make(view, "그룹 ID는 1 이상의 정수입니다.", Snackbar.LENGTH_SHORT).show();
             return;
         }
         Call<ResGroupSearch> resSearchCall = NetSSL.getInstance().getGroupImpFactory().searchGroup(keyword);
@@ -158,8 +166,39 @@ public class GroupSearchActivity extends AppCompatActivity {
     }
 
     private void setSearchCard() {
+        U.getInstance().myLog(searchData.toString());
         searchCard.setVisibility(View.VISIBLE);
         infoText.setVisibility(View.GONE);
+
+        joinBtn.setBackgroundResource(R.drawable.enter_pink);
+        joinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResStandard> resJoinGroup = NetSSL.getInstance().getGroupImpFactory().joinGroup(searchData.getId()+"");
+                resJoinGroup.enqueue(new Callback<ResStandard>() {
+                    @Override
+                    public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+                        if(response.isSuccessful()){
+                            if(response.body()!=null){
+                                U.getInstance().myLog("resJoinGroup 들어옴");
+                                U.getInstance().popSimpleDialog(null, GroupSearchActivity.this, null, response.body().getResult());
+                            }else{
+                                U.getInstance().myLog("resJoinGroup Body is null : "+response.message());
+                            }
+
+                        }else{
+                            U.getInstance().myLog("resJoinGroup is not Successful : "+response.message());
+                            Snackbar.make(v, "죄송합니다. 다시 시도해 주세요.", Snackbar.LENGTH_SHORT);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResStandard> call, Throwable t) {
+                        U.getInstance().myLog("resJoinGroup Fail : "+t.toString());
+                    }
+                });
+            }
+        });
 
         //1. 가입불가면 그룹 버튼 재설정
         if (searchData.getBtnAppear() == 0) {
