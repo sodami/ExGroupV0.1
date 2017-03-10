@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.ui.mypage;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,7 +20,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.group.InnerCalendar;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.Home2Activity;
@@ -56,6 +60,8 @@ public class MyHomeActivity extends Activity {
     SweetAlertDialog alert;
     TextView nickname;      // 닉네임 보여짐
     CalendarView cal;
+    ImageButton myBack;
+    Button      myCancel;
     Bundle bundle;
     Student student;
 
@@ -64,7 +70,8 @@ public class MyHomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_home);
 
-
+        myCancel        = (Button) findViewById(R.id.my_cancel);
+        myBack          = (ImageButton)findViewById(R.id.my_back);
         profile_change  = (ImageView) findViewById(R.id.profile_change);
         // profile_change.bringToFront();
         nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
@@ -86,6 +93,11 @@ public class MyHomeActivity extends Activity {
         spec.setIndicator("", resource.getDrawable(R.drawable.chart_white_resized));
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
+
+        ActionBar actionBar = getActionBar();
+//        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff80ab")));
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
@@ -118,15 +130,40 @@ public class MyHomeActivity extends Activity {
 
         // individual Calendar 2017. 02. 17
         cal = (CalendarView) findViewById(R.id.calendarView1);
-        cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            // 캘린더 클릭 시 플로팅
+        cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() { // 캘린더 클릭 시 플로팅
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                Log.i("onSelectedDayChange", "onSelectedDayChange 진입");
                 Context mContext = getApplicationContext();
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.activity_calendar_dialog, (ViewGroup) findViewById(R.id.activity_calendar_dialog));
                 AlertDialog.Builder aDialog = new AlertDialog.Builder(MyHomeActivity.this);
                 aDialog.setView(layout);
+                Call<InnerCalendar> innerCalendar = NetSSL.getInstance().getMemberImpFactory().myCalendar();
+                innerCalendar.enqueue(new Callback<InnerCalendar>() {
+                    @Override
+                    public void onResponse(Call<InnerCalendar> call, Response<InnerCalendar> response) {
+                        if (response.body().getUserPicUrl() == null) {
+                            U.getInstance().myLog("onSelectedDayChange : Body is NULL");
+                            return;
+
+                        } else {
+                            U.getInstance().myLog("onSelectedDayChange : "+response.body().getUserPicUrl().toString());
+                            final ImageView calendarfood = (ImageView) layout.findViewById(R.id.calendarfood);
+                            if (response.body().getUserPicUrl() != null)
+                                Picasso.with(MyHomeActivity.this)
+                                        .load(response.body().getUserPicUrl())
+                                        .resize(50, 50)
+                                        .centerCrop()
+                                        .into(calendarfood);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<InnerCalendar> call, Throwable t) {
+                        U.getInstance().myLog("onSelectedDayChange : " + t.toString());
+                    }
+                });
                 aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         onStart();
@@ -155,11 +192,11 @@ public class MyHomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onMyBack() {
+    public void onMyBack(View view) {
         onBackPressed();
     }
 
-    public void onMySubmit() {
+    public void onMySubmit(View view) {
         Intent intent = new Intent(MyHomeActivity.this, Home2Activity.class);
         startActivity(intent);
     }
