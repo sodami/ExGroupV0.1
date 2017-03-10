@@ -106,7 +106,7 @@ public class InputInit1Activity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResInitInfo> call, Throwable t) {
-
+                    U.getInstance().myLog("initinfo 접근실패 :"+t.toString());
                 }
             });
 

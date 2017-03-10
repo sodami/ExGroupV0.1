@@ -56,6 +56,8 @@ public class GroupSearchActivity extends AppCompatActivity {
     ImageButton joinBtn;
     @BindView(R.id.group_profile_search_card)
     ImageView profileImg;
+    @BindView(R.id.period_search_card)
+    TextView periodTxt;
 
     GroupSearchData searchData;
 
@@ -137,6 +139,7 @@ public class GroupSearchActivity extends AppCompatActivity {
                     } else {
                         //resultCode == 0
                         searchCard.setVisibility(View.GONE);
+                        infoText.setVisibility(View.VISIBLE);
                         infoText.setText("해당 ID로 검색되는 그룹이 없습니다.");
                     }
 
@@ -173,6 +176,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         titleSearch.setText(searchData.getGroupTitle());
         nowNumSearch.setText(searchData.getNowNum() + "");
         maxNumSearch.setText(searchData.getMaxNum() + "");
+        periodTxt.setText(searchData.getExPeriod()+"");
         Picasso.with(this).load(searchData.getGroupPicUrl())
                 .fit().centerCrop().into(profileImg);
 

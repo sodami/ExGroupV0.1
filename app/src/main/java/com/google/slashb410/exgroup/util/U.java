@@ -200,6 +200,7 @@ public class U {
                     U.getInstance().myLog("path : "+path);
 
                     E.KEY.TEMP_PIC_URI = path;
+                    U.getInstance().myLog(E.KEY.TEMP_PIC_URI);
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
                 });
 
@@ -218,6 +219,7 @@ public class U {
                     U.getInstance().myLog("path : "+path);
 
                     E.KEY.TEMP_PIC_URI = path;
+                    U.getInstance().myLog(E.KEY.TEMP_PIC_URI);
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
                 });
     }
