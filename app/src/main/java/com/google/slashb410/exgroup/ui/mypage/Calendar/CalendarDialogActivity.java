@@ -11,5 +11,7 @@ public class CalendarDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar_dialog);
+
+//        ImageView calendarfood = calendarfood.findViewById(R.id.calendarfood);
     }
 }
