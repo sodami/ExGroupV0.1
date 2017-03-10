@@ -149,6 +149,7 @@
         </TableLayout>
 
         <ImageView
+            android:layout_marginTop="4dp"
             android:src="@drawable/attention_pink"
             android:layout_width="20dp"
             android:layout_height="20dp" />

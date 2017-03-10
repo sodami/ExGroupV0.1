@@ -53,7 +53,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="80sp"
                     android:layout_height="80sp"
-                    android:background="@drawable/com_facebook_profile_picture_blank_square"
+                    android:src="@drawable/com_facebook_profile_picture_blank_square"
                     android:id="@+id/profile_change"
                     android:layout_gravity="center"
                     android:onClick="onPhoto"

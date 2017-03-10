@@ -32,6 +32,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.MyData;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.Home2Activity;
@@ -64,10 +65,15 @@ public class MyHomeActivity extends Activity {
     Bundle bundle;
     Student student;
 
+    MyData myData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_home);
+
+        //프로필 데이터 불러오기
+        Intent intent = getIntent();
+        myData = (MyData) intent.getSerializableExtra("myData");
 
         myCancel        = (Button) findViewById(R.id.my_cancel);
         myBack          = (ImageButton)findViewById(R.id.my_back);
@@ -273,24 +279,9 @@ public class MyHomeActivity extends Activity {
     }
 
     private void setProfile() {
-        Log.i("setProfile", "setProfile 진입");
-        Call<ResMe> resMe = NetSSL.getInstance().getMemberImpFactory().userMe();
-        resMe.enqueue(new Callback<ResMe>() {
-            @Override
-            public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if (response.body().getData() == null) {
-                    U.getInstance().myLog("setProfile : Body is NULL");
-                    return;
-                } else {
-                    U.getInstance().myLog("setProfile : "+response.body().getData().toString());
-                    if (response.body().getData().getNickname() != null) nickname.setText(response.body().getData().getNickname());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ResMe> call, Throwable t) {
-                U.getInstance().myLog("setProfile : " + t.toString());
-            }
-        });
+        if (myData.getNickname() != null) nickname.setText(myData.getNickname());
+        if(myData.getPicUrl()!=null) Picasso.with(this).load(myData.getPicUrl()).fit().centerCrop().into(profile_change);
+
     }
 }
