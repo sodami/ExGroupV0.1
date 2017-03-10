@@ -4,39 +4,172 @@
     android:id="@+id/activity_group_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eeeeee"
     android:orientation="vertical"
     tools:context="com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity">
 
     <LinearLayout
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:background="@drawable/box_pink"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="56dp">
-        <EditText
+        android:layout_height="56dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/searchBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/search_pink" />
+
+        <com.google.slashb410.exgroup.util.ClearEditText
             android:id="@+id/search_groupId"
-            android:padding="4dp"
-            android:hint="그룹 ID를 붙여넣으세요."
-            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <ImageButton
-            android:id="@+id/searchBtn"
-            android:padding="8dp"
-            android:background="@color/babyPink"
-            android:scaleType="centerInside"
-            android:src="@drawable/search_white"
-            android:layout_width="48dp"
-            android:layout_height="48dp" />
+            android:background="@null"
+            android:hint="그룹 ID를 입력하세요."
+            android:imeOptions="actionSearch"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="4dp" />
+
     </LinearLayout>
 
-    <ListView
-        android:layout_margin="4dp"
-        android:id="@+id/search_list"
+    <android.support.v7.widget.CardView
+        android:id="@+id/search_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/gmd_margin_default"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/gmd_margin_default">
+
+            <ImageView
+                android:id="@+id/group_profile_search_card"
+                android:layout_width="168dp"
+                android:layout_height="168dp"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:background="@color/babyPink" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_search_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="end"
+                    android:text="Group Title"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/date_search_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="end"
+                    android:text="group create date"
+                    android:textColor="#888888"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="@dimen/gmd_margin_default"
+                    android:gravity="end|center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/period_pink" />
+
+                    <TextView
+                        android:id="@+id/period_search_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="0"
+                        android:textColor="#888888"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="일"
+                        android:textColor="#888888"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/member_pink" />
+
+                    <TextView
+                        android:id="@+id/nowNum_search_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="0"
+                        android:textColor="#888888"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="#888888"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/maxNum_search_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#888888"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/gmd_margin_default">
+
+                    <ImageButton
+                        android:id="@+id/join_groupBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/enter_pink" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/search_noti"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#eeeeee"
+        android:gravity="center"
+        android:text="@string/search_info"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_small" />
 
 </LinearLayout>

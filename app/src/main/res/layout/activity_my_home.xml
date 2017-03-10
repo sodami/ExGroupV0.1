@@ -1,57 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_my_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="com.google.slashb410.exgroup.ui.mypage.MyHomeActivity">
 
 
+    <ImageButton
+        android:id="@+id/my_back"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/gmd_margin_default"
+        android:background="@drawable/back_pink"
+        android:onClick="onMyBack"/>
+
+    <Button
+        android:id="@+id/my_cancel"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/gmd_margin_default"
+        android:textColor="@color/babyPink"
+        android:text="완료"
+        android:background="@null"
+        android:onClick="onMySubmit"/>
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/calendar_bg"
-        android:id="@+id/linearLayout">
-
-
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-
-            <android.support.v7.widget.Toolbar
-                android:padding="0dp"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/gmd_bar_height"
-                android:background="#ffffff"
-                app:titleTextColor="#ffffff"
-                android:gravity="center"
-                android:theme="@style/ToolbarColoredBackArrow"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
-
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="마이 페이지"
-                    android:textSize="18.5dp"
-                    android:paddingLeft="15dp"
-                    android:textColor="@color/babyPink"
-                    android:gravity="center" />
-
-
-            </android.support.v7.widget.Toolbar>
-
-
-        </android.support.design.widget.AppBarLayout>
-
-
-    <!-- 프로필 영역 -->
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gmd_bar_height"
+        android:orientation="vertical">
+        <!-- 프로필 영역 -->
         <LinearLayout
             android:background="@color/button_text_color"
             android:orientation="vertical"
@@ -67,7 +53,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="80sp"
                     android:layout_height="80sp"
-                    android:background="@drawable/profile"
+                    android:background="@drawable/com_facebook_profile_picture_blank_square"
                     android:id="@+id/profile_change"
                     android:layout_gravity="center"
                     android:onClick="onPhoto"
@@ -84,281 +70,83 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <TextView
-                        android:text="몽총이"
-                        android:hint="이름"
-                        android:paddingTop="15dp"
-                        android:gravity="center"
-                        android:textSize="16.5dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/babyPink"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/resultMyName"
-                        android:layout_gravity="center"
-                        android:focusable="true"
-                        android:cursorVisible="true" />
-
-
-                    <ImageView
-                        android:layout_width="10.5dp"
-                        android:layout_height="18dp"
-                        android:background="@drawable/by_ea"
-                        android:id="@+id/nicknameInfo"
-                        android:layout_gravity="bottom"
-                        android:onClick="onClick" />
+                        <com.google.slashb410.exgroup.util.ClearEditText
+                            android:text="몽총이"
+                            android:hint="이름"
+                            android:paddingTop="15dp"
+                            android:gravity="center"
+                            android:textSize="16.5dp"
+                            android:textColor="@color/babyPink"
+                            android:layout_width="150dp"
+                            android:layout_height="@dimen/text_big"
+                            android:id="@+id/resultMyName"
+                            android:layout_gravity="center"/>
+                            <!--android:textCursorDrawable="@null" />-->
 
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/_pl_lv10"
-                        android:id="@+id/imageView7"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/_pl_lv10"
-                        android:id="@+id/imageView6"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/_pl_lv10"
-                        android:id="@+id/imageView5"
-                        android:layout_weight="1" />
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    <!-- 탭 영역 -->
+        <!-- 탭 영역 -->
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-        <ScrollView
-        android:background="@color/button_text_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TabHost
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/tabHost">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+            <ScrollView
+                android:background="@color/button_text_color"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TabWidget
-                    android:id="@android:id/tabs"
+                android:layout_height="wrap_content">
+                <TabHost
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/babyPink" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/tabHost">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <!-- BMI -->
-                    <LinearLayout
-                        android:id="@+id/tab1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:weightSum="5">
-                        <LinearLayout
+                        <TabWidget
+                            android:id="@android:id/tabs"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="4">
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv1"
-                                android:id="@+id/imageView10"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv2"
-                                android:id="@+id/imageView100"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv3"
-                                android:id="@+id/imageView11"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv4"
-                                android:id="@+id/imageView12"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="4">
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv5"
-                                android:id="@+id/imageView9a"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv6"
-                                android:id="@+id/imageView10a"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv7"
-                                android:id="@+id/imageView11a"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv8"
-                                android:id="@+id/imageView12a"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="4">
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv9"
-                                android:id="@+id/imageView9b"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv10"
-                                android:id="@+id/imageView10b"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv11"
-                                android:id="@+id/imageView11b"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv12"
-                                android:id="@+id/imageView12b"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="4">
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv13"
-                                android:id="@+id/imageView9c"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv14"
-                                android:id="@+id/imageView10c"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv15"
-                                android:id="@+id/imageView11c"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv16"
-                                android:id="@+id/imageView12c"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="4">
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv17"
-                                android:id="@+id/imageView9d"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv18"
-                                android:id="@+id/imageView10d"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv19"
-                                android:id="@+id/imageView11d"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/_pl_lv20"
-                                android:id="@+id/imageView12d"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                    </LinearLayout>
-                    <!-- Calendar -->
-                    <LinearLayout
-                        android:id="@+id/tab2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingTop="10dp"
-                        android:background="@color/button_text_color">
-                        <CalendarView
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:id="@+id/calendarView1" />
-                    </LinearLayout>
-                    <!-- Palnet -->
-                    <LinearLayout
-                        android:id="@+id/tab3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingTop="10dp">
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:paddingTop="10dp"
-                            android:id="@+id/chart"
-                            android:layout_width="fill_parent"
-                            android:layout_height="300dp" />
-                        </LinearLayout>
-                    </FrameLayout>
-                </LinearLayout>
-            </TabHost>
-        </ScrollView>
-    </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:background="@color/babyPink" />
 
+                        <FrameLayout
+                            android:id="@android:id/tabcontent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <!-- Calendar -->
+                            <LinearLayout
+                                android:id="@+id/tab1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp"
+                                android:background="@color/button_text_color">
+                                <CalendarView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="300dp"
+                                    android:id="@+id/calendarView1" />
+                            </LinearLayout>
+                            <!-- chart -->
+                            <LinearLayout
+                                android:id="@+id/tab2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingTop="10dp">
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:paddingTop="10dp"
+                                    android:id="@+id/chart"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="300dp" />
+                            </LinearLayout>
+                        </FrameLayout>
+                    </LinearLayout>
+                </TabHost>
+            </ScrollView>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

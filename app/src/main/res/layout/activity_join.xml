@@ -42,7 +42,7 @@
     </LinearLayout>
 
 
-    <Button
+    <Button          style="?android:attr/borderlessButtonStyle"
         android:id="@+id/nextBtn1"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/gmd_button_height"

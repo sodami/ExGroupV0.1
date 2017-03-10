@@ -19,6 +19,22 @@ public class GroupSearchData {
     private String utime;
     private int btnAppear;
 
+    public GroupSearchData(int id, int nowNum, int maxNum, String groupTitle, String groupPicUrl, int exPeriod, String startDate, String goalDate, String groupCreateDate, int activation, String ctime, String utime, int btnAppear) {
+        this.id = id;
+        this.nowNum = nowNum;
+        this.maxNum = maxNum;
+        this.groupTitle = groupTitle;
+        this.groupPicUrl = groupPicUrl;
+        this.exPeriod = exPeriod;
+        this.startDate = startDate;
+        this.goalDate = goalDate;
+        this.groupCreateDate = groupCreateDate;
+        this.activation = activation;
+        this.ctime = ctime;
+        this.utime = utime;
+        this.btnAppear = btnAppear;
+    }
+
     @Override
     public String toString() {
         return "GroupSearchData{" +

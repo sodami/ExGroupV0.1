@@ -65,7 +65,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="현재 BMI 지수 "
                 android:textSize="@dimen/text_default" />
@@ -77,6 +77,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_default" />
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/bmi_test4" />
     </LinearLayout>
 </LinearLayout>

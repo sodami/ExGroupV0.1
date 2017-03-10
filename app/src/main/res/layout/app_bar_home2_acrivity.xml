@@ -13,23 +13,24 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:padding="0dp"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gmd_bar_height"
             android:background="#ffffff"
-            app:titleTextColor="#ffffff"
             android:gravity="center"
+            android:padding="0dp"
             android:theme="@style/ToolbarColoredBackArrow"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="#ffffff">
 
             <ImageView
-                android:layout_margin="@dimen/gmd_margin_default"
-                android:src="@drawable/title_logo"
-                android:scaleType="centerInside"
                 android:layout_width="40dp"
-                android:layout_height="match_parent" />
-            
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/gmd_margin_default"
+                android:scaleType="centerInside"
+                android:src="@drawable/title_logo" />
+
         </android.support.v7.widget.Toolbar>
 
 

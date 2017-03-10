@@ -13,8 +13,8 @@
         <!-- background (위로) -->
         <item android:bottom="3dp">
             <shape>
-                <corners android:radius="30dp" />
-                <solid android:color="@color/babyPink" />
+                <corners android:radius="10dp" />
+                <solid android:color="@color/shadowPink" />
             </shape>
         </item>
     </layer-list>

@@ -3,7 +3,7 @@
 
     <string name="facebook_app_id">1099410106836082</string>
 
-    <string name="join">회원가입</string>
+    <string name="join">이메일로 회원가입</string>
     <string name="login">로그인</string>
 
     <string name="nickname">닉네임</string>
@@ -21,7 +21,7 @@
     <string name="info_bmi">BMI지수</string>
     <string name="wannabeKg">목표 체중</string>
     <string name="age_unit">세</string>
-    <string name="group_name">그룹명</string>
+    <string name="group_name">그룹명 | </string>
     <string name="invite_sms">문자로 초대하기</string>
     <string name="wait">초대 승인을 기다리고 있습니다.</string>
     <string name="settings_to_dev">개발자에게 문의하기</string>
@@ -29,15 +29,14 @@
     <string name="settings_push">푸시알림 설정</string>
     <string name="mypage">마이페이지</string>
     <string name="group_add">그룹 만들기</string>
-    <string name="group_startday">활동시작일</string>
-    <string name="group_endday">활동종료일</string>
+    <string name="group_startday">활동시작일 | </string>
 
 
-    <string name="when_group_start">초대자 전원 가입시</string>
+    <string name="when_group_start">멤버 전원이 가입하여 시작 체중 인증샷을 올리면\n그룹 활동이 시작됩니다!</string>
     <string name="date_pick">날짜 선택</string>
-    <string name="group_member">그룹 멤버 수</string>
+    <string name="group_member">그룹 멤버 수 | </string>
     <string name="person_unit">명</string>
-    <string name="group_name_sample">끝나고 치킨 먹자</string>
+    <string name="group_name_sample">끝나고 치킨먹자</string>
     <string name="group_img">그룹 이미지 설정</string>
     <string name="weigh_start">시작 체중 인증하기</string>
     <string name="input_weight">체중 입력</string>
@@ -54,7 +53,7 @@
     <string name="group_search">그룹 검색</string>
     <string name="title_activity_get_planet">GetPlanetActivity</string>
     <string name="write">글쓰기</string>
-    <string name="group_activeday">활동기간</string>
+    <string name="group_activeday">활동기간 | </string>
     <string name="comment_title">댓글 보기</string>
     <string name="input_init">기본 정보 입력</string>
     <string name="max_group">그룹은 최대 5개까지 소속될 수 있습니다.</string>
@@ -62,4 +61,5 @@
     <string name="copy">그룹아이디 복사</string>
     <string name="info_3day_destroy">그룹 생성일로부터 3일 후 그룹 인원이 채워지지 않거나 인증이 달성되지 않은 경우 그룹은 자동으로 삭제됩니다.</string>
     <string name="period_choice">기간 선택</string>
+    <string name="search_info">그룹 ID를 정확하게 입력하셔야 합니다.</string>
 </resources>

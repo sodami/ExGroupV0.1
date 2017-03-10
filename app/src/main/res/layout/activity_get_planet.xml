@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
+    <Button          style="?android:attr/borderlessButtonStyle"
         android:id="@+id/planet_to_kakao"
         android:text="카카오톡으로 자랑하기"
         android:layout_width="wrap_content"

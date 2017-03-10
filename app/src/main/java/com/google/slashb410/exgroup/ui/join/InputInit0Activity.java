@@ -46,7 +46,8 @@ public class InputInit0Activity extends AppCompatActivity {
             intent.putExtra("nickname", nickname.getText().toString());
             intent.putExtra("phone", phone.getText().toString());
             if(picUrl.equals("")){
-                picUrl = "https://firebasestorage.googleapis.com/v0/b/exgroup-1faeb.appspot.com/o/default%2F%EC%82%AC%EC%A7%84%20%EB%94%94%ED%8F%B4%ED%8A%B8_xhdpi(96x96).png?alt=media&token=b21b330d-9e25-4254-ab8a-aadec8d30c86";
+                U.getInstance().myLog("picUrl is null");
+//                picUrl = "https://firebasestorage.googleapis.com/v0/b/exgroup-1faeb.appspot.com/o/default%2F%EC%82%AC%EC%A7%84%20%EB%94%94%ED%8F%B4%ED%8A%B8_xhdpi(96x96).png?alt=media&token=b21b330d-9e25-4254-ab8a-aadec8d30c86";
             }
             intent.putExtra("picUrl", picUrl);
             startActivity(intent);
@@ -68,10 +69,12 @@ public class InputInit0Activity extends AppCompatActivity {
                             case 0:
                                 U.getInstance().onCamera(InputInit0Activity.this, profile);
                                 picUrl = E.KEY.TEMP_PIC_URI;
-
+                                U.getInstance().myLog("picUrl : "+E.KEY.TEMP_PIC_URI);
                                 break;
                             case 1:
                                 U.getInstance().onGallery(InputInit0Activity.this, profile);
+                                picUrl = E.KEY.TEMP_PIC_URI;
+                                U.getInstance().myLog("picUrl : "+E.KEY.TEMP_PIC_URI);
                                 break;
                         }
                     }

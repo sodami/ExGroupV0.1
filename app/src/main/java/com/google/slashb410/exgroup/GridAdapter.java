@@ -168,8 +168,6 @@ public class GridAdapter extends BaseAdapter {
                         .centerCrop()
                         .into(imageView);
 //
-//                Uri picUrl = Uri.parse(waitGroup.get(mPosition).getGroupPicUrl());
-//                imageView.setImageURI(picUrl);
 
                 textView.setText(waitGroup.get(mPosition).getGroupTitle());
 //                textView.setTextColor(Color.WHITE);
@@ -203,9 +201,13 @@ public class GridAdapter extends BaseAdapter {
 
                 int mPosition = position - (actGroup.size()+waitGroup.size() + 1);
                 textView.setText(unActGroup.get(mPosition).getGroupTitle());
-                textView.setTextColor(Color.WHITE);
-                Uri picUrl = Uri.parse(unActGroup.get(mPosition).getGroupPicUrl());
-                imageView.setImageURI(picUrl);
+
+                Picasso.with(context)
+                        .load(unActGroup.get(mPosition).getGroupPicUrl())
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+
                 TextView textView3 = (TextView) convertView.findViewById(R.id.d_day);
                 textView3.setVisibility(View.GONE);
                 textView2.setVisibility(View.GONE);

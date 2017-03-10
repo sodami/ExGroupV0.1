@@ -31,10 +31,11 @@
                 android:visibility="gone">
 
                 <Button
-                    android:layout_gravity="center"
                     android:id="@+id/waiting_lock"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/lock_white"
                     android:visibility="gone" />
 
@@ -54,12 +55,12 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:background="@drawable/owner"
-                        android:visibility="gone"
                         android:id="@+id/manager"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_margin="4dp" />
+                        android:layout_margin="4dp"
+                        android:background="@drawable/owner"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/group_name_card"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -55,6 +56,8 @@ public class EnterActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
+        U.getInstance().popSimpleDialog(null, this, null, "로그인 버튼을 누르시면 테스트 계정으로 자동 로그인됩니다.");
+
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -91,13 +94,15 @@ public class EnterActivity extends AppCompatActivity {
         resFacebookLogin.enqueue(new Callback<ResStandard>() {
             @Override
             public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
-                if(response.body()==null) U.getInstance().myLog("resFacebookLogin body is null");
+                if (response.body() == null) U.getInstance().myLog("resFacebookLogin body is null");
                 int resultCode = response.body().getResultCode();
-                switch (resultCode){
-                    case 0 : U.getInstance().myLog("처음 등록한 사용자");
+                switch (resultCode) {
+                    case 0:
+                        U.getInstance().myLog("처음 등록한 사용자");
                         U.getInstance().goNext(getApplicationContext(), InputInit0Activity.class, false, false);
                         break;
-                    case 1 : U.getInstance().myLog("등록된 사용자");
+                    case 1:
+                        U.getInstance().myLog("등록된 사용자");
                         U.getInstance().goNext(getApplicationContext(), Home2Activity.class, false, false);
                         break;
 
@@ -106,7 +111,7 @@ public class EnterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResStandard> call, Throwable t) {
-                U.getInstance().myLog("facebook 접근실패 : "+t.toString());
+                U.getInstance().myLog("facebook 접근실패 : " + t.toString());
             }
         });
     }
@@ -132,18 +137,21 @@ public class EnterActivity extends AppCompatActivity {
         if (isFirstLogin()) {
 
         } else {
-            if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
-                Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
-            } else {
-                reqLogin = new ReqLogin();
-                reqLogin.setUsername(email.getText().toString());
-                reqLogin.setPassword(password.getText().toString());
+//            if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
+//                Snackbar.make(view, "입력란을 모두 채워주세요.", Snackbar.LENGTH_SHORT).show();
+//            } else {
+            reqLogin = new ReqLogin();
+//                reqLogin.setUsername(email.getText().toString());
+//                reqLogin.setPassword(password.getText().toString());
 
-                Call<ResLogin> resLoginCall = NetSSL.getInstance().getMemberImpFactory().login(reqLogin);
-                resLoginCall.enqueue(new Callback<ResLogin>() {
-                    @Override
-                    public void onResponse(Call<ResLogin> call, Response<ResLogin> response) {
-                        U.getInstance().goNext(EnterActivity.this, Home2Activity.class, false, false);
+            reqLogin.setUsername("b@naver.com");
+            reqLogin.setPassword("b");
+
+            Call<ResLogin> resLoginCall = NetSSL.getInstance().getMemberImpFactory().login(reqLogin);
+            resLoginCall.enqueue(new Callback<ResLogin>() {
+                @Override
+                public void onResponse(Call<ResLogin> call, Response<ResLogin> response) {
+                    U.getInstance().goNext(EnterActivity.this, Home2Activity.class, false, false);
 //                        U.getInstance().myLog((response.body().toString()+""));
 //                        if (response.body().getResultCode() == 1) {
 //                            U.getInstance().myLog(response.body().getMessage());
@@ -171,16 +179,14 @@ public class EnterActivity extends AppCompatActivity {
 //                                    .show();
 //
 //                        }
-                    }
+                }
 
-                    @Override
-                    public void onFailure(Call<ResLogin> call, Throwable t) {
-                        U.getInstance().myLog("접근실패 : " + t.toString());
-                    }
-                });
-            }
+                @Override
+                public void onFailure(Call<ResLogin> call, Throwable t) {
+                    U.getInstance().myLog("접근실패 : " + t.toString());
+                }
+            });
         }
-
     }
 
 

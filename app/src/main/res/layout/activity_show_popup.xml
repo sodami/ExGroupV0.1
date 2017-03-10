@@ -31,7 +31,7 @@
                 android:paddingRight="10dp"
                 android:layout_weight="1" />
 
-            <Button
+            <Button          style="?android:attr/borderlessButtonStyle"
                 android:text="x"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <Button          style="?android:attr/borderlessButtonStyle"
                 android:text="확인"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_weight="1"
                 android:onClick="onOK"/>
 
-            <Button
+            <Button          style="?android:attr/borderlessButtonStyle"
                 android:text="닫기"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

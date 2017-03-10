@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.slashb410.exgroup.GridAdapter;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
 import com.google.slashb410.exgroup.db.StorageHelper;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
@@ -43,6 +45,7 @@ import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,6 +73,10 @@ public class Home2Activity extends AppCompatActivity
     TextView seqAttendNum;
     @BindView(R.id.bmi)
     TextView bmi;
+    @BindView(R.id.group_card)
+    ImageView group_card;
+    String name;
+
 
     GridView gridView;
     GridAdapter gridAdapter;
@@ -102,6 +109,9 @@ public class Home2Activity extends AppCompatActivity
         setContentView(R.layout.activity_home2_acrivity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        name = getIntent().getStringExtra("name");
+
         ButterKnife.bind(this);
 
         String[] todays = U.getInstance().currentYYmmDD();
@@ -116,7 +126,7 @@ public class Home2Activity extends AppCompatActivity
 //        }
 
         //프로필박스 세팅
-        //setProfileBox();
+        setProfileBox();
         //그룹리스트 세팅
         setGroupList();
 
@@ -205,11 +215,22 @@ public class Home2Activity extends AppCompatActivity
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
                 if (response.body() == null) {
                     U.getInstance().myLog("setProfileBox Body is NULL");
+                    return;
                 } else {
                     U.getInstance().myLog("ResMe : "+response.body().getData().toString());
+                    E.KEY.USER_ID = response.body().getData().getId();
+                    E.KEY.USER_NAME = response.body().getData().getUsername();
+                    E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+
+                    if (response.body().getData().getPicUrl() != null)
+                        Picasso.with(Home2Activity.this)
+                                .load(response.body().getData().getPicUrl())
+                                .resize(50, 50)
+                                .centerCrop()
+                                .into(group_card);
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
-                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI());
-                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum());
+                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
+                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum()+"");
                 }
             }
 
@@ -319,21 +340,6 @@ public class Home2Activity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
 
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
-
-//        } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
-//            Context mContext = getApplicationContext();
-//            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-//            View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));
-//            AlertDialog.Builder aDialog = new AlertDialog.Builder(Home2Activity.this);
-//            aDialog.setView(layout);
-//            aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int which) {
-//                    onSessionout();
-//                    Toast.makeText(getApplicationContext(), "탈퇴버튼 클릭", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//            AlertDialog ad = aDialog.create();
-//            ad.show();
         } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();

@@ -200,6 +200,7 @@ public class U {
                     U.getInstance().myLog("path : "+path);
 
                     E.KEY.TEMP_PIC_URI = path;
+                    U.getInstance().myLog(E.KEY.TEMP_PIC_URI);
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
                 });
 
@@ -218,6 +219,7 @@ public class U {
                     U.getInstance().myLog("path : "+path);
 
                     E.KEY.TEMP_PIC_URI = path;
+                    U.getInstance().myLog(E.KEY.TEMP_PIC_URI);
                     if(imageView!=null) loadImage(activity, response.data(), imageView);
                 });
     }
@@ -237,6 +239,17 @@ public class U {
         String time[] = U.getInstance().currentTime();
 
         return date[0]+"년 "+date[1]+"월 "+date[2]+"일 "+time[0]+"시 "+time[1]+"분";
+
+    }
+
+    public String customDate(String date){
+
+        String[] splitDate = date.split("-");
+        String year = splitDate[0];
+        String month = splitDate[1];
+        String day = splitDate[2].substring(0,2);
+
+        return year+"년 "+month+"월 "+day+"일";
 
     }
 

@@ -38,20 +38,20 @@
             android:layout_width="match_parent"
             android:layout_height="48dp" />
 
-        <Button
+        <Button          style="?android:attr/borderlessButtonStyle"
             android:id="@+id/group_id_copyBtn"
             android:text="id 복사"
             android:background="@drawable/button_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <Button
+        <Button          style="?android:attr/borderlessButtonStyle"
             android:id="@+id/kakao_invite"
             android:text="카카오톡으로 초대"
             android:background="@drawable/button_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Button
+        <Button          style="?android:attr/borderlessButtonStyle"
             android:text="홈으로"
             android:background="@drawable/button_white"
             android:layout_width="wrap_content"
