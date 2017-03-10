@@ -225,7 +225,7 @@ public class Home2Activity extends AppCompatActivity
                     if (response.body().getData().getPicUrl() != null)
                         Picasso.with(Home2Activity.this)
                                 .load(response.body().getData().getPicUrl())
-                                .resize(50, 50)
+                                .fit()
                                 .centerCrop()
                                 .into(group_card);
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
@@ -338,9 +338,7 @@ public class Home2Activity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
-
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
-        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -355,8 +353,7 @@ public class Home2Activity extends AppCompatActivity
             });
             AlertDialog ad = aDialog.create();
             ad.show();
-        } else if (id == R.id.nav_manage) {
-            // 누르면 개발자에게 문의하기
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));
