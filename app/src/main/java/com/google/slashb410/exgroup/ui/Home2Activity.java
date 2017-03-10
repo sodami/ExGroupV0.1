@@ -45,6 +45,7 @@ import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,7 @@ public class Home2Activity extends AppCompatActivity
     TextView bmi;
     @BindView(R.id.group_card)
     ImageView group_card;
+    String name;
 
 
     GridView gridView;
@@ -108,6 +110,7 @@ public class Home2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        name = getIntent().getStringExtra("name");
 
         ButterKnife.bind(this);
 
@@ -219,7 +222,12 @@ public class Home2Activity extends AppCompatActivity
                     E.KEY.USER_NAME = response.body().getData().getUsername();
                     E.KEY.USER_NICKNAME = response.body().getData().getNickname();
 
-                    //if (response.body().getData().getPicUrl() != null) Picasso.load(url).into(group_card);
+                    if (response.body().getData().getPicUrl() != null)
+                        Picasso.with(Home2Activity.this)
+                                .load(response.body().getData().getPicUrl())
+                                .resize(50, 50)
+                                .centerCrop()
+                                .into(group_card);
                     if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
                     if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
                     if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum()+"");

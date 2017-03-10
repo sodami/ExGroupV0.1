@@ -52,7 +52,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:srcCompat="@drawable/camera_black"
-            android:id="@+id/imageView3" />
+            android:id="@+id/calendarweigth" />
 
     </LinearLayout>
 
