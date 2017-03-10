@@ -18,7 +18,7 @@
         android:layout_width="@dimen/gmd_button_height"
         android:layout_height="@dimen/gmd_button_height"
         android:padding="@dimen/gmd_margin_default"
-        android:src="@drawable/com_facebook_profile_picture_blank_square" />
+        android:src="@drawable/profile_default" />
 
     <LinearLayout
         android:layout_width="wrap_content"

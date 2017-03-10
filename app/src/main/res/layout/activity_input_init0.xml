@@ -28,7 +28,7 @@
                 android:layout_height="56dp"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/gmd_margin_default"
-                android:src="@drawable/com_facebook_profile_picture_blank_square" />
+                android:src="@drawable/profile_default" />
 
             <ImageView
                 android:clickable="false"

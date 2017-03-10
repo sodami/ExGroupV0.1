@@ -29,8 +29,8 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_margin="@dimen/gmd_margin_default"
-            android:src="@drawable/com_facebook_profile_picture_blank_square"
-            app:civ_border_color="#cccccc"
+            android:src="@drawable/profile_default"
+            app:civ_border_color="@color/babyPink"
             app:civ_border_width="1dp" />
 
         <TableLayout
