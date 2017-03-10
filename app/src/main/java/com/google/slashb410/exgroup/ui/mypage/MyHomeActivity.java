@@ -32,7 +32,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.group.InnerCalendar;
 import com.google.slashb410.exgroup.model.group.home.ResMe;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.Home2Activity;
@@ -139,31 +138,6 @@ public class MyHomeActivity extends Activity {
                 View layout = inflater.inflate(R.layout.activity_calendar_dialog, (ViewGroup) findViewById(R.id.activity_calendar_dialog));
                 AlertDialog.Builder aDialog = new AlertDialog.Builder(MyHomeActivity.this);
                 aDialog.setView(layout);
-                Call<InnerCalendar> innerCalendar = NetSSL.getInstance().getMemberImpFactory().myCalendar();
-                innerCalendar.enqueue(new Callback<InnerCalendar>() {
-                    @Override
-                    public void onResponse(Call<InnerCalendar> call, Response<InnerCalendar> response) {
-                        if (response.body().getUserPicUrl() == null) {
-                            U.getInstance().myLog("onSelectedDayChange : Body is NULL");
-                            return;
-
-                        } else {
-                            U.getInstance().myLog("onSelectedDayChange : "+response.body().getUserPicUrl().toString());
-                            final ImageView calendarfood = (ImageView) layout.findViewById(R.id.calendarfood);
-                            if (response.body().getUserPicUrl() != null)
-                                Picasso.with(MyHomeActivity.this)
-                                        .load(response.body().getUserPicUrl())
-                                        .resize(50, 50)
-                                        .centerCrop()
-                                        .into(calendarfood);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<InnerCalendar> call, Throwable t) {
-                        U.getInstance().myLog("onSelectedDayChange : " + t.toString());
-                    }
-                });
                 aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         onStart();
@@ -198,6 +172,7 @@ public class MyHomeActivity extends Activity {
 
     public void onMySubmit(View view) {
         Intent intent = new Intent(MyHomeActivity.this, Home2Activity.class);
+        intent.putExtra("name", "홍길동");
         startActivity(intent);
     }
 
