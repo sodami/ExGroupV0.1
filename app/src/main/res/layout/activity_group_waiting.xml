@@ -210,7 +210,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_margin="@dimen/gmd_margin_default"
-                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                    app:srcCompat="@drawable/profile_default" />
 
                 <TextView
                     android:id="@+id/waiting_nickname1"
@@ -232,7 +232,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_margin="@dimen/gmd_margin_default"
-                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                    app:srcCompat="@drawable/profile_default" />
 
                 <TextView
                     android:id="@+id/waiting_nickname2"
@@ -254,7 +254,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_margin="@dimen/gmd_margin_default"
-                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                    app:srcCompat="@drawable/profile_default" />
 
                 <TextView
                     android:id="@+id/waiting_nickname3"
@@ -276,7 +276,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_margin="@dimen/gmd_margin_default"
-                    app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                    app:srcCompat="@drawable/profile_default" />
 
                 <TextView
                     android:id="@+id/waiting_nickname4"

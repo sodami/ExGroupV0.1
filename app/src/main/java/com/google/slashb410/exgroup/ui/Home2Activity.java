@@ -260,6 +260,24 @@ public class Home2Activity extends AppCompatActivity
                     }
                 }else{
                     U.getInstance().myLog("setprofile is not successful : "+response.message());
+                if (response.body() == null) {
+                    U.getInstance().myLog("setProfileBox Body is NULL");
+                    return;
+                } else {
+                    U.getInstance().myLog("ResMe : "+response.body().getData().toString());
+                    E.KEY.USER_ID = response.body().getData().getId();
+                    E.KEY.USER_NAME = response.body().getData().getUsername();
+                    E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+
+                    if (response.body().getData().getPicUrl() != null)
+                        Picasso.with(Home2Activity.this)
+                                .load(response.body().getData().getPicUrl())
+                                .fit()
+                                .centerCrop()
+                                .into(group_card);
+                    if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
+                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
+                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum()+"");
                 }
             }
 
@@ -367,7 +385,6 @@ public class Home2Activity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
-
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
 //        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
         } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
@@ -384,8 +401,7 @@ public class Home2Activity extends AppCompatActivity
             });
             AlertDialog ad = aDialog.create();
             ad.show();
-        } else if (id == R.id.nav_manage) {
-            // 누르면 개발자에게 문의하기
+        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_developer_message, (ViewGroup) findViewById(R.id.popup));

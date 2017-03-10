@@ -1,6 +1,5 @@
 package com.google.slashb410.exgroup.ui.mypage;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -99,10 +98,6 @@ public class MyHomeActivity extends Activity {
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
 
-        ActionBar actionBar = getActionBar();
-//        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff80ab")));
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
