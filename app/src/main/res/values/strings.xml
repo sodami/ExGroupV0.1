@@ -32,7 +32,7 @@
     <string name="group_startday">활동시작일 | </string>
 
 
-    <string name="when_group_start">멤버 전원이 가입하여 최초 체중 인증하면\n그룹 활동이 시작됩니다!</string>
+    <string name="when_group_start">멤버 전원이 가입하여 시작 체중 인증샷을 올리면\n그룹 활동이 시작됩니다!</string>
     <string name="date_pick">날짜 선택</string>
     <string name="group_member">그룹 멤버 수 | </string>
     <string name="person_unit">명</string>

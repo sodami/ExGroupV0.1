@@ -148,13 +148,17 @@
             </TableRow>
         </TableLayout>
 
+        <ImageView
+            android:src="@drawable/attention_pink"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gmd_margin_default"
             android:gravity="center"
             android:text="@string/when_group_start"
-            android:textColor="#ffffff" />
+            android:textColor="#666666" />
         <!-- <Button          style="?android:attr/borderlessButtonStyle"
              android:textColor="#ffffff"
              android:id="@+id/inviteBtn"

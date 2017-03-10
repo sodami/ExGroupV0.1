@@ -86,13 +86,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_pink"
             android:textSize="30sp" />
-    <com.facebook.login.widget.LoginButton
-        android:background="@drawable/button_pink"
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30sp" />
+
     </LinearLayout>
 
     </LinearLayout>
