@@ -218,9 +218,9 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     if (response.body() == null) {
-                        U.getInstance().myLog("setProfileBox Body is NULL : "+response.message());
+                        U.getInstance().myLog("setProfileBox Body is NULL : " + response.message());
                         return;
                     } else {
                         U.getInstance().myLog("ResMe : " + response.body().getData().toString());
@@ -258,29 +258,32 @@ public class Home2Activity extends AppCompatActivity
                         if (response.body().getData().getSeqAttendNum() != 0)
                             seqAttendNum.setText(response.body().getData().getSeqAttendNum() + "");
                     }
-                }else{
-                    U.getInstance().myLog("setprofile is not successful : "+response.message());
-                if (response.body() == null) {
-                    U.getInstance().myLog("setProfileBox Body is NULL");
-                    return;
                 } else {
-                    U.getInstance().myLog("ResMe : "+response.body().getData().toString());
-                    E.KEY.USER_ID = response.body().getData().getId();
-                    E.KEY.USER_NAME = response.body().getData().getUsername();
-                    E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+                    U.getInstance().myLog("setprofile is not successful : " + response.message());
+                    if (response.body() == null) {
+                        U.getInstance().myLog("setProfileBox Body is NULL");
+                        return;
+                    } else {
+                        U.getInstance().myLog("ResMe : " + response.body().getData().toString());
+                        E.KEY.USER_ID = response.body().getData().getId();
+                        E.KEY.USER_NAME = response.body().getData().getUsername();
+                        E.KEY.USER_NICKNAME = response.body().getData().getNickname();
 
-                    if (response.body().getData().getPicUrl() != null)
-                        Picasso.with(Home2Activity.this)
-                                .load(response.body().getData().getPicUrl())
-                                .fit()
-                                .centerCrop()
-                                .into(group_card);
-                    if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
-                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
-                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum()+"");
+                        if (response.body().getData().getPicUrl() != null)
+                            Picasso.with(Home2Activity.this)
+                                    .load(response.body().getData().getPicUrl())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(group_card);
+                        if (response.body().getData().getNickname() != null)
+                            nick_profile.setText(response.body().getData().getNickname());
+                        if (response.body().getData().getBMI() != null)
+                            bmi.setText(response.body().getData().getBMI() + "");
+                        if (response.body().getData().getSeqAttendNum() != 0)
+                            seqAttendNum.setText(response.body().getData().getSeqAttendNum() + "");
+                    }
                 }
             }
-
             @Override
             public void onFailure(Call<ResMe> call, Throwable t) {
                 U.getInstance().myLog("접근실패 : " + t.toString());
