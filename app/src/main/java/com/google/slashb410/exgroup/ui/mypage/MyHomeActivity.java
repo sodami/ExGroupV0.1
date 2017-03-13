@@ -10,9 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,10 +30,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.MyData;
-import com.google.slashb410.exgroup.model.group.home.ResMe;
-import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.Home2Activity;
-import com.google.slashb410.exgroup.util.U;
 import com.miguelbcr.ui.rx_paparazzo.RxPaparazzo;
 import com.miguelbcr.ui.rx_paparazzo.entities.size.SmallSize;
 import com.squareup.picasso.Picasso;
@@ -46,15 +41,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MyHomeActivity extends Activity {
-    TabLayout tabLayout;
-    ViewPager viewPager;
     ImageView profile_change;
     SweetAlertDialog alert;
     TextView nickname;      // 닉네임 보여짐
@@ -74,15 +64,16 @@ public class MyHomeActivity extends Activity {
         Intent intent = getIntent();
         myData = (MyData) intent.getSerializableExtra("myData");
 
-        myCancel        = (Button) findViewById(R.id.my_cancel);
-        myBack          = (ImageButton)findViewById(R.id.my_back);
-        profile_change  = (ImageView) findViewById(R.id.profile_change);
-        // profile_change.bringToFront();
-        nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
+        // xml to JAVA
+        myCancel        = (Button) findViewById(R.id.my_cancel);            // 취소
+        myBack          = (ImageButton)findViewById(R.id.my_back);          // 뒤로가기
+        profile_change  = (ImageView) findViewById(R.id.profile_change);    // 프로필 수정
+        nickname        = (TextView) findViewById(R.id.resultMyName);       // 닉네임
 
         setProfile();
 
 
+        // 탭호스트
         // 2017. 02. 01
         Resources resource = getResources();
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
@@ -98,11 +89,11 @@ public class MyHomeActivity extends Activity {
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
 
-
-
+        // MPAndroid Chart 그래프 정보 나타내기
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
+        // 열
         entries.add(new Entry(65.0f, 0));
         entries.add(new Entry(64.5f, 1));
         entries.add(new Entry(64.0f, 2));
@@ -111,9 +102,11 @@ public class MyHomeActivity extends Activity {
         entries.add(new Entry(58.5f, 5));
         entries.add(new Entry(57.8f, 6));
 
+        // 사용자
         LineDataSet dataSet = new LineDataSet(entries, "슬비꺼");
         LineDataSet dataSet2 = new LineDataSet(entries, "소담이꺼");
 
+        // 라벨
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("1일차");
         labels.add("2일차");
@@ -128,6 +121,7 @@ public class MyHomeActivity extends Activity {
         lineChart.setData(data);
         lineChart.setData(data2);
 
+        // 개인 그래프 정보
         // individual Calendar 2017. 02. 17
         cal = (CalendarView) findViewById(R.id.calendarView1);
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() { // 캘린더 클릭 시 플로팅
@@ -148,8 +142,6 @@ public class MyHomeActivity extends Activity {
                 ad.show();
             }
         });
-
-
     }
 
     @Override
@@ -173,7 +165,6 @@ public class MyHomeActivity extends Activity {
 
     public void onMySubmit(View view) {
         Intent intent = new Intent(MyHomeActivity.this, Home2Activity.class);
-        intent.putExtra("name", "홍길동");
         startActivity(intent);
     }
 
@@ -274,9 +265,7 @@ public class MyHomeActivity extends Activity {
     }
 
     private void setProfile() {
-
         if (myData.getNickname() != null) nickname.setText(myData.getNickname());
-        if(myData.getPicUrl()!=null) Picasso.with(this).load(myData.getPicUrl()).fit().centerCrop().into(profile_change);
-
+        if (myData.getPicUrl()!=null)     Picasso.with(this).load(myData.getPicUrl()).fit().centerCrop().into(profile_change);
     }
 }

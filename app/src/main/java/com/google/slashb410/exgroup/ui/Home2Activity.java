@@ -43,8 +43,6 @@ import com.google.slashb410.exgroup.model.group.home.ResSessionOut;
 import com.google.slashb410.exgroup.model.group.home.Ticket;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
-import com.google.slashb410.exgroup.ui.join.InputInit0Activity;
-import com.google.slashb410.exgroup.ui.join.InputInit1Activity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
@@ -189,10 +187,10 @@ public class Home2Activity extends AppCompatActivity
                     ArrayList<GroupData> unActRst = resGroupList.getResult().getUnActRst();
 
                     U.getInstance().myLog("actGroup size : " + actRst.size());
-                    U.getInstance().myLog("waitGroup size : "+waitRst.size());
+                    U.getInstance().myLog("waitGroup size : " + waitRst.size());
                     U.getInstance().myLog("unActGroup size : " + unActRst.size());
 
-                    for(int i =0; i<actRst.size();++i){
+                    for (int i = 0; i < actRst.size(); ++i) {
                         actGroups.add(actRst.get(i).getGroup_id());
                         actTitles.add(actRst.get(i).getGroupTitle());
                     }
@@ -218,9 +216,9 @@ public class Home2Activity extends AppCompatActivity
         resMe.enqueue(new Callback<ResMe>() {
             @Override
             public void onResponse(Call<ResMe> call, Response<ResMe> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     if (response.body() == null) {
-                        U.getInstance().myLog("setProfileBox Body is NULL : "+response.message());
+                        U.getInstance().myLog("setProfileBox Body is NULL : " + response.message());
                         return;
                     } else {
                         U.getInstance().myLog("ResMe : " + response.body().getData().toString());
@@ -258,33 +256,36 @@ public class Home2Activity extends AppCompatActivity
                         if (response.body().getData().getSeqAttendNum() != 0)
                             seqAttendNum.setText(response.body().getData().getSeqAttendNum() + "");
                     }
-                }else{
-                    U.getInstance().myLog("setprofile is not successful : "+response.message());
-                if (response.body() == null) {
-                    U.getInstance().myLog("setProfileBox Body is NULL");
-                    return;
                 } else {
-                    U.getInstance().myLog("ResMe : "+response.body().getData().toString());
-                    E.KEY.USER_ID = response.body().getData().getId();
-                    E.KEY.USER_NAME = response.body().getData().getUsername();
-                    E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+                    U.getInstance().myLog("setprofile is not successful : " + response.message());
+                    if (response.body() == null) {
+                        U.getInstance().myLog("setProfileBox Body is NULL");
+                        return;
+                    } else {
+                        U.getInstance().myLog("ResMe : " + response.body().getData().toString());
+                        E.KEY.USER_ID = response.body().getData().getId();
+                        E.KEY.USER_NAME = response.body().getData().getUsername();
+                        E.KEY.USER_NICKNAME = response.body().getData().getNickname();
 
-                    if (response.body().getData().getPicUrl() != null)
-                        Picasso.with(Home2Activity.this)
-                                .load(response.body().getData().getPicUrl())
-                                .fit()
-                                .centerCrop()
-                                .into(group_card);
-                    if (response.body().getData().getNickname() != null) nick_profile.setText(response.body().getData().getNickname());
-                    if (response.body().getData().getBMI() != null) bmi.setText(response.body().getData().getBMI()+"");
-                    if (response.body().getData().getSeqAttendNum() != 0) seqAttendNum.setText(response.body().getData().getSeqAttendNum()+"");
+                        if (response.body().getData().getPicUrl() != null)
+                            Picasso.with(Home2Activity.this)
+                                    .load(response.body().getData().getPicUrl())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(group_card);
+                        if (response.body().getData().getNickname() != null)
+                            nick_profile.setText(response.body().getData().getNickname());
+                        if (response.body().getData().getBMI() != null)
+                            bmi.setText(response.body().getData().getBMI() + "");
+                        if (response.body().getData().getSeqAttendNum() != 0)
+                            seqAttendNum.setText(response.body().getData().getSeqAttendNum() + "");
+                    }
                 }
             }
-
-            @Override
-            public void onFailure(Call<ResMe> call, Throwable t) {
-                U.getInstance().myLog("접근실패 : " + t.toString());
-            }
+                @Override
+                public void onFailure (Call < ResMe > call, Throwable t){
+                    U.getInstance().myLog("접근실패 : " + t.toString());
+                }
         });
     }
 
@@ -295,8 +296,8 @@ public class Home2Activity extends AppCompatActivity
 
         intent.putExtra("actGroups", actGroups);
         String[] actTitles_str = new String[actTitles.size()];
-        for(int j=0; j<actTitles.size();++j){
-            actTitles_str[j]= (String) actTitles.get(j);
+        for (int j = 0; j < actTitles.size(); ++j) {
+            actTitles_str[j] = (String) actTitles.get(j);
         }
         intent.putExtra("actTitles", actTitles_str);
 
@@ -313,7 +314,7 @@ public class Home2Activity extends AppCompatActivity
             @Override
             public void onResponse(Call<ResAttend> call, Response<ResAttend> response) {
                 if (response.body() != null) {
-                    if(response.body().getResultCode()==1){
+                    if (response.body().getResultCode() == 1) {
                         Gson gson = new Gson();
                         String ticket_json = gson.toJson(response.body().getTicket());
                         StorageHelper.getInstance().setString(getApplicationContext(), "ticket", ticket_json);
@@ -343,7 +344,7 @@ public class Home2Activity extends AppCompatActivity
     private boolean hasValidTicket(String today) {
 
         //티켓이 존재하지 않는다. > false
-        if(StorageHelper.getInstance().getString(getApplicationContext(), "ticket")==null) {
+        if (StorageHelper.getInstance().getString(getApplicationContext(), "ticket") == null) {
             U.getInstance().myLog("티켓이 없네요");
             return false;
         }
@@ -386,8 +387,7 @@ public class Home2Activity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) { // 누르면 출석체크 푸쉬 on/off
         } else if (id == R.id.nav_slideshow) { // 누르면 운동, 식당 인증 푸쉬 on/off
-//        } else if (id == R.id.nav_manage) { // 누르면 개발자에게 문의하기
-        } else if(id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
+        } else if (id == R.id.nav_session) { // 누르면 앱 연결 해제하기(탈퇴)
             Context mContext = getApplicationContext();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.activity_session_dialog, (ViewGroup) findViewById(R.id.sessionpopup));
@@ -442,8 +442,7 @@ public class Home2Activity extends AppCompatActivity
     }
 
     // 회원 탈퇴
-    private void onSessionout()
-    {
+    private void onSessionout() {
         Call<ResSessionOut> res =
                 NetSSL.getInstance().getMemberImpFactory().sessionout(); //전문에 있는 양식 순서대로
         res.enqueue(new Callback<ResSessionOut>() { //enqueue가 callback오니까
