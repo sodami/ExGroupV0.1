@@ -24,6 +24,7 @@ public class CalendarDialogActivity extends AppCompatActivity
     TextView foodSummary;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,43 +53,26 @@ public class CalendarDialogActivity extends AppCompatActivity
                     } else {
                         U.getInstance().myLog("InnerCalendar : " + response.body().toString());
                         // 작성 날짜
-                        if (response.body().getWriteDate().toString() != null)
-                            writeDate.setText(response.body().getWriteDate().toString() + "");
+                        if (response.body().getResult() != null) //toString() != null)
+                            writeDate.setText(response.body().getResult().toString());
                         // 식단 사진
-                        if (response.body().getBoardPicUrl().toString() != null)
+                        if (response.body().getResult() != null)
                             Picasso.with(CalendarDialogActivity.this)
-                                    .load(response.body().getBoardPicUrl().toString())
+                                    .load(response.body().getResult().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarfood);
                         // 몸무게 사진
                         // ex -> getBoardPicUrl (게시판사진)
-                        if (response.body().getBoardPicUrl().toString() != null)
+                        if (response.body().getResult().toString() != null)
                             Picasso.with(CalendarDialogActivity.this)
-                                    .load(response.body().getBoardPicUrl().toString())
+                                    .load(response.body().getResult().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarweigth);
                         // 한줄 요약
-                        if (response.body().getSummary().toString() != null)
-                            foodSummary.setText(response.body().getSummary().toString() +"");
-
-//                        myData = new MyData(
-//                                response.body().getData().getId(),
-//                                response.body().getData().getUsername(),
-//                                response.body().getData().getPassword(),
-//                                response.body().getData().getNickname(),
-//                                response.body().getData().getPicUrl(),
-//                                response.body().getData().getWeight(),
-//                                response.body().getData().getHeight(),
-//                                response.body().getData().getBMI(),
-//                                response.body().getData().getSeqAttendNum(),
-//                                response.body().getData().getAge(),
-//                                response.body().getData().getFacebookId(),
-//                                response.body().getData().getActivation(),
-//                                response.body().getData().getUtime(),
-//                                response.body().getData().getCtime()
-//                        );
+                        if (response.body().getResult() != null)
+                            foodSummary.setText(response.body().getResult().toString() +"");
                     }
                 } else {
                     U.getInstance().myLog("setDialog is not successful : " + response.message());
@@ -97,29 +81,27 @@ public class CalendarDialogActivity extends AppCompatActivity
                         return;
                     } else {
                         U.getInstance().myLog("InnerCalendar : " + response.body().toString());
-
                         // 작성 날짜
-                        if (response.body().getWriteDate().toString() != null)
-                            writeDate.setText(response.body().getWriteDate().toString() + "");
+                        if (response.body().getResult() != null) //toString() != null)
+                            writeDate.setText(response.body().getResult().toString());
                         // 식단 사진
-                        // ex -> getUserPic (www.daum.net)
-                        if (response.body().getUserPicUrl().toString() != null)
+                        if (response.body().getResult() != null)
                             Picasso.with(CalendarDialogActivity.this)
-                                    .load(response.body().getUserPicUrl().toString())
+                                    .load(response.body().getResult().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarfood);
                         // 몸무게 사진
-                        // ex -> getBoardPicUrl (null)
-                        if (response.body().getBoardPicUrl().toString() != null)
+                        // ex -> getBoardPicUrl (게시판사진)
+                        if (response.body().getResult().toString() != null)
                             Picasso.with(CalendarDialogActivity.this)
-                                    .load(response.body().getBoardPicUrl().toString())
+                                    .load(response.body().getResult().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarweigth);
                         // 한줄 요약
-                        if (response.body().getSummary().toString() != null)
-                            foodSummary.setText(response.body().getSummary().toString() +"");
+                        if (response.body().getResult() != null)
+                            foodSummary.setText(response.body().getResult().toString() +"");
                     }
                 }
             }
