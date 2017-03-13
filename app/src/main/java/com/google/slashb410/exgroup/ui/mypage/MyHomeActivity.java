@@ -61,8 +61,6 @@ public class MyHomeActivity extends Activity {
     CalendarView cal;
     ImageButton myBack;
     Button      myCancel;
-    Bundle bundle;
-    Student student;
 
     MyData myData;
     @Override

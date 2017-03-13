@@ -231,7 +231,7 @@ public class QuickWriteActivity extends AppCompatActivity {
                 resUpload.enqueue(new Callback<ResUpload>() {
                     @Override
                     public void onResponse(Call<ResUpload> call, Response<ResUpload> response) {
-
+                        if(response.isSuccessful()){
                         if(response.body()==null) {
                             Snackbar.make(view, "죄송합니다. 다시 시도해 주세요.", Snackbar.LENGTH_SHORT).show();
                             return;
@@ -256,6 +256,8 @@ public class QuickWriteActivity extends AppCompatActivity {
                                 }
                             };
                             U.getInstance().onProgress(handler, QuickWriteActivity.this, "게시하는 중입니다.");
+                        }}else{
+                            U.getInstance().myLog("resUpload is not Successful : "+response.message());
                         }
                     }
 
