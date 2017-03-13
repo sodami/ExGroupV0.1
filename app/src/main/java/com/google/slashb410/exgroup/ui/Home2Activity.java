@@ -282,10 +282,10 @@ public class Home2Activity extends AppCompatActivity
                     }
                 }
             }
-                @Override
-                public void onFailure (Call < ResMe > call, Throwable t){
-                    U.getInstance().myLog("접근실패 : " + t.toString());
-                }
+            @Override
+            public void onFailure(Call<ResMe> call, Throwable t) {
+                U.getInstance().myLog("접근실패 : " + t.toString());
+            }
         });
     }
 

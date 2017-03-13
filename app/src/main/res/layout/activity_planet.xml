@@ -8,44 +8,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.google.slashb410.exgroup.ui.mypage.Planet.PlanetActivity">
+    tools:context="com.google.slashb410.exgroup.ui.mypage.Planet.PlanetActivity"
+    >
 
-    <TextView
-        android:text="This is Planet Activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+    <!--<TextView-->
+        <!--android:text="This is Planet Activity"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/textView" />-->
 
-    <RelativeLayout
-        android:id="@+id/tab1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="4">>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/tab1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="4">>-->
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/_pl_lv10"
-            android:id="@+id/imageView9"
-            android:layout_weight="1" />
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/_pl_lv10"
-            android:id="@+id/imageView10"
-            android:layout_weight="1" />
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/_pl_lv10"
-            android:id="@+id/imageView11"
-            android:layout_weight="1" />
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/_pl_lv10"
-            android:id="@+id/imageView12"
-            android:layout_weight="1" />
-    </RelativeLayout>
+        <!--<ImageView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:background="@drawable/_pl_lv10"-->
+            <!--android:id="@+id/imageView9"-->
+            <!--android:layout_weight="1" />-->
+        <!--<ImageView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:background="@drawable/_pl_lv10"-->
+            <!--android:id="@+id/imageView10"-->
+            <!--android:layout_weight="1" />-->
+        <!--<ImageView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:background="@drawable/_pl_lv10"-->
+            <!--android:id="@+id/imageView11"-->
+            <!--android:layout_weight="1" />-->
+        <!--<ImageView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:background="@drawable/_pl_lv10"-->
+            <!--android:id="@+id/imageView12"-->
+            <!--android:layout_weight="1" />-->
+    <!--</RelativeLayout>-->
 </RelativeLayout>

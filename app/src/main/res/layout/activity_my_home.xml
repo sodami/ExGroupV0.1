@@ -59,32 +59,20 @@
                     android:onClick="onPhoto"
                     app:civ_border_color="#FF000000" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.google.slashb410.exgroup.util.ClearEditText
-                            android:text="몽총이"
-                            android:hint="이름"
+                        <TextView
+                            android:layout_margin="@dimen/gmd_margin_default"
+                            android:text="nickname"
                             android:paddingTop="15dp"
                             android:gravity="center"
-                            android:textSize="16.5dp"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
                             android:textColor="@color/babyPink"
-                            android:layout_width="150dp"
-                            android:layout_height="@dimen/text_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:id="@+id/resultMyName"
                             android:layout_gravity="center"/>
                             <!--android:textCursorDrawable="@null" />-->
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
         <!-- 탭 영역 -->
