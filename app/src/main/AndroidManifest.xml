@@ -27,9 +27,10 @@
             android:resource="@color/colorAccent" />
         <!-- [END fcm_default_icon] -->
         <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-            <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" />
+            <action     android:name="android.intent.action.MAIN" />
+            <category   android:name="android.intent.category.LAUNCHER" />
+            <data   android:scheme="@string/kakao_scheme"
+                    android:host="@string/kakaolink_host" />
         </intent-filter>
 
         <activity
