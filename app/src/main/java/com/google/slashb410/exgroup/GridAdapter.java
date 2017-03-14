@@ -3,7 +3,6 @@ package com.google.slashb410.exgroup;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -226,7 +225,6 @@ public class GridAdapter extends BaseAdapter {
         }
         return convertView;
     }
-
 
     private boolean isManager() {
         boolean isManager = false;
