@@ -12,28 +12,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
+import com.google.slashb410.exgroup.model.group.group.RankUser;
+import com.google.slashb410.exgroup.model.group.group.ResRank;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
+import com.google.slashb410.exgroup.util.U;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GroupHomeActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    TextView groupTitleView;
-    ImageView groupImg;
 
     public GroupData groupData;
     public int groupId;
-    Uri picUrl;
 
     @BindView(R.id.group_title_toolbar)
     TextView title;
@@ -53,7 +60,6 @@ public class GroupHomeActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-
         //기본정보 저장
         groupData = new GroupData();
         Intent intent = getIntent();
@@ -65,27 +71,17 @@ public class GroupHomeActivity extends AppCompatActivity {
                 .fit().centerCrop()
                 .into(groupPic);
 
-        //랭크 세팅
-        setRankList();
 
         //그룹아이디 세팅 for Fragment
         groupId = groupData.getGroup_id();
 
-//        CollapsingToolbarLayout layout = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar_layout);
-//        groupTitleView = (TextView) findViewById(R.id.group_home_title);
-//        groupImg = (ImageView) findViewById(R.id.collapseImg);
-
-//        if (groupData.getGroupTitle()!=null) {
-//            groupTitleView.setText(groupData.getGroupTitle());
-//            groupImg.setImageURI(picUrl);
-//        }
-
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.planet_white));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.trophy_white));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.chart_white));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.feed_white));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.calendar_white));
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -113,23 +109,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         });
     }
 
-    @BindView(R.id.rank1)
-    LinearLayout rank1;
-    @BindView(R.id.rank2)
-    LinearLayout rank2;
-    @BindView(R.id.rank3)
-    LinearLayout rank3;
-    @BindView(R.id.rank4)
-    LinearLayout rank4;
-    @BindView(R.id.rank5)
-    LinearLayout rank5;
 
-
-    private void setRankList() {
-        int numMem = groupData.getMaxNum();
-        String layoutName = "rank";
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -151,19 +131,22 @@ public class GroupHomeActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(GroupHomeActivity.this, QuickWriteActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            switch (which){
-                                case 0 : intent.putExtra("menu", 1);
+                            switch (which) {
+                                case 0:
+                                    intent.putExtra("menu", 1);
                                     break;
-                                case 1 : intent.putExtra("menu", 2);
+                                case 1:
+                                    intent.putExtra("menu", 2);
                                     break;
-                                case 2 : intent.putExtra("menu", 3);
+                                case 2:
+                                    intent.putExtra("menu", 3);
                                     break;
                             }
                             startActivity(intent);
                         }
                     }).show();
             return true;
-        }else if(id == R.id.home){
+        } else if (id == R.id.home) {
             finish();
         }
 

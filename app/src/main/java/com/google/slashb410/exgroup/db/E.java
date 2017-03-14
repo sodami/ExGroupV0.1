@@ -22,6 +22,7 @@ public class E {
         public static int USER_ID = 0;
         public static String USER_NAME = "";
         public static String USER_NICKNAME = "";
+        public static String USER_PROFILE = "";
 
         public static String TEMP_PIC_URI="";
     }

@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.google.slashb410.exgroup.ui.group.room.tabs.GroupCalendarFragment;
 import com.google.slashb410.exgroup.ui.group.room.tabs.GroupShotsFragment;
 import com.google.slashb410.exgroup.ui.group.room.tabs.GroupGraphFragment;
-import com.google.slashb410.exgroup.ui.group.room.tabs.GroupPlanetFragment;
+import com.google.slashb410.exgroup.ui.group.room.tabs.GroupRankFragment;
 
 /**
  * Created by Tacademy on 2017-02-02.
@@ -28,8 +28,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                GroupPlanetFragment groupPlanetFragment = new GroupPlanetFragment();
-                return groupPlanetFragment;
+                GroupRankFragment groupRankFragment = new GroupRankFragment();
+                return groupRankFragment;
             case 1:
                 GroupGraphFragment groupGraphFragment = new GroupGraphFragment();
                 return groupGraphFragment;

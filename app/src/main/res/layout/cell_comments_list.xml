@@ -4,6 +4,7 @@
     android:layout_height="wrap_content">
 
     <ImageButton
+        android:visibility="gone"
         android:id="@+id/delete_comment"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -11,6 +12,7 @@
         android:src="@drawable/delete_black"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

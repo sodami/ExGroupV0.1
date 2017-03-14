@@ -7,6 +7,7 @@ import com.google.slashb410.exgroup.model.group.group.ResGroupCalendar;
 import com.google.slashb410.exgroup.model.group.group.ResGroupGraph;
 import com.google.slashb410.exgroup.model.group.group.ResGroupList;
 import com.google.slashb410.exgroup.model.group.group.ResGroupSearch;
+import com.google.slashb410.exgroup.model.group.group.ResRank;
 import com.google.slashb410.exgroup.model.group.group.ResUncertifiedMem;
 import com.google.slashb410.exgroup.model.group.group.ResUpload;
 
@@ -62,6 +63,8 @@ public interface GroupImpFactory {
     Call<ResGroupList> groupList();
 
     //E_1. 전체 그룹원 순위 보기
+    @GET("groups/{groupId}/rank")
+    Call<ResRank> rank(@Path("groupId") int groupId);
 
     //E_2. 그룹그래프 정보보기
     @GET("groups/{groupId}/lossweight")
@@ -69,12 +72,16 @@ public interface GroupImpFactory {
 
     //E_3. 그룹 캘린더에서 해당 날짜 정보 보기
     @GET("groups/{groupId}/calendar/{date}")
-    Call<ResGroupCalendar> groupCalendar(@Path("groupId") String groupId, @Path("date") String date);
+    Call<ResGroupCalendar> groupCalendar(@Path("groupId") int groupId, @Path("date") String date);
 
     //F_1. 그룹 게시글 등록하기
     @Multipart
     @POST("boards")
     Call<ResUpload> upload(@PartMap Map<String, RequestBody> map);
+
+    //F_2. 그룹 게시글 삭제하기
+    @DELETE("boards/{boardId}")
+    Call<ResStandard> deleteBoard(@Path("boardId") int boardId);
 
     //F_3. 그룹 게시글 불러오기
     @GET("groups/{groupId}/boards")
@@ -82,18 +89,20 @@ public interface GroupImpFactory {
 
     //F_4. 게시물에 댓글달기
     @POST("comments")
-    Call<String> addComment(@Body ReqComment reqComment);
+    Call<ResStandard> addComment(@Body ReqComment reqComment);
 
     //F_5. 게시물에 달린 댓글 모두 보기 -> F_3
 
     //F_6. 게시물에 달린 댓글 삭제하기
+    @DELETE("comments/{comId}")
+    Call<ResStandard> deleteComment(@Path("comId") int comId);
 
     //F_7. 좋아요 하기
     @POST("favorites")
-    Call<ResStandard> favorite(@Body String boardId);
+    Call<ResStandard> favorite(@Body int boardId);
 
     //F_8. 좋아요 취소하기
     @DELETE("favorites/{favoriteId}")
-    Call<ResStandard> unFavorite(@Path("favoriteId") String favoriteId);
+    Call<ResStandard> unFavorite(@Path("favoriteId") int favoriteId);
 
 }

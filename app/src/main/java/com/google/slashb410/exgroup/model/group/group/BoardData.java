@@ -27,6 +27,27 @@ public class BoardData implements Parcelable{
     private int commentNum;
     private int favoriteNum;
 
+    @Override
+    public String toString() {
+        return "BoardData{" +
+                "group_id=" + group_id +
+                ", board_id=" + board_id +
+                ", user_id=" + user_id +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", userPicUrl='" + userPicUrl + '\'' +
+                ", categoryNum=" + categoryNum +
+                ", summary='" + summary + '\'' +
+                ", content='" + content + '\'' +
+                ", boardPicUrl='" + boardPicUrl + '\'' +
+                ", writeDate='" + writeDate + '\'' +
+                ", comment=" + comment +
+                ", favoriteBool=" + favoriteBool +
+                ", commentNum=" + commentNum +
+                ", favoriteNum=" + favoriteNum +
+                '}';
+    }
+
     protected BoardData(Parcel in) {
         group_id = in.readInt();
         board_id = in.readInt();

@@ -1,20 +1,14 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chart_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.google.slashb410.exgroup.ui.group.room.tabs.GroupGraphFragment">
 
-    <FrameLayout
+    <!-- TODO: Update blank fragment layout -->
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/group_graph"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/gmd_margin_default" />
 
-        <!-- TODO: Update blank fragment layout -->
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/group_graph"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/gmd_margin_default" />
-
-    </FrameLayout>
-</android.support.v4.widget.NestedScrollView>
+</FrameLayout>

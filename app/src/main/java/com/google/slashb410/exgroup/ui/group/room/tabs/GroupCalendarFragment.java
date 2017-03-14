@@ -1,5 +1,6 @@
 package com.google.slashb410.exgroup.ui.group.room.tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,13 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
+import android.widget.ListView;
 
-import com.andexert.calendarlistview.library.DayPickerView;
 import com.andexert.calendarlistview.library.SimpleMonthAdapter;
 import com.google.slashb410.exgroup.R;
-import com.google.slashb410.exgroup.model.group.CalendarListData;
 import com.google.slashb410.exgroup.model.group.group.GroupData;
+import com.google.slashb410.exgroup.model.group.group.InnerCalendar;
 import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
 import com.squareup.timessquare.CalendarPickerView;
 
@@ -29,21 +29,24 @@ import java.util.Date;
 
 public class GroupCalendarFragment extends Fragment implements com.andexert.calendarlistview.library.DatePickerController {
 
-    ExpandableListView listView;
-    CalExpandableListAdapter adapter;
+    ListView listView;
+    CalListAdapter adapter;
     GroupData groupData;
-    ArrayList<String> theDay;
-    ArrayList<ArrayList<CalendarListData>> theDayActList;
-    DayPickerView dayPickerView;
+    SimpleDateFormat format;
+    SimpleDateFormat timeFormat;
     Date startDate;
     Date goalDate;
+
+    ArrayList<InnerCalendar> innerCalendars;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        groupData = ((GroupHomeActivity)getActivity()).groupData;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        groupData = ((GroupHomeActivity) getActivity()).groupData;
+        format = new SimpleDateFormat("yyyy-MM-dd");
+        timeFormat = new SimpleDateFormat("HH시 mm분");
+
         try {
             startDate = format.parse(groupData.getStartDate());
         } catch (ParseException e) {
@@ -55,41 +58,37 @@ public class GroupCalendarFragment extends Fragment implements com.andexert.cale
             e.printStackTrace();
         }
 
-        Calendar nextYear = Calendar.getInstance();
-        nextYear.add(Calendar.MONTH, 1);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(goalDate);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        Date goalDate_tommorow = cal.getTime();
 
         View view = inflater.inflate(R.layout.fragment_group_calendar, container, false);
-        listView = (ExpandableListView) view.findViewById(R.id.group_cal_list);
 
-        theDayActList = new ArrayList<>();
-
-        ArrayList<CalendarListData> inData = new ArrayList<>();
-
-        inData.add(new CalendarListData(1, "asdf", "슬비닉네임", "2017년 2월 7일 17시 49분", "1시간동안 15키로 자전거!"));
-        theDayActList.add(0, inData);
-
-        theDay = new ArrayList<>();
-        theDay.add("날짜를 선택하시면 활동내역을 볼 수 있습니다.");
-        adapter = new CalExpandableListAdapter(getContext(), theDay, theDayActList);
-        listView.setAdapter(adapter);
-
-//        dayPickerView = (DayPickerView) view.findViewById(R.id.pickerView);
-//        dayPickerView.setController(this);
+//        adapter = new CalListAdapter(getContext(), innerCalendars);
+//        listView.setAdapter(adapter);
 
         CalendarPickerView calendar = (CalendarPickerView) view.findViewById(R.id.group_calendar);
         Date today = new Date();
-        calendar.init(startDate, goalDate)
+        calendar.init(startDate, goalDate_tommorow)
                 .withSelectedDate(today);
+
+        ArrayList<Date> highlightDateSet = new ArrayList<>();
+        highlightDateSet.add(startDate);
+        highlightDateSet.add(goalDate);
+
+        calendar.highlightDates(highlightDateSet);
 
         calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
             public void onDateSelected(Date date) {
-                Date dateSelected = date;
-                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
-                theDay = new ArrayList<String>();
-                theDay.add(0, transFormat.format(dateSelected));
-                adapter.setNewData(theDay, null);
-                listView.invalidateViews();
+                String dateSelected = format.format(date);
+                Intent intent = new Intent(getActivity(), GroupCalListDialogActivity.class);
+                intent.putExtra("date", dateSelected);
+                intent.putExtra("groupData", groupData);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                startActivity(intent);
             }
 
             @Override
