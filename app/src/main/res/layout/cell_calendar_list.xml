@@ -18,6 +18,7 @@
         android:layout_width="@dimen/gmd_button_height"
         android:layout_height="@dimen/gmd_button_height"
         android:padding="@dimen/gmd_margin_default"
+        android:layout_marginEnd="@dimen/gmd_margin_default"
         android:src="@drawable/profile_default" />
 
     <LinearLayout

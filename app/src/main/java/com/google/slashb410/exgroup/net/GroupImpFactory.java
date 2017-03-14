@@ -72,7 +72,7 @@ public interface GroupImpFactory {
 
     //E_3. 그룹 캘린더에서 해당 날짜 정보 보기
     @GET("groups/{groupId}/calendar/{date}")
-    Call<ResGroupCalendar> groupCalendar(@Path("groupId") String groupId, @Path("date") String date);
+    Call<ResGroupCalendar> groupCalendar(@Path("groupId") int groupId, @Path("date") String date);
 
     //F_1. 그룹 게시글 등록하기
     @Multipart

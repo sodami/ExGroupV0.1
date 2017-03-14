@@ -13,8 +13,14 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.model.group.group.GroupData;
+import com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity;
+import com.google.slashb410.exgroup.util.U;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Tacademy on 2017-02-02.
@@ -22,15 +28,37 @@ import java.util.ArrayList;
 
 public class GroupGraphFragment extends Fragment {
 
+    GroupData groupData;
+    LineChart lineChart;
+
+    SimpleDateFormat format;
+    Date startDate;
+    Date goalDate;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-   //     ButterKnife.bind(getActivity());
-
         View view = inflater.inflate(R.layout.fragment_group_graph, container, false);
 
-        LineChart lineChart = (LineChart) view.findViewById(R.id.group_graph);
+        groupData = ((GroupHomeActivity)getActivity()).groupData;
+
+        lineChart = (LineChart) view.findViewById(R.id.group_graph);
+
+        format = new SimpleDateFormat("mm-DD");
+
+        try {
+           startDate = format.parse(groupData.getStartDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            goalDate = format.parse(groupData.getGoalDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        U.getInstance().myLog("startDate : "+startDate.toString()+"\ngoalDate : "+goalDate.toString());
 
 
         ArrayList<Entry> entries = new ArrayList<Entry>();

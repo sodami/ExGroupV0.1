@@ -167,32 +167,32 @@ public class MyHomeActivity extends Activity {
             @Override
             public void onResponse(Call<InnerCalendar> call, Response<InnerCalendar> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().getResult() == null) {
+                    if (response.body() == null) {
                         U.getInstance().myLog("setDialog Body is NULL : " + response.message());
                         return;
                     } else {
                         U.getInstance().myLog("setDialog : " + response.body().toString());
                         // 작성 날짜
-                        if (response.body().getResult() != null) //toString() != null)
-                            writeDate.setText(response.body().getResult().toString());
+                        if (response.body() != null) //toString() != null)
+                            writeDate.setText(response.body().toString());
                         // 식단 사진
-                        if (response.body().getResult() != null)
+                        if (response.body() != null)
                             Picasso.with(MyHomeActivity.this)
-                                    .load(response.body().getResult().toString())
+                                    .load(response.body().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarfood);
                         // 몸무게 사진
                         // ex -> getBoardPicUrl (게시판사진)
-                        if (response.body().getResult().toString() != null)
+                        if (response.body().toString() != null)
                             Picasso.with(MyHomeActivity.this)
-                                    .load(response.body().getResult().toString())
+                                    .load(response.body().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarweigth);
                         // 한줄 요약
-                        if (response.body().getResult() != null)
-                            foodSummary.setText(response.body().getResult().toString() +"");
+                        if (response.body() != null)
+                            foodSummary.setText(response.body().toString() +"");
                     }
                 } else {
                     U.getInstance().myLog("setDialog is not successful : " + response.message());
@@ -202,26 +202,26 @@ public class MyHomeActivity extends Activity {
                     } else {
                         U.getInstance().myLog("setDialogBox : " + response.body().toString());
                         // 작성 날짜
-                        if (response.body().getResult() != null) //toString() != null)
-                            writeDate.setText(response.body().getResult().toString());
+                        if (response.body() != null) //toString() != null)
+                            writeDate.setText(response.body().toString());
                         // 식단 사진
-                        if (response.body().getResult() != null)
+                        if (response.body() != null)
                             Picasso.with(MyHomeActivity.this)
-                                    .load(response.body().getResult().toString())
+                                    .load(response.body().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarfood);
                         // 몸무게 사진
                         // ex -> getBoardPicUrl (게시판사진)
-                        if (response.body().getResult().toString() != null)
+                        if (response.body().toString() != null)
                             Picasso.with(MyHomeActivity.this)
-                                    .load(response.body().getResult().toString())
+                                    .load(response.body().toString())
                                     .fit()
                                     .centerCrop()
                                     .into(calendarweigth);
                         // 한줄 요약
-                        if (response.body().getResult() != null)
-                            foodSummary.setText(response.body().getResult().toString() +"");
+                        if (response.body() != null)
+                            foodSummary.setText(response.body().toString() +"");
                     }
                 }
             }

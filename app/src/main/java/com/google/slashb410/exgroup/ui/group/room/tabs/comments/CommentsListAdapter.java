@@ -71,15 +71,16 @@ public class CommentsListAdapter extends BaseAdapter{
             commentHolder.delete = (ImageButton) view.findViewById(R.id.delete_comment);
         }
 
-        if(commentDatas.get(position).getUserPicUrl()!=null) {
-            Picasso.with(view.getContext())
-                    .load(commentDatas.get(position).getUserPicUrl())
-                    .fit().centerCrop()
-                    .into(commentHolder.profile);
+        if(!commentDatas.get(position).getUserPicUrl().equals("")) {
+            U.getInstance().myLog("USERPICURL : "+commentDatas.get(position).getUserPicUrl());
+//            Picasso.with(view.getContext())
+//                    .load(commentDatas.get(position).getUserPicUrl())
+//                    .fit().centerCrop()
+//                    .into(commentHolder.profile);
         }
-        if(commentDatas.get(position).getNickname()!=null) commentHolder.nickname.setText(commentDatas.get(position).getNickname());
-        if(commentDatas.get(position).getWriteDate()!=null) commentHolder.dateNTime.setText(commentDatas.get(position).getWriteDate());
-        if(commentDatas.get(position).getContent()!=null) commentHolder.content.setText(commentDatas.get(position).getContent());
+        if(!commentDatas.get(position).getNickname().equals("")) commentHolder.nickname.setText(commentDatas.get(position).getNickname());
+        if(!commentDatas.get(position).getWriteDate().equals("")) commentHolder.dateNTime.setText(commentDatas.get(position).getWriteDate());
+        if(!commentDatas.get(position).getContent().equals("")) commentHolder.content.setText(commentDatas.get(position).getContent());
 
         //user id와 작성자가 같다면 delete 띄우기
         userId = E.KEY.USER_ID;

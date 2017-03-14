@@ -71,15 +71,13 @@ public class GroupHomeActivity extends AppCompatActivity {
                 .fit().centerCrop()
                 .into(groupPic);
 
-        //랭크 세팅
-        setRankList();
 
         //그룹아이디 세팅 for Fragment
         groupId = groupData.getGroup_id();
 
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.planet_white));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.trophy_white));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.chart_white));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.feed_white));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.calendar_white));
@@ -111,119 +109,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         });
     }
 
-    @BindView(R.id.rank1)
-    LinearLayout rank1;
-    @BindView(R.id.rank2)
-    LinearLayout rank2;
-    @BindView(R.id.rank3)
-    LinearLayout rank3;
-    @BindView(R.id.rank4)
-    LinearLayout rank4;
-    @BindView(R.id.rank5)
-    LinearLayout rank5;
 
-    @BindView(R.id.rank1_nick)
-    TextView nick1;
-    @BindView(R.id.rank2_nick)
-    TextView nick2;
-    @BindView(R.id.rank3_nick)
-    TextView nick3;
-    @BindView(R.id.rank4_nick)
-    TextView nick4;
-    @BindView(R.id.rank5_nick)
-    TextView nick5;
-
-    @BindView(R.id.rank1_profile)
-    ImageView profile1;
-    @BindView(R.id.rank2_profile)
-    ImageView profile2;
-    @BindView(R.id.rank3_profile)
-    ImageView profile3;
-    @BindView(R.id.rank4_profile)
-    ImageView profile4;
-    @BindView(R.id.rank5_profile)
-    ImageView profile5;
-
-    ArrayList<RankUser> rankUsers;
-
-    private void setRankList() {
-        rankUsers = new ArrayList<>();
-
-        //1.랭킹 정보 요청
-        Call<ResRank> resRank = NetSSL.getInstance().getGroupImpFactory().rank(groupData.getGroup_id());
-        resRank.enqueue(new Callback<ResRank>() {
-            @Override
-            public void onResponse(Call<ResRank> call, Response<ResRank> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        if (response.body().getResultCode() == 1) {
-                            //2. 랭킹 정보 박기
-                            rankUsers = response.body().getResult().getData();
-
-                            nick1.setText(rankUsers.get(0).getNickname());
-                            nick2.setText(rankUsers.get(1).getNickname());
-
-                            Picasso.with(GroupHomeActivity.this).load(rankUsers.get(0).getPicUrl()).fit().centerCrop().into(profile1);
-                            Picasso.with(GroupHomeActivity.this).load(rankUsers.get(1).getPicUrl()).fit().centerCrop().into(profile2);
-
-
-                            //3. 사람수만큼 visibility 세팅
-                            switch (rankUsers.size()) {
-                                case 0:
-                                    U.getInstance().myLog("groupData.getMaxNum == 0");
-                                    break;
-                                case 2:
-
-                                    rank3.setVisibility(View.GONE);
-                                    rank4.setVisibility(View.GONE);
-                                    rank5.setVisibility(View.GONE);
-
-                                    break;
-                                case 3:
-                                    nick3.setText(rankUsers.get(2).getNickname());
-                                    Picasso.with(GroupHomeActivity.this).load(rankUsers.get(2).getPicUrl()).fit().centerCrop().into(profile3);
-
-                                    rank4.setVisibility(View.GONE);
-                                    rank5.setVisibility(View.GONE);
-
-                                    break;
-                                case 4:
-                                    nick3.setText(rankUsers.get(2).getNickname());
-                                    nick4.setText(rankUsers.get(3).getNickname());
-                                    Picasso.with(GroupHomeActivity.this).load(rankUsers.get(2).getPicUrl()).fit().centerCrop().into(profile3);
-                                    Picasso.with(GroupHomeActivity.this).load(rankUsers.get(3).getPicUrl()).fit().centerCrop().into(profile4);
-
-                                    rank5.setVisibility(View.GONE);
-
-                                    break;
-                                case 5:
-                                    nick3.setText(rankUsers.get(2).getNickname());
-                                    nick4.setText(rankUsers.get(3).getNickname());
-                                    nick5.setText(rankUsers.get(4).getNickname());
-                                    Picasso.with(GroupHomeActivity.this).load(rankUsers.get(2).getPicUrl()).fit().centerCrop().into(profile3);
-                                    Picasso.with(GroupHomeActivity.this).load(rankUsers.get(3).getPicUrl()).fit().centerCrop().into(profile4);
-                                    Picasso.with(GroupHomeActivity.this).load(rankUsers.get(4).getPicUrl()).fit().centerCrop().into(profile5);
-
-                                    break;
-
-                            }
-
-                        }
-                    } else {
-                        U.getInstance().myLog("resRank Body is null :" + response.message());
-                    }
-                } else {
-                    U.getInstance().myLog("resRank is not successful : " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResRank> call, Throwable t) {
-
-            }
-        });
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -148,7 +148,7 @@ public class GroupShotsCommentsActivity extends AppCompatActivity {
                         int count = adapter.getCount();
                         String customDateNTime = U.getInstance().currentDateNTime();
                         addComment = new CommentData(0, boardId, E.KEY.USER_ID, E.KEY.USER_NAME, E.KEY.USER_NICKNAME, "", commentEdit.getText().toString(), customDateNTime);
-                        boardData.getComment().add(count + 1, addComment);
+                        boardData.getComment().add(addComment);
 
                         adapter.notifyDataSetChanged();
 

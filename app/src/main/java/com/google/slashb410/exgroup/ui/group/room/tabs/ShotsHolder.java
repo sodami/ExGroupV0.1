@@ -1,11 +1,7 @@
 package com.google.slashb410.exgroup.ui.group.room.tabs;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -114,7 +110,20 @@ class ShotsHolder extends RecyclerView.ViewHolder {
             }
         });
         numLike.setText(mDatas.getFavoriteNum() + "");
+        numLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLike(v);
+            }
+        });
+
         numComments.setText(mDatas.getCommentNum() + "");
+        numComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onComments(v);
+            }
+        });
 
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +161,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
                 if(response.isSuccessful()) {
                     if (response.body() != null) {
                         likeBtn.setBackgroundResource(R.drawable.like_gray);
-                        numLike.setText(mDatas.getFavoriteNum()-1);
+                        numLike.setText(mDatas.getFavoriteNum()-1+"");
                         mDatas.setFavoriteNum(mDatas.getFavoriteNum()-1);
                         mDatas.setFavoriteBool(0);
 
@@ -182,7 +191,7 @@ class ShotsHolder extends RecyclerView.ViewHolder {
                 if(response.isSuccessful()) {
                     if (response.body() != null) {
                         likeBtn.setBackgroundResource(R.drawable.like_pink);
-                        numLike.setText(mDatas.getFavoriteNum()+1);
+                        numLike.setText(mDatas.getFavoriteNum()+1+"");
                         mDatas.setFavoriteNum(mDatas.getFavoriteNum()+1);
                         mDatas.setFavoriteBool(1);
 
