@@ -27,16 +27,16 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
         // Returning the current tabs
         switch (position) {
+//            case 0:
+//                GroupPlanetFragment groupPlanetFragment = new GroupPlanetFragment();
+//                return groupPlanetFragment;
             case 0:
-                GroupPlanetFragment groupPlanetFragment = new GroupPlanetFragment();
-                return groupPlanetFragment;
-            case 1:
                 GroupGraphFragment groupGraphFragment = new GroupGraphFragment();
                 return groupGraphFragment;
-            case 2:
+            case 1:
                 GroupShotsFragment groupShotsFragment = new GroupShotsFragment();
                 return groupShotsFragment;
-            case 3:
+            case 2:
                 GroupCalendarFragment groupCalendarFragment = new GroupCalendarFragment();
                 return groupCalendarFragment;
             default:

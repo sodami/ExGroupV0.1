@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class MyData implements Serializable {
+
     private int id;
     private String username;
     private String password;

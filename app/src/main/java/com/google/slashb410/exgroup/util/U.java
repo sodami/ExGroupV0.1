@@ -232,13 +232,29 @@ public class U {
         Picasso.with(activity).load(url).into(imageView);
 
     }
-    public String customDateNTime(){
-
+    public String currentDateNTime(){
 
         String date[] = U.getInstance().currentYYmmDD();
         String time[] = U.getInstance().currentTime();
 
         return date[0]+"년 "+date[1]+"월 "+date[2]+"일 "+time[0]+"시 "+time[1]+"분";
+
+    }
+
+    public String customDateNTime(String date){
+
+        //2017-03-11T14:41:03.000Z
+
+        String[] splitDate = date.split("-");
+        String year = splitDate[0];
+        String month = splitDate[1];
+        String day = splitDate[2].substring(0,2);
+
+        String[] time = splitDate[2].split(":");
+        String hour = time[0].substring(3,5);
+        String min = time[1];
+
+        return year+"년 "+month+"월 "+day+"일 "+hour+"시 "+min+"분";
 
     }
 
@@ -254,7 +270,4 @@ public class U {
     }
 
 
-//    public String customDateNTime() {
-//
-//    }
 }

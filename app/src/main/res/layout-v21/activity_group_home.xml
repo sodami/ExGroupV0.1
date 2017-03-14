@@ -1,215 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity">
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/collapse_app_bar"
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="0dp"
+        tools:context="com.google.slashb410.exgroup.ui.group.room.GroupHomeActivity">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMargin="@dimen/gmd_margin_default"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:id="@+id/collapseImg"
-                android:layout_width="match_parent"
-                android:layout_height="176dp"
-                android:background="#888888"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/collapse_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                app:layout_collapseMode="pin">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/group_title_toolbar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/gmd_margin_default"
-                        android:text="그룹타이틀"
-                        android:textSize="@dimen/text_default" />
-
-                </LinearLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-        <LinearLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/collapse_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gmd_margin_default"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:fitsSystemWindows="true">
 
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMargin="4dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <ImageView
+                    android:id="@+id/collapseImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="144dp"
+                    android:background="#888888"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/collapse_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_collapseMode="pin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/group_title_toolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="4dp"
+                            android:text="그룹타이틀"
+                            android:textSize="@dimen/text_default" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
             <LinearLayout
-                android:id="@+id/rank1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/rank1_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-                    app:civ_border_color="#cccccc"
-                    app:civ_border_width="1dp" />
 
-                <TextView
-                    android:id="@+id/rank1_nick"
+                <LinearLayout
+                    android:id="@+id/rank1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nickname"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/text_small" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/rank2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rank1_profile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        app:civ_border_color="#cccccc"
+                        app:civ_border_width="1dp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/rank2_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-                    app:civ_border_color="#cccccc"
-                    app:civ_border_width="1dp" />
+                    <TextView
+                        android:id="@+id/rank1_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="nickname"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/text_small" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/rank2_nick"
+                <LinearLayout
+                    android:id="@+id/rank2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nickname"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/text_small" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/rank3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rank2_profile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        app:civ_border_color="#cccccc"
+                        app:civ_border_width="1dp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/rank3_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-                    app:civ_border_color="#cccccc"
-                    app:civ_border_width="1dp" />
+                    <TextView
+                        android:id="@+id/rank2_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="nickname"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/text_small" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/rank3_nick"
+                <LinearLayout
+                    android:id="@+id/rank3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nickname"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/text_small" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/rank4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rank3_profile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        app:civ_border_color="#cccccc"
+                        app:civ_border_width="1dp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/rank4_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-                    app:civ_border_color="#cccccc"
-                    app:civ_border_width="1dp" />
+                    <TextView
+                        android:id="@+id/rank3_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="nickname"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/text_small" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/rank4_nick"
+                <LinearLayout
+                    android:id="@+id/rank4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nickname"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/text_small" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/rank5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rank4_profile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        app:civ_border_color="#cccccc"
+                        app:civ_border_width="1dp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/rank5_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/gmd_margin_default"
-                    android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-                    app:civ_border_color="#cccccc"
-                    app:civ_border_width="1dp" />
+                    <TextView
+                        android:id="@+id/rank4_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="nickname"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/text_small" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/rank5_nick"
+                <LinearLayout
+                    android:id="@+id/rank5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nickname"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/text_small" />
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rank5_profile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        app:civ_border_color="#cccccc"
+                        app:civ_border_width="1dp" />
+
+                    <TextView
+                        android:id="@+id/rank5_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="nickname"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/text_small" />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+            <!--</android.support.design.widget.CollapsingToolbarLayout>-->
 
-        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
+        </android.support.design.widget.AppBarLayout>
 
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
+
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/collapse_app_bar"
+            app:layout_anchorGravity="center_vertical|center_horizontal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/group_menu"
-            android:layout_weight="0"
-            android:background="@color/babyPink"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
-            app:tabIndicatorColor="#ffffff"
-            app:tabSelectedTextColor="@color/shadowPink"
-            app:tabTextColor="@color/babyPink" />
 
-    </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_weight="0"
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/group_menu"
+        android:background="@color/babyPink"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_anchor="@id/collapse_app_bar"
+        app:layout_anchorGravity="center_vertical|center_horizontal"
+        app:tabIndicatorColor="#ffffff"
+        app:tabSelectedTextColor="@color/shadowPink"
+        app:tabTextColor="@color/babyPink" />
+</LinearLayout>

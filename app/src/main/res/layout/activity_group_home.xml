@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/collapseImg"
                 android:layout_width="match_parent"
-                android:layout_height="176dp"
+                android:layout_height="136dp"
                 android:background="#888888"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
@@ -71,8 +71,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/rank1_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_margin="@dimen/gmd_margin_default"
                     android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                     app:civ_border_color="#cccccc"
@@ -95,8 +95,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/rank2_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_margin="@dimen/gmd_margin_default"
                     android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                     app:civ_border_color="#cccccc"
@@ -119,8 +119,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/rank3_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_margin="@dimen/gmd_margin_default"
                     android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                     app:civ_border_color="#cccccc"
@@ -143,8 +143,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/rank4_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_margin="@dimen/gmd_margin_default"
                     android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                     app:civ_border_color="#cccccc"
@@ -167,8 +167,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/rank5_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_margin="@dimen/gmd_margin_default"
                     android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                     app:civ_border_color="#cccccc"
@@ -190,6 +190,8 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        app:layout_anchor="@id/collapse_app_bar"
+        app:layout_anchorGravity="center_vertical|center_horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -214,4 +216,5 @@
             app:tabTextColor="@color/babyPink" />
 
     </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>

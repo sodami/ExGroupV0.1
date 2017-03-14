@@ -13,10 +13,14 @@
     android:padding="4dp">
 
     <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
+        android:scrollbars="vertical"
         android:id="@+id/shot_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="wrap_content" />
+    </ScrollView>
 </FrameLayout>
 </android.support.v4.widget.NestedScrollView>

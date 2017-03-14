@@ -4,20 +4,28 @@
     android:layout_height="match_parent"
     tools:context="com.google.slashb410.exgroup.ui.group.room.tabs.GroupCalendarFragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <ExpandableListView
+    <ExpandableListView
             android:id="@+id/group_cal_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:groupIndicator="@null" />
 
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
         <com.squareup.timessquare.CalendarPickerView
             android:id="@+id/group_calendar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+        </ScrollView>
+
     </LinearLayout>
+
 </android.support.v4.widget.NestedScrollView>

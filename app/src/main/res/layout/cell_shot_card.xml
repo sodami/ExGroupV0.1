@@ -66,6 +66,7 @@
             </LinearLayout>
 
             <ImageButton
+                android:visibility="gone"
                 android:id="@+id/delete_shot"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -121,7 +122,6 @@
             android:orientation="horizontal"
             android:padding="@dimen/gmd_margin_default">
 
-
             <ImageButton
                 android:id="@+id/likeBtn"
                 android:layout_width="20dp"
@@ -136,7 +136,6 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textColor="#cccccc" />
-
             <ImageButton
                 android:id="@+id/commentImgBtn"
                 android:layout_width="20dp"
