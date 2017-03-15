@@ -6,7 +6,7 @@ package com.google.slashb410.exgroup.model.group.group;
 
 public class ResUpload {
     private String result;
-    private UploadData data;
+    private UploadData data = new UploadData();
     private int resultCode;
 
     public String getResult() {

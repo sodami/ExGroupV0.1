@@ -1,10 +1,7 @@
 package com.google.slashb410.exgroup.ui.group.room.tabs.comments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -32,9 +29,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.google.slashb410.exgroup.R.id.comment_inputBtn;
-import static com.google.slashb410.exgroup.R.id.numLike;
 
 public class GroupShotsCommentsActivity extends AppCompatActivity {
 
@@ -138,19 +132,17 @@ public class GroupShotsCommentsActivity extends AppCompatActivity {
                     if (response.body() != null) {
                         if (response.body().equals("댓글 등록을 성공했습니다.")) {
                             U.getInstance().myLog("댓글 등록 성공");
-                            //4-1. 등록 성공 했다면 다시 코멘트리스트 재요청
-//                    reCallComment(); //차후 개발
-                            //단순 리스트 추가
-                                } else {
+                            int count = adapter.getCount();
+                            String customDateNTime = U.getInstance().currentDateNTime();
+                            addComment = new CommentData(0, boardId, E.KEY.USER_ID, E.KEY.USER_NAME, E.KEY.USER_NICKNAME, E.KEY.USER_PROFILE, commentEdit.getText().toString(), customDateNTime);
+                            boardData.getComment().add(addComment);
+
+                            adapter.notifyDataSetChanged();
+
+                        } else {
                             U.getInstance().myLog("resComment Body is null : " + response.message());
                         }
 
-                        int count = adapter.getCount();
-                        String customDateNTime = U.getInstance().currentDateNTime();
-                        addComment = new CommentData(0, boardId, E.KEY.USER_ID, E.KEY.USER_NAME, E.KEY.USER_NICKNAME, "", commentEdit.getText().toString(), customDateNTime);
-                        boardData.getComment().add(addComment);
-
-                        adapter.notifyDataSetChanged();
 
                     }
                 } else {

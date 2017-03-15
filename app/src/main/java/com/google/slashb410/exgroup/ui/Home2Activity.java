@@ -270,6 +270,7 @@ public class Home2Activity extends AppCompatActivity
                         E.KEY.USER_ID = response.body().getData().getId();
                         E.KEY.USER_NAME = response.body().getData().getUsername();
                         E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+                        E.KEY.USER_PROFILE = response.body().getData().getPicUrl();
 
                         if (response.body().getData().getPicUrl() != null)
                             Picasso.with(Home2Activity.this)

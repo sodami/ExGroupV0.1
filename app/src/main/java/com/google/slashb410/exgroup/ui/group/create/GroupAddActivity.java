@@ -3,7 +3,6 @@ package com.google.slashb410.exgroup.ui.group.create;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -191,7 +190,7 @@ public class GroupAddActivity extends AppCompatActivity {
         map.put("exPeriod", RequestBody.create(MediaType.parse("multipart/form-data"), pickPeriod+""));
 
 
-        File file = new File(profilePath);
+        File file = new File(profilePath.replace("file://", ""));
         U.getInstance().myLog(file.getAbsolutePath() + "+" + file.canRead());
 
         RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -202,13 +201,17 @@ public class GroupAddActivity extends AppCompatActivity {
         resMakeGroup.enqueue(new Callback<ResStandard>() {
             @Override
             public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
-                if (response.body() == null) {
-                    U.getInstance().myLog("resMakeGroup Body is NULL");
-                } else {
-                    U.getInstance().myLog("그룹만들기 성공");
-                    E.KEY.TEMP_PIC_URI = "";
-                    U.getInstance().myLog(response.body().getResult());
+                if(response.isSuccessful()) {
+                    if (response.body() !=null){
+                        U.getInstance().myLog("그룹만들기 성공");
+                        E.KEY.TEMP_PIC_URI = "";
+                        U.getInstance().myLog(response.body().getResult());
 
+                    }else{
+                        U.getInstance().myLog("resMakeGroup Body is NULL : " + response.message());
+                    }
+                }else{
+                    U.getInstance().myLog("resGroupMake is NOT successful : "+response.message());
                 }
             }
 

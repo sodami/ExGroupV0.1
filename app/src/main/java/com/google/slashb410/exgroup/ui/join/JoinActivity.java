@@ -86,11 +86,11 @@ public class JoinActivity extends AppCompatActivity {
 
                             }
                         }else{
-                            U.getInstance().myLog("err 0 : "+response.message());
+                            U.getInstance().myLog("resJoin Body is null : "+response.message());
                             return;
                         }
                     }else{
-                        U.getInstance().myLog("err 1 : "+response.message());
+                        U.getInstance().myLog("resJoin is NOT Successful : "+response.message());
                         return;
                     }
 

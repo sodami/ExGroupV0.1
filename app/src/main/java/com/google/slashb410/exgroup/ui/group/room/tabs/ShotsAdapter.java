@@ -2,13 +2,11 @@ package com.google.slashb410.exgroup.ui.group.room.tabs;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.ResStandard;
@@ -67,7 +65,7 @@ public class ShotsAdapter extends RecyclerView.Adapter {
                                     public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
                                         if(response.isSuccessful()){
                                             if(response.body()!=null){
-                                                U.getInstance().popSimpleDialog(null, null, "삭제 성공!", null);
+                                                U.getInstance().popSimpleDialog(null, context, "삭제 성공!", null);
                                                 deleteShot(position);
                                             }else{
                                                 U.getInstance().myLog("resDeleteBoard Body is null : "+response.message());
