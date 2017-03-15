@@ -1,8 +1,5 @@
-<FrameLayout
-    android:id="@+id/chart_frame"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.google.slashb410.exgroup.ui.group.room.tabs.GroupGraphFragment">
@@ -12,6 +9,6 @@
         android:id="@+id/group_graph"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/gmd_margin_default"/>
+        android:layout_margin="@dimen/gmd_margin_default" />
 
 </FrameLayout>

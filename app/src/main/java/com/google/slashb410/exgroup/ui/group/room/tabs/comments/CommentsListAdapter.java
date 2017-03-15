@@ -10,10 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.slashb410.exgroup.R;
+import com.google.slashb410.exgroup.db.E;
+import com.google.slashb410.exgroup.model.group.ResStandard;
 import com.google.slashb410.exgroup.model.group.group.CommentData;
+import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.util.U;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Tacademy on 2017-02-06.
@@ -25,6 +33,7 @@ public class CommentsListAdapter extends BaseAdapter{
     ArrayList<CommentData> commentDatas;
     LayoutInflater inflater;
     CommentHolder commentHolder;
+    int userId;
 
     public CommentsListAdapter(Context context, ArrayList<CommentData> commentDatas) {
         this.commentDatas = commentDatas;
@@ -35,7 +44,6 @@ public class CommentsListAdapter extends BaseAdapter{
     public int getCount() {
         U.getInstance().myLog("코멘트 count : "+commentDatas.size()+"");
         return commentDatas.size();
-
     }
 
     @Override
@@ -63,21 +71,57 @@ public class CommentsListAdapter extends BaseAdapter{
             commentHolder.delete = (ImageButton) view.findViewById(R.id.delete_comment);
         }
 
-//
-//        Picasso.with(view.getContext())
-//                .load(commentDatas.get(position).getPicUrl())
-//                .fit().centerCrop()
-//                .into(commentHolder.profile);
-        if(commentDatas.get(position).getNickname()!=null) commentHolder.nickname.setText(commentDatas.get(position).getNickname());
-        if(commentDatas.get(position).getWriteDate()!=null) commentHolder.dateNTime.setText(commentDatas.get(position).getWriteDate());
-        if(commentDatas.get(position).getContent()!=null) commentHolder.content.setText(commentDatas.get(position).getContent());
+        if(!commentDatas.get(position).getUserPicUrl().equals("")) {
+            U.getInstance().myLog("USERPICURL : "+commentDatas.get(position).getUserPicUrl());
+//            Picasso.with(view.getContext())
+//                    .load(commentDatas.get(position).getUserPicUrl())
+//                    .fit().centerCrop()
+//                    .into(commentHolder.profile);
+        }
+        if(!commentDatas.get(position).getNickname().equals("")) commentHolder.nickname.setText(commentDatas.get(position).getNickname());
+        if(!commentDatas.get(position).getWriteDate().equals("")) commentHolder.dateNTime.setText(commentDatas.get(position).getWriteDate());
+        if(!commentDatas.get(position).getContent().equals("")) commentHolder.content.setText(commentDatas.get(position).getContent());
 
         //user id와 작성자가 같다면 delete 띄우기
+        userId = E.KEY.USER_ID;
+        if(commentDatas.get(position).getUser_id()==userId){
+            commentHolder.delete.setVisibility(View.VISIBLE);
+            commentHolder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callCommentDelete(position);
+                }
 
+
+            });
+        }
 
         return view;
     }
 
+    public void callCommentDelete(int position){
+        Call<ResStandard> resCommentDelete = NetSSL.getInstance().getGroupImpFactory().deleteComment(commentDatas.get(position).getComment_id());
+
+        resCommentDelete.enqueue(new Callback<ResStandard>() {
+            @Override
+            public void onResponse(Call<ResStandard> call, Response<ResStandard> response) {
+                if(response.isSuccessful()){
+                    if(response.body() !=null){
+                        U.getInstance().myLog("댓글 삭제 성공");
+                    }else{
+                        U.getInstance().myLog("resDeleteComment Body is null : "+response.message());
+                    }
+                }else{
+                    U.getInstance().myLog("resDeleteComment is NOT successful : "+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResStandard> call, Throwable t) {
+
+            }
+        });
+    }
 
     class CommentHolder{
 

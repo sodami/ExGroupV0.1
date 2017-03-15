@@ -46,6 +46,9 @@ import com.google.slashb410.exgroup.ui.group.search.GroupSearchActivity;
 import com.google.slashb410.exgroup.ui.mypage.MyHomeActivity;
 import com.google.slashb410.exgroup.ui.write.QuickWriteActivity;
 import com.google.slashb410.exgroup.util.U;
+import com.kakao.kakaolink.KakaoLink;
+import com.kakao.kakaolink.KakaoTalkLinkMessageBuilder;
+import com.kakao.util.KakaoParameterException;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -225,6 +228,7 @@ public class Home2Activity extends AppCompatActivity
                         E.KEY.USER_ID = response.body().getData().getId();
                         E.KEY.USER_NAME = response.body().getData().getUsername();
                         E.KEY.USER_NICKNAME = response.body().getData().getNickname();
+                        E.KEY.USER_PROFILE = response.body().getData().getPicUrl();
 
                         myData = new MyData(
                                 response.body().getData().getId(),
@@ -282,7 +286,6 @@ public class Home2Activity extends AppCompatActivity
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ResMe> call, Throwable t) {
                 U.getInstance().myLog("접근실패 : " + t.toString());
@@ -435,8 +438,19 @@ public class Home2Activity extends AppCompatActivity
             //팝업창 만들기
             AlertDialog ad = aDialog.create();
             ad.show();
-        } else if (id == R.id.nav_share) {
-            // 친구에게 공유하기
+        } else if (id == R.id.nav_share) { // 친구에게 공유하기
+            KakaoLink kakaoLink = null;
+            try {
+                kakaoLink = KakaoLink.getKakaoLink(Home2Activity.this);
+            } catch (KakaoParameterException e) {
+                e.printStackTrace();
+            }
+            final KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
+            try {
+                kakaoTalkLinkMessageBuilder.addWebLink("카카오 홈페이지로 이동", "www.naver.com");
+            } catch (KakaoParameterException e) {
+                e.printStackTrace();
+            }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

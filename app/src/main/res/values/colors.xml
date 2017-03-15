@@ -9,4 +9,29 @@
     <color name="nightSky">#283b42</color>
     <color name="babyPink">#ff80ab</color>
     <color name="shadowPink">#FF4081</color>
+
+    <!--<color name="calendar_active_month_bg">#1fc7fd</color>-->
+    <!--<color name="calendar_bg">#555555</color>-->
+    <!--<color name="calendar_divider">#fcc31f</color>-->
+    <!--<color name="calendar_inactive_month_bg">#6ddbfd</color>-->
+    <!--<color name="calendar_text_inactive">#fd7246</color>-->
+    <!--<color name="calendar_text_active">#fd7246</color>-->
+    <!--<color name="calendar_text_selected">#fd7246</color>-->
+    <!--<color name="calendar_text_unselectable">#fd7246</color>-->
+    <!--<color name="calendar_active_month_bg">#014156</color>-->
+    <!--<color name="calendar_bg">#ffffffff</color>-->
+
+    <color name="calendar_divider">#ffffff</color>
+    <color name="calendar_selected_day_bg">#ff80ab</color>
+
+    <!--<color name="calendar_inactive_month_bg">#027da3</color>-->
+    <!--<color name="calendar_selected_day_bg">#039aca</color>-->
+    <!--<color name="calendar_text_inactive">#ffffff</color>-->
+    <!--<color name="calendar_text_active">#FC541F</color>-->
+    <!--<color name="calendar_text_selected">#ffffff</color>-->
+    <!--<color name="calendar_text_unselectable">#c4c4c4</color>-->
+
+    <color name="calendar_highlighted_day_bg">#FF4081</color>
+    <color name="calendar_highlighted_day">#ffffff</color>
+
 </resources>

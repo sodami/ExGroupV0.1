@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddcccccc"
+    tools:context="com.google.slashb410.exgroup.ui.group.room.tabs.GroupCalListDialogActivity">
+
+        <LinearLayout
+            android:background="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/date_cal_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="16dp"
+                android:text="2017-05-10"
+                android:textSize="@dimen/text_default" />
+                <ImageButton
+                    android:layout_margin="@dimen/gmd_margin_default"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/cancel_pink"/>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/no_shot_cal_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="해당 날짜에 게시된 인증샷이 없습니다." />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/list_cal_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            </ScrollView>
+        </LinearLayout>
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.google.slashb410.exgroup.model.group.group;
 
+import java.util.ArrayList;
+
 /**
  * Created by drizzle on 2017-03-05.
  */
@@ -13,10 +15,25 @@ public class InnerCalendar {
     private String nickname;
     private int categoryNum;
     private String userPicUrl;
-    private String summary;
-    private String boardPicUrl;
-    private String writeDate;
+    private String summary;     // o
+    private String boardPicUrl; // o
+    private String writeDate;   // o
 
+    @Override
+    public String toString() {
+        return "InnerCalendar{" +
+                "board_id=" + board_id +
+                ", user_id=" + user_id +
+                ", group_id=" + group_id +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", categoryNum=" + categoryNum +
+                ", userPicUrl='" + userPicUrl + '\'' +
+                ", summary='" + summary + '\'' +
+                ", boardPicUrl='" + boardPicUrl + '\'' +
+                ", writeDate='" + writeDate + '\'' +
+                '}';
+    }
 
     public int getBoard_id() {
         return board_id;
@@ -98,3 +115,4 @@ public class InnerCalendar {
         this.writeDate = writeDate;
     }
 }
+

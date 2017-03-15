@@ -10,9 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,7 +30,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.slashb410.exgroup.R;
 import com.google.slashb410.exgroup.model.group.MyData;
-import com.google.slashb410.exgroup.model.group.home.ResMe;
+import com.google.slashb410.exgroup.model.group.group.InnerCalendar;
 import com.google.slashb410.exgroup.net.NetSSL;
 import com.google.slashb410.exgroup.ui.Home2Activity;
 import com.google.slashb410.exgroup.util.U;
@@ -53,18 +51,20 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MyHomeActivity extends Activity {
-    TabLayout tabLayout;
-    ViewPager viewPager;
     ImageView profile_change;
     SweetAlertDialog alert;
     TextView nickname;      // 닉네임 보여짐
     CalendarView cal;
     ImageButton myBack;
     Button      myCancel;
-    Bundle bundle;
-    Student student;
 
     MyData myData;
+
+    ImageView calendarfood;
+    ImageView calendarweigth;
+    TextView writeDate;
+    TextView foodSummary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,15 +74,16 @@ public class MyHomeActivity extends Activity {
         Intent intent = getIntent();
         myData = (MyData) intent.getSerializableExtra("myData");
 
-        myCancel        = (Button) findViewById(R.id.my_cancel);
-        myBack          = (ImageButton)findViewById(R.id.my_back);
-        profile_change  = (ImageView) findViewById(R.id.profile_change);
-        // profile_change.bringToFront();
-        nickname        = (TextView) findViewById(R.id.resultMyName);      // 닉네임
+        // xml to JAVA
+        myCancel        = (Button) findViewById(R.id.my_cancel);            // 취소
+        myBack          = (ImageButton)findViewById(R.id.my_back);          // 뒤로가기
+        profile_change  = (ImageView) findViewById(R.id.profile_change);    // 프로필 수정
+        nickname        = (TextView) findViewById(R.id.resultMyName);       // 닉네임
 
         setProfile();
 
 
+        // 탭호스트
         // 2017. 02. 01
         Resources resource = getResources();
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
@@ -98,11 +99,11 @@ public class MyHomeActivity extends Activity {
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
 
-
-
+        // MPAndroid Chart 그래프 정보 나타내기
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
+        // 열
         entries.add(new Entry(65.0f, 0));
         entries.add(new Entry(64.5f, 1));
         entries.add(new Entry(64.0f, 2));
@@ -111,9 +112,11 @@ public class MyHomeActivity extends Activity {
         entries.add(new Entry(58.5f, 5));
         entries.add(new Entry(57.8f, 6));
 
+        // 사용자
         LineDataSet dataSet = new LineDataSet(entries, "슬비꺼");
         LineDataSet dataSet2 = new LineDataSet(entries, "소담이꺼");
 
+        // 라벨
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("1일차");
         labels.add("2일차");
@@ -128,6 +131,7 @@ public class MyHomeActivity extends Activity {
         lineChart.setData(data);
         lineChart.setData(data2);
 
+        // 개인 그래프 정보
         // individual Calendar 2017. 02. 17
         cal = (CalendarView) findViewById(R.id.calendarView1);
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() { // 캘린더 클릭 시 플로팅
@@ -137,19 +141,95 @@ public class MyHomeActivity extends Activity {
                 Context mContext = getApplicationContext();
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.activity_calendar_dialog, (ViewGroup) findViewById(R.id.activity_calendar_dialog));
+                calendarfood    = (ImageView)findViewById(R.id.calendarfood);
+                calendarweigth  = (ImageView)findViewById(R.id.calendarweigth);
+                writeDate       = (TextView)findViewById(R.id.today);
+                foodSummary     = (TextView)findViewById(R.id.FoodSummary);
                 AlertDialog.Builder aDialog = new AlertDialog.Builder(MyHomeActivity.this);
                 aDialog.setView(layout);
                 aDialog.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        onStart();
+                        setDialogBox();
                     }
                 });
                 AlertDialog ad = aDialog.create();
                 ad.show();
             }
         });
+    }
 
 
+    //A_8. 마이페이지 캘린더에서 해당 날짜 게시글 보이기
+    private void setDialogBox() {
+        Log.i("SetDialog : ", "setDialogBox 진입");
+        Call<InnerCalendar> MyCalendar = NetSSL.getInstance().getMemberImpFactory().myCalendar();
+        MyCalendar.enqueue(new Callback<InnerCalendar>() {
+            @Override
+            public void onResponse(Call<InnerCalendar> call, Response<InnerCalendar> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() == null) {
+                        U.getInstance().myLog("setDialog Body is NULL : " + response.message());
+                        return;
+                    } else {
+                        U.getInstance().myLog("setDialog : " + response.body().toString());
+                        // 작성 날짜
+                        if (response.body() != null) //toString() != null)
+                            writeDate.setText(response.body().toString());
+                        // 식단 사진
+                        if (response.body() != null)
+                            Picasso.with(MyHomeActivity.this)
+                                    .load(response.body().toString())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(calendarfood);
+                        // 몸무게 사진
+                        // ex -> getBoardPicUrl (게시판사진)
+                        if (response.body().toString() != null)
+                            Picasso.with(MyHomeActivity.this)
+                                    .load(response.body().toString())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(calendarweigth);
+                        // 한줄 요약
+                        if (response.body() != null)
+                            foodSummary.setText(response.body().toString() +"");
+                    }
+                } else {
+                    U.getInstance().myLog("setDialog is not successful : " + response.message());
+                    if (response.body() == null) {
+                        U.getInstance().myLog("setDialogBox Body is NULL :" + response.message());
+                        return;
+                    } else {
+                        U.getInstance().myLog("setDialogBox : " + response.body().toString());
+                        // 작성 날짜
+                        if (response.body() != null) //toString() != null)
+                            writeDate.setText(response.body().toString());
+                        // 식단 사진
+                        if (response.body() != null)
+                            Picasso.with(MyHomeActivity.this)
+                                    .load(response.body().toString())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(calendarfood);
+                        // 몸무게 사진
+                        // ex -> getBoardPicUrl (게시판사진)
+                        if (response.body().toString() != null)
+                            Picasso.with(MyHomeActivity.this)
+                                    .load(response.body().toString())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(calendarweigth);
+                        // 한줄 요약
+                        if (response.body() != null)
+                            foodSummary.setText(response.body().toString() +"");
+                    }
+                }
+            }
+            @Override
+            public void onFailure (Call < InnerCalendar > call, Throwable t){
+                U.getInstance().myLog("접근실패 : " + t.toString());
+            }
+        });
     }
 
     @Override
@@ -173,7 +253,6 @@ public class MyHomeActivity extends Activity {
 
     public void onMySubmit(View view) {
         Intent intent = new Intent(MyHomeActivity.this, Home2Activity.class);
-        intent.putExtra("name", "홍길동");
         startActivity(intent);
     }
 
@@ -274,9 +353,7 @@ public class MyHomeActivity extends Activity {
     }
 
     private void setProfile() {
-
         if (myData.getNickname() != null) nickname.setText(myData.getNickname());
-        if(myData.getPicUrl()!=null) Picasso.with(this).load(myData.getPicUrl()).fit().centerCrop().into(profile_change);
-
+        if (myData.getPicUrl()!=null)     Picasso.with(this).load(myData.getPicUrl()).fit().centerCrop().into(profile_change);
     }
 }

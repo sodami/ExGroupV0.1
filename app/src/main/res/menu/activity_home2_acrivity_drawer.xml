@@ -4,26 +4,23 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="로그 아웃" />
-        <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/moon_pink"
             android:title="출석체크 알림" />
 
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
             android:title="인증샷 알림" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/gmail_login_pink"
             android:title="개발자에게 문의하기" />
         <item
-            android:id="@+id/nav_session"
-            android:title="친구랑 연결 끊기"
-            android:icon="@drawable/ic_menu_manage" />
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/setting_pink"
+            android:title="로그아웃" />
+
+
 
     </group>
 
@@ -31,8 +28,12 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/share_pink"
                 android:title="친구한테 공유하기" />
+            <item
+                android:id="@+id/nav_session"
+                android:title="친구랑 연결 끊기"
+                android:icon="@drawable/logout_new_pink" />
 
         </menu>
     </item>

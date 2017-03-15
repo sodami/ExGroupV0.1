@@ -56,6 +56,9 @@ public class GroupShotsFragment extends Fragment {
         return view;
     }
 
+    public void reSet(){
+        shotsAdapter.notifyDataSetChanged();
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
